@@ -1,0 +1,41 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+p{
+	font-size: 14px;
+}
+
+.good-item{
+	margin:10px;
+	padding-bottom: 10px;
+	-o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  /* ...and now for the proper property */
+  transition:.5s;
+}
+
+/*.good-item:hover{
+	background-color: #82ed96;
+	border-radius: 4px;
+	opacity: 0.9;
+	cursor: pointer;
+}*/
+
+.capitalize {
+   text-transform: capitalize;
+}
+
+.new-good-tooltip{
+	color:#82ed96;
+}
+
+.new-good-tooltip:hover{
+	text-decoration: none;
+}

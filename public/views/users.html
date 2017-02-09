@@ -1,0 +1,59 @@
+<!-- currentUser && farmer --> 
+<!-- lists out farmers inventory -->
+<div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>
+        Your Inventory
+      </h3>
+      <div class="row" ng-repeat="good in user.goods">
+        <h4>{{good.name}}</h4>
+        <b>Quanity Remaining:</b> {{good.quantityForSale}}<br>
+        <b>Price Per Unit:</b> {{good.pricePerUnit | currency}}<br>
+        <a href="/#/goods/{{good._id}}/update">Update</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h3>
+        Orders Sold
+      </h3>
+      <div class="row" ng-repeat="good in user.purchases">
+        <h4>{{good.good}}</h4>
+        <b>Quanity Remaining:</b> {{good.quantity}}<br>
+        <b>Price:</b> {{good.price | currency}}<br>
+        <b>Buyer:</b> {{good.buyer}}<br>
+      </div>
+    </div>  
+  </div>
+</div>
+
+
+<!-- currentUser && !farmer -->
+<div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==0">
+  <div class="row">
+    <h3>
+      Your Orders
+    </h3>
+    <div class="row" ng-repeat="good in user.purchases">
+      <h4>{{good.good}}</h4>
+      <b>Quanity Remaining:</b> {{good.quantity}}<br>
+      <b>Price:</b> {{good.price | currency}}<br>
+      <b>Seller:</b> {{good.seller}}<br>
+    </div>
+  </div>
+</div>
+
+<!-- !currentUser && farmer -->
+<div ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
+  <div class="row">
+    <h3>
+      Goods {{user.user.username}} has for sale.
+    </h3>
+    <div class="row" ng-repeat="good in user.goods">
+      <b class="capitalize">{{good.name}}</b>
+      <p class="capitalize">{{good.seller}}<br>
+      {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}<br>
+      <a href="/#/{{good.seller}}/{{good._id}}">Details</a><br></p>
+    </div>
+</div>
+

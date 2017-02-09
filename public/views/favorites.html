@@ -1,0 +1,13 @@
+<div class="page-header">
+  <div class="row">
+    <div ng-repeat="good in favorites.favorites">
+        <div class="clearfix" ng-if="$index % 3 == 0"></div>
+        <div class="col-lg-3 good-item text-center" href="/#/{{good.seller}}/{{good._id}}">
+            <h2 class="capitalize">{{good.name}}</h2>
+            <p>{{good.seller}}<br>
+            {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}</p>
+            <a href="/#/{{good.seller}}/{{good._id}}">Details</a>
+        </div>
+    </div>
+  </div>
+</div>

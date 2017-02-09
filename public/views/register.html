@@ -1,0 +1,80 @@
+<div class="page-header">
+  <h1>Farmers Market</h1>
+</div>
+
+<div ng-show="auth.error" class="alert alert-danger row">
+  <span>{{ auth.error.message }}</span>
+</div>
+
+<form ng-submit="auth.register()"
+  style="margin-top:30px;">
+  <h3>Register</h3>
+  <b style="color:#cd0a0a">If you want to sell goods, you must check this box!</b>
+  <br>
+  <label>Farmer:
+    <input type="checkbox" ng-model="auth.user.farmer">
+  </label><br>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <input type="text"
+      class="form-control"
+      placeholder="Business Name"
+      ng-model="auth.user.username"></input>
+    </div>
+    <div class="form-group col-md-6">
+      <input type="password"
+      class="form-control"
+      placeholder="Password"
+      ng-model="auth.user.password"></input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <input type="email"
+      class="form-control"
+      placeholder="Email"
+      ng-model="auth.user.email"></input>
+    </div>
+    <div class="form-group col-md-6">
+      <input type="phone"
+      class="form-control"
+      placeholder="Phone Number"
+      ng-model="auth.user.phone"></input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <input type="text"
+      class="form-control"
+      placeholder="Street Address"
+      ng-model="auth.user.address.street"></input>
+    </div>
+    <div class="form-group col-md-6">
+      <input type="text"
+      class="form-control"
+      placeholder="Apt or Unit #"
+      ng-model="auth.user.address.unit"></input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-4">
+      <input type="text"
+      class="form-control"
+      placeholder="City"
+      ng-model="auth.user.address.city"></input>
+    </div>
+    <div class="form-group col-md-4">
+      <input type="text"
+      class="form-control"
+      placeholder="State"
+      ng-model="auth.user.address.state"></input>
+    </div>
+    <div class="form-group col-md-4">
+      <input type="text"
+      class="form-control"
+      placeholder="Zip Code"
+      ng-model="auth.user.address.zip"></input>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>

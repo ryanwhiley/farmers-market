@@ -1,0 +1,126 @@
+<!-- currentUser && farmer --> 
+<div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
+  <!-- for sale but not purchased -->
+  <h3>For Sale</h3>
+  <div ng-repeat="good in user.goods | orderBy:'-price'" ng-if="good.forSale==true">
+    <span style="font-size:20px;">
+      <span>
+        <h2>
+          {{good.name}} - {{good.price | currency}}
+        </h2>
+      </span>
+      <span>
+        <p>Quantity: {{good.quantity}} -
+        Description: {{good.description}}</p>
+      </span>
+      <span>
+        <a href="#/goods/{{good._id}}">Details</a>
+      </span>
+    </span>
+  </div>
+
+  <h3>Purchased</h3>
+  <div ng-repeat="good in user.goods | orderBy:'-price'" ng-if="good.forSale==false&&good.delivered==false">
+    <span style="font-size:20px;">
+      <span>
+        <h2>
+          {{good.name}} - {{good.price | currency}}
+        </h2>
+      </span>
+      <span>
+        <p>Quantity: {{good.quantity}} -
+        Description: {{good.description}}</p>
+      </span>
+      <span>
+        <a href="#/goods/{{good._id}}">Details</a>
+      </span>
+    </span>
+  </div>
+
+  <h3>Delivered</h3>
+  <div ng-repeat="good in user.goods | orderBy:'-price'" ng-if="good.forSale==false&&good.delivered==true">
+    <span style="font-size:20px;">
+      <span>
+        <h2>
+          {{good.name}} - {{good.price | currency}}
+        </h2>
+      </span>
+      <span>
+        <p>Quantity: {{good.quantity}} -
+        Description: {{good.description}}</p>
+      </span>
+      <span>
+        <a href="#/goods/{{good._id}}">Details</a>
+      </span>
+    </span>
+  </div>
+</div>
+
+
+<!-- !currentUser && farmer -->
+<div ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
+  <div ng-repeat="good in user.goods | orderBy:'-price'"  ng-if="good.forSale==true">
+    <span style="font-size:20px;">
+      <span>
+        <h2>
+          {{good.name}} - {{good.price | currency}}
+        </h2>
+      </span>
+      <span>
+        <p>Quantity: {{good.quantity}} -
+        Description: {{good.description}}</p>
+      </span>
+      <span>
+        <a href="#/goods/{{good._id}}">Details</a>
+      </span>
+    </span>
+  </div>
+</div>
+
+
+<!-- !currentUser && farmer -->
+<div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==0">
+  <div ng-repeat="good in user.goods | orderBy:'-price'">
+    <span style="font-size:20px;">
+      <span>
+        <h2>
+          {{good.name}} - {{good.price | currency}}
+        </h2>
+      </span>
+      <span>
+        <p>Quantity: {{good.quantity}} -
+        Description: {{good.description}}</p>
+      </span>
+      <span>
+        <a href="#/goods/{{good._id}}">Details</a>
+      </span>
+    </span>
+  </div>
+</div>
+
+
+<!-- 
+<div class="row">
+  Goods for sale by {{user.currentUser.username}}
+</div>
+
+<div >
+asdfasdf
+</div>
+
+<div ng-repeat="good in user.goods | orderBy:'-price'">
+  <span style="font-size:20px; margin-left:10px;">
+    <span>
+      {{good.name}}
+    </span>
+    <span>
+      {{good.price}}
+    </span>
+    <span>
+      <a href="#/goods/{{good._id}}">Details</a>
+    </span>
+    <span ng-if="user.currentUser==user.user" ng-click="user.deleteGood(good._id)">
+      Delete Good
+    </san>
+  </span>
+</div>

@@ -1,0 +1,33 @@
+<div class="page-header">
+  <h3>
+    <span>
+      <h2 class="capitalize">
+        {{good.good.name}} <br>
+        {{good.good.pricePerUnit | currency}}/{{good.good.unitOfSale}} {{good.good.unitOfMeasurement}}
+        <hr>
+      </h2>
+    </span>
+    <span>
+      <p class="capitalize">Description: {{good.good.description}}</p>
+      <p class="capitalize">Type: {{good.good.type}}</p>
+      <p class="capitalize">Category: {{good.good.category}}</p>
+    </span>
+    <p>
+      Producer: <a href="#/users/{{good.good.seller}}" class="capitalize">{{good.good.seller}}</a>
+    </p>
+  </h3>
+</div>
+
+<div ng-if="good.currentUser.username!=good.good.seller">
+<label>
+  Quantity
+</label>
+<select ng-model="good.userQuantity">
+  <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
+</select><br>
+
+<button ng-click="good.addToCart()" type="button" class="btn btn-primary">Add to Cart</button>
+<div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
+  <span>{{ good.success }}</span>
+</div>
+</div>

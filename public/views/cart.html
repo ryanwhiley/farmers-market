@@ -1,0 +1,52 @@
+<div class="page-header">
+	<div class="row">
+		<div class="col-md-4">
+			<h4>Product Details</h4>
+		</div>
+		<div class="col-md-4">
+			<h4>Price</h4>
+		</div>
+		<div class="col-md-4">
+			<h4>Quantity</h4>
+		</div>
+	</div>
+</div>
+	<div class="row" ng-repeat="good in cart.currentUser.cart">
+		<div class="col-md-4">
+			<p class="capitalize">{{good.seller.name}}</p>
+			<b class="capitalize"><a href="/#/{{good.seller.name}}/{{good.good_id}}">{{good.good}}</a></b>
+			<p ng-click="cart.removeFromCart($index)">Remove</p>
+		</div>
+		<div class="col-md-4">
+			<b>{{(good.price*good.quantity) | currency}}</b>
+		</div>
+		<div class="col-md-4">
+			<select ng-model="good.quantity" ng-dropdown ng-change="cart.updateUserCart()" ng-options="quantity for quantity in cart.quantity">
+			  <!-- <option ng-repeat="q in cart.quantity" value="{{q}}">{{q}}</option> -->
+			</select>
+		</div>
+		<hr />
+	</div>
+	<div ng-if="cart.currentUser.cart.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
+    <span>You have no goods in your cart.</span>
+  </div>
+
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<h5><b>Totals:</b></h5>
+	</div>
+	<div class="col-md-4">
+		<h5>{{cart.totals.totalPrice | currency}}</h5>
+	</div>
+	<div class="col-md-4">
+		<h5>{{cart.totals.totalQuantity}}</h5>
+	</div>
+</div>
+<hr />
+<button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-click="cart.purchase()">Purchase</button>
+
+
+<div ng-show="cart.success" class="alert alert-success row" style="margin-top:20px;">
+  <span>{{ cart.success }}</span>
+</div>
