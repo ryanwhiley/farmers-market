@@ -19,7 +19,6 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-
 var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
 
 /* GET home page. */

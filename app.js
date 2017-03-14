@@ -13,7 +13,9 @@ require('./models/Users');
 require('./models/Purchases');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/market');
+// mongoose.connect('mongodb://localhost/market');
+
+mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
 
 var passport = require('passport');
 
@@ -26,6 +28,7 @@ var app = express();
 // use helmet for security headers
 // https://helmetjs.github.io/docs/
 app.use(helmet());
+// app.use('/api', jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
