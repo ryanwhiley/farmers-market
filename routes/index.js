@@ -7,6 +7,8 @@ var Good = mongoose.model('Good');
 var User = mongoose.model('User');
 var Purchase = mongoose.model('Purchase');
 var nodemailer = require('nodemailer');
+var crypto = require('crypto');
+var async = require('async');
 // var goods = require('./goods')
 
 
@@ -98,6 +100,7 @@ router.get('/goods/search/:term', function(req,res){
   })
 })
 
+
 // get purchases by user
 router.get('/purchases/:user', function(req,res,next){
   Purchase.find( { $or:[ {'seller':req.params.user}, {'buyer':req.params.user}]}, function(err,purchases){
@@ -105,6 +108,106 @@ router.get('/purchases/:user', function(req,res,next){
     res.json(purchases);
   });
 })
+
+// reset password
+router.post('/forgot', function(req, res, next) {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          return res.status(500).json({ error: "No account with that email address exists." });
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+    function(token, user, done) {
+      var mailOptions = {
+        to: user.email,
+        from: 'passwordreset@demo.com',
+        subject: 'Node.js Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/#/users/reset/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      transporter.sendMail(mailOptions, function(err) {
+        if (err) throw err;
+        return res.json({email: user.email});
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/forgot');
+  });
+});
+
+router.get('/reset/:token', function(req,res){
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      return res.send({message: 'Password reset token is invalid or has expired.'});
+    }
+    return res.json({});
+  });
+})
+
+router.post('/reset/:token', function(req, res, next) {
+  console.log(req.body.password,req.body.confirm);
+  async.waterfall([
+    function(done){
+      if(req.body.password!==req.body.confirm){
+        return res.status(400).json({error:'Password and confirmation password do not match.'})
+      }else{
+        done();
+      }
+    },
+
+    function(done) {
+      console.log('second function');
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+          res.send('error', 'Password reset token is invalid or has expired.');
+          return res.redirect('back');
+        }
+
+        user.password = user.setPassword(req.body.password);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        user.save(function(err) {
+          if(err) throw err;
+          done();
+          return res.json({token: user.generateJWT()});
+        });
+      });
+    },
+    function(user, done) {
+      var mailOptions = {
+        to: user.email,
+        from: 'passwordreset@demo.com',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+      transporter.sendMail(mailOptions, function(err) {
+        return res.json();
+      });
+    }
+  ], function(err) {
+    res.redirect('/');
+  });
+});
 
 // update user in table, get back web token for storage on front end
 // router.post('/users/update', function(req,res,next){

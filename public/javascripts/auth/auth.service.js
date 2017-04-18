@@ -60,5 +60,30 @@ function auth($http, $window){
   auth.logOut = function(){
     $window.localStorage.removeItem('farmers-market-token');
   };
+  auth.findResetToken = function(token){
+    return $http.get('/reset/'+token)
+    .success(function(res){
+      return res;
+    }).error(function(err){
+      return err;
+    })
+  }
+  auth.sendResetPasswordEmail = function(email){
+    return $http.post('/forgot',{email:email})
+    .success(function(res){
+      return res;
+    }).error(function(err){
+      return err;
+    })
+  }
+  auth.updatePassword = function(password,confirm,token){
+    return $http.post('/reset/'+token,{password:password,confirm:confirm})
+    .success(function(res){
+      return res;
+    })
+    .error(function(err){
+      return err;
+    })
+  }
   return auth;
 }

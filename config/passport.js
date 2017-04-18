@@ -9,7 +9,7 @@ passport.use(new LocalStrategy({
   },
   function(login, password, done) {
     User.findOne({$or: [{email: login}, {username: login}]}, function (err, user) {
-      if (err) { return done(err); }
+      if (err) { console.log('yup'); return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }

@@ -1,7 +1,6 @@
 angular.module('farmersMarket.config', [])
 .config(configure)
 
-
 function configure($stateProvider, $urlRouterProvider){
 	$stateProvider
     .state('home', {
@@ -45,12 +44,33 @@ function configure($stateProvider, $urlRouterProvider){
       }
 		})
 
+    // users reset pw
+    .state('reset', {
+      url: '/users/reset/{token}',
+      templateUrl: 'views/reset.html',
+      controller: 'ResetPwCtrl',
+      controllerAs: 'reset',
+      resolve: {
+        goods: ['$stateParams', 'auth', function($stateParams, auth) {
+          return auth.findResetToken($stateParams.token);
+        }]
+      }
+    })
+
     // users edit
     .state('edit', {
       url: '/users/edit',
       templateUrl: 'views/edit.html',
       controller: 'EditProfileCtrl',
       controllerAs: 'edit'
+    })
+
+    // users forgot pw
+    .state('forgot', {
+      url: '/users/forgot',
+      templateUrl: 'views/forgot.html',
+      controller: 'ForgotPwCtrl',
+      controllerAs: 'forgot'
     })
 
     // get users page

@@ -18,6 +18,8 @@ var UserSchema = new mongoose.Schema({
   favorites: Array,
   hash: String,
   salt: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default:Date.now }
 });

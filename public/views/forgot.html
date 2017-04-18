@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>Farmers Market</h1>
+</div>
+
+<div ng-show="forgot.error" class="alert alert-danger row">
+  <span>{{ forgot.error }}</span>
+</div>
+
+<div ng-show="forgot.sentEmail" class="alert alert-success row">
+  <span>We just sent an email to {{ forgot.requiredEmail }} with instructions on reseting your password.</span>
+</div>
+
+<form ng-submit="forgot.resetPassword()"
+  style="margin-top:30px;">
+  <h3>Reset Password</h3>
+
+  <div class="form-group">
+    <input type="text"
+    class="form-control"
+    placeholder="Email"
+    ng-model="forgot.requiredEmail"></input>
+  </div>
+  <button type="submit" class="btn btn-primary">Reset Password</button>
+</form>
