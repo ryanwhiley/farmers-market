@@ -57,13 +57,17 @@ function ResetPwCtrl($state, auth, $stateParams){
   var vm = this;
   vm.password = '';
   vm.confirm = '';
+  vm.successfulPasswordUpdate = false;
   vm.updatePassword = updatePassword;
 
   function updatePassword(){
-    console.log(vm.password,vm.confirm);
     auth.updatePassword(vm.password,vm.confirm,$stateParams.token)
     .then(function(res){
-      $state.go('home');
+      vm.successfulPasswordUpdate = true;
+      setTimeout(function(){
+        $state.go('home');
+        vm.successfulPasswordUpdate = false;
+      },3000);
     })
     .catch(function(err){
       vm.error = err.data.error;

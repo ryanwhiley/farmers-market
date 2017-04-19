@@ -79,6 +79,7 @@ function auth($http, $window){
   auth.updatePassword = function(password,confirm,token){
     return $http.post('/reset/'+token,{password:password,confirm:confirm})
     .success(function(res){
+      auth.saveToken(res.token);
       return res;
     })
     .error(function(err){
