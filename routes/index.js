@@ -33,8 +33,10 @@ router.get('/:type', function(req, res, next) {
   res.json(req.goods);
 });
 
-// get good by id
-router.get('/goods/IDs', function(req, res) {
+
+
+// get goods by id
+router.get('/goods/ids', function(req, res) {
   Good.find()
     .where('quantityForSale').gt(0)
     .where('_id').in(req.query.good_ids)
@@ -354,7 +356,7 @@ function sendPurchaseEmail(recipient,other,toSeller,goods){
 
 function buildMailOptions(recipient,other,toSeller,goods){
   var mailOptions = {
-    from: '<ryanfarmersmarket@gmail.com>', // sender address
+    from: '<'+process.env.EMAIL_NAME+'>', // sender address
     to: recipient.email, // list of receivers
     subject: buildEmailSubject(toSeller, goods), // Subject line
     // text: 'text' //, // plaintext body
