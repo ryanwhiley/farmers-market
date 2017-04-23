@@ -59,4 +59,11 @@ UserSchema.methods.formatPhoneNumber = function(phone){
   return phone.split('-').join('').split('.').join('').split(' ').join('');
 }
 
+UserSchema.statics.search = function(term,cb){
+  return this.find({ username: { "$regex": term, "$options": "i" } })
+  .select('username email phone')
+  .limit(10)
+  .exec(cb)
+}
+
 mongoose.model('User', UserSchema);

@@ -17,4 +17,13 @@ var PruchasesSchema = new mongoose.Schema({
 	// good
 })
 
+PruchasesSchema.statics.create = function(purchase,cb){
+	var NewPurchase = new this(purchase);
+	return NewPurchase.save(cb);
+}
+
+PruchasesSchema.statics.findByUser = function(user,cb){
+	return this.find( { $or:[ {'seller':user}, {'buyer':user}]}).exec(cb);
+}
+
 mongoose.model('Purchase', PruchasesSchema);
