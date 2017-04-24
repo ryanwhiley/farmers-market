@@ -227,7 +227,6 @@ function CartCtrl($state, goodsService, auth){
 	// variable declarations
 	var vm = this;
 	vm.currentUser = auth.currentUser();
-	console.log(vm.currentUser.cart);
 	vm.quantity = [1,2,3,4,5,6,7,8,9,10];
 	vm.cart = [];
 	vm.quantityPass = true;

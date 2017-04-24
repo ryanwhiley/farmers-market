@@ -7,17 +7,9 @@ var express = require('express'),
 		passport = require('passport'),
 		crypto = require('crypto'),
 		async = require('async'),
-		nodemailer = require('nodemailer');
+    email = require('../helpers/email');
 
 var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
-
-var transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: process.env.EMAIL_NAME, // Your email id
-    pass: process.env.EMAIL_PW // Your password
-  }
-});
 
 // update user
 // used for updating cart, etc
@@ -61,19 +53,20 @@ router.post('/forgot', function(req, res, next) {
       });
     },
     function(token, user, done) {
-      var mailOptions = {
-        to: user.email,
-        from: 'passwordreset@demo.com',
-        subject: 'Node.js Password Reset',
-        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/#/users/reset/' + token + '\n\n' +
-          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-      };
-      transporter.sendMail(mailOptions, function(err) {
-        if (err) throw err;
-        return res.json({email: user.email});
-      });
+      return res.json({email: email.sendForgotPasswordEmail(user.email,token,req.headers.host)});
+      // var mailOptions = {
+      //   to: user.email,
+      //   from: 'passwordreset@demo.com',
+      //   subject: 'Farmers Market Password Reset',
+      //   text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account on Farmers Market.\n\n' +
+      //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+      //     'http://' + req.headers.host + '/#/users/reset/' + token + '\n\n' +
+      //     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      // };
+      // transporter.sendMail(mailOptions, function(err) {
+      //   if (err) throw err;
+      //   return res.json({email: user.email});
+      // });
     }
   ], function(err) {
     if (err) return next(err);
@@ -103,7 +96,7 @@ router.post('/reset/:token', function(req, res, next) {
     function(done) {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
         if (!user) {
-          res.send('error', 'Password reset token is invalid or has expired.');
+          res.status(400).send('error', 'Password reset token is invalid or has expired.');
           return res.redirect('back');
         }
 
@@ -113,23 +106,23 @@ router.post('/reset/:token', function(req, res, next) {
 
         user.save(function(err) {
           if(err) throw err;
-          done();
+          // done();
           return res.json({token: user.generateJWT()});
         });
       });
     },
-    function(user, done) {
-      var mailOptions = {
-        to: user.email,
-        from: 'passwordreset@demo.com',
-        subject: 'Your password has been changed',
-        text: 'Hello,\n\n' +
-          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-      };
-      transporter.sendMail(mailOptions, function(err) {
-        return res.json();
-      });
-    }
+    // function(user, done) {
+    //   var mailOptions = {
+    //     to: user.email,
+    //     from: 'passwordreset@demo.com',
+    //     subject: 'Your password has been changed',
+    //     text: 'Hello,\n\n' +
+    //       'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+    //   };
+    //   transporter.sendMail(mailOptions, function(err) {
+    //     return res.json();
+    //   });
+    // }
   ], function(err) {
     res.redirect('/');
   });
