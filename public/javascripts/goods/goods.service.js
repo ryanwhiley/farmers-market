@@ -32,18 +32,19 @@ function goodsService($http,auth){
 
   // api calls
   o.getAll = function() {
-    return $http.get('/goods').success(function(data){
+    return $http.get('/api/goods').success(function(data){
       angular.copy(data, o.goods);
     });
   };
   o.search = function(term){
     console.log(term);
-    return $http.get('/goods/search/'+term).success(function(res){
+    return $http.get('/api/goods/search/'+term).success(function(res){
       return res;
     })
   }
   o.create = function(good) {
-    return $http.post('/goods', good, {
+    console.log(good);
+    return $http.post('/api/goods', good, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
     }).success(function(data){
       o.goods.push(data);
@@ -51,43 +52,42 @@ function goodsService($http,auth){
   };
   // currently not using, replaced by auth.userUpdate()
   o.addToCart = function(user){
-    return $http.post('/users/addToCart', {user: user}).success(function(data){
+    return $http.post('/api/users/addToCart', {user: user}).success(function(data){
       return data.token;
     })
   };
   o.get = function(id) {
-    return $http.get('/goods/' + id).then(function(res){
+    return $http.get('/api/goods/' + id).then(function(res){
       return res.data;
     });
   };
   o.getByType = function(type){
-    return $http.get('/'+type).then(function(res){
+    return $http.get('/api/goods/type/'+type).then(function(res){
       return res.data;
     })
   };
   o.getByUser = function(user){
-    return $http.get('/users/' + user + '/goods').then(function(res){
+    return $http.get('/api/users/' + user + '/goods').then(function(res){
       return res.data;
     });
   };
   o.getByIDs = function(good_ids){
-    return $http.get('/goods/ids', {params: { good_ids: good_ids }}).then(function(res){
+    return $http.get('/api/goods/ids', {params: { good_ids: good_ids }}).then(function(res){
       return res.data;
     })
   },
   o.remove = function(good){
-    return $http.delete('/goods/' + good).then(function(res){
+    return $http.delete('/api/goods/' + good).then(function(res){
       return res.data;
     });
   };
   o.getPurchases = function(user){
-    return $http.get('/purchases/'+user).then(function(res){
+    return $http.get('/api/purchases/'+user).then(function(res){
       return res.data;
     })
   }
   o.purchase = function(purchase){
-    console.log('c,sadfasd',1)
-    return $http.post('/goods/purchase', purchase, {
+    return $http.post('/api/purchases', purchase, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
     }).success(function(data){
       console.log('c,sadfasd')
@@ -97,10 +97,10 @@ function goodsService($http,auth){
     })
   };
   o.purchaseEmail = function(goods, buyer, seller, toSeller){
-    return $http.put('/email/purchase', {goods: goods, buyer: buyer, seller: seller, toSeller: toSeller});
+    return $http.put('/api/purchases/email', {goods: goods, buyer: buyer, seller: seller, toSeller: toSeller});
   };
   o.update = function(good){
-    return $http.put('/goods/update',{good:good}).then(function(res){
+    return $http.put('/api/goods/update',{good:good}).then(function(res){
       return res.data;
     })
   }

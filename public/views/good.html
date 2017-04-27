@@ -26,6 +26,15 @@
   <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
 </select><br>
 
+<label>Pickup or Delivery</label>
+<select ng-model="good.delivery" ng-disabled="good.can_deliver">
+  <option value=""></option>
+  <option value="delivery">Delivery</option>
+  <option value="pickup">Pickup</option>
+</select><br>
+
+
+
 <button ng-click="good.addToCart()" type="button" class="btn btn-primary">Add to Cart</button>
 <div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
   <span>{{ good.success }}</span>

@@ -9,7 +9,7 @@ var express = require('express'),
 var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
 
 // create new pruchase in purchase table
-router.post('/goods/purchase', auth, function(req, res, next) {
+router.post('/', auth, function(req, res, next) {
   Purchase.create(req.body, function(err,purchase){
     if(err){ return next(err); }
     res.json(purchase);
@@ -17,7 +17,7 @@ router.post('/goods/purchase', auth, function(req, res, next) {
 });
 
 // send purchase emails
-router.put('/email/purchase', function(req,res,next){
+router.put('/email', function(req,res,next){
   // send emails to sellers
   // send one email to buyer
   // use flag from controller through service
@@ -31,7 +31,7 @@ router.put('/email/purchase', function(req,res,next){
 
 
 // get purchases by user
-router.get('/purchases/:user', function(req,res,next){
+router.get('/:user', function(req,res,next){
   Purchase.findByUser(req.params.user, function(err,purchases){
     if(err){ return next(err); }
     res.json(purchases);

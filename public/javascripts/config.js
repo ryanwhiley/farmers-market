@@ -1,5 +1,8 @@
 angular.module('farmersMarket.config', [])
 .config(configure)
+// .config(function($locationProvider) {
+//     $locationProvider.html5Mode(true); 
+// });
 
 function configure($stateProvider, $urlRouterProvider){
 	$stateProvider
@@ -7,11 +10,11 @@ function configure($stateProvider, $urlRouterProvider){
       url: '/home',
       templateUrl: 'views/home.html',
       controller: 'MainCtrl',
-      resolve: {
-        goodPromise: ['goodsService', function(goodsService){
-          return goodsService.getAll();
-        }]
-      }
+      // resolve: {
+      //   goodPromise: ['goodsService', function(goodsService){
+      //     return goodsService.getAll();
+      //   }]
+      // }
     })
 
     // users reorder

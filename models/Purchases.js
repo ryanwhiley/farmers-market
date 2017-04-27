@@ -7,6 +7,17 @@ var PruchasesSchema = new mongoose.Schema({
 	price: Number,
 	quantity: Number,
 	delivered: {type: Boolean, default: false},
+	delivery: {
+		selected: Boolean,
+		fee: Number,
+		delivery_time: Date,
+		delivery_location: String
+	},
+	pickup: {
+		selected: Boolean,
+		pickup_time: Date,
+		pickup_location: String
+	},
 	good_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Good' },
 	created_at: { type: Date, default: Date.now }
 	// buyer

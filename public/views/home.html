@@ -21,7 +21,7 @@
   </div>
 </div> -->
 
-<div ng-repeat="good in main.goods | goodsFilter:main.price:main.type | orderBy:'-price'">
+<!-- <div ng-repeat="good in main.goods | goodsFilter:main.price:main.type | orderBy:'-price'">
   <span style="font-size:20px;" ng-if="good.forSale==true">
     <span>
       <h2>
@@ -39,7 +39,7 @@
       <a href="#/{{good.seller}}/{{good._id}}">Details</a>
     </span>
   </span>
-</div>
+</div> -->
 
 <div ng-hide="main.isLoggedIn()">
   <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>

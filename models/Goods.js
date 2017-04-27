@@ -11,6 +11,9 @@ var GoodsSchema = new mongoose.Schema({
 	pricePerUnit: Number, //price per unit of sale
 	seller: String,
 	forSale: {type: Boolean, default: true},
+	can_deliver: Boolean,
+	delivery_fee: Number,
+	delivery_time: String,
 	created_at: { type: Date, default: Date.now },
 	updated_at: { type: Date, default:Date.now }
 })

@@ -51,7 +51,7 @@ function NewGoodCtrl($state, goodsService, auth){
 	var vm = this;
 	// variable declarations
 	vm.isLoggedIn = auth.isLoggedIn;
-	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1};
+	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1, can_deliver: false, delivery_fee: 0, delivery_time: ''};
 	vm.categories = goodsService.categories;
 	vm.currentUser = auth.currentUser();
 
@@ -67,6 +67,7 @@ function NewGoodCtrl($state, goodsService, auth){
 			!vm.goodDetails.category||
 			!vm.goodDetails.unitOfMeasurement||
 			!vm.goodDetails.unitOfSale||
+			(vm.goodDetails.can_deliver&&(!vm.goodDetails.delivery_fee < 0 || !vm.goodDetails.delivery_time))||
 			vm.goodDetails.quantityForSale < 0 || !vm.goodDetails.quantityForSale
 			){
 			return false;
@@ -85,9 +86,12 @@ function NewGoodCtrl($state, goodsService, auth){
 	    	category: vm.goodDetails.category,
 	    	quantityForSale: vm.goodDetails.quantityForSale,
 	    	unitOfMeasurement: vm.goodDetails.unitOfMeasurement,
-	    	unitOfSale: vm.goodDetails.unitOfSale
+	    	unitOfSale: vm.goodDetails.unitOfSale,
+	    	can_deliver: vm.goodDetails.can_deliver,
+				delivery_fee: vm.goodDetails.delivery_fee,
+	    	delivery_time: vm.goodDetails.delivery_time
 	    })
-	  	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1};
+	  	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1, can_deliver: false, delivery_fee: 0, delivery_time: ''};
 	  	$state.go('home');
 		}else{
 			if(!vm.currentUser.farmer){
@@ -115,6 +119,7 @@ function GoodCtrl(goodsService,good,auth){
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.currentUser = auth.currentUser();
 	vm.good = good;
+	console.log(vm.good);
 	vm.success = '';
 
 	// functions
@@ -127,7 +132,6 @@ function GoodCtrl(goodsService,good,auth){
 		vm.buildPurchaseObject().then(function(res){
 			vm.updateUserCart();
 			vm.success = 'Successfully added to cart!';
-			console.log(vm.currentUser.cart);
 			auth.userUpdate(vm.currentUser).then(function(res){
 				auth.updateToken(res.data.token);
 			})

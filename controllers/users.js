@@ -13,7 +13,7 @@ var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
 
 // update user
 // used for updating cart, etc
-router.post('/users/update', function(req, res, next) {
+router.post('/update', function(req, res, next) {
   // console.log(User.schema.methods.generateJWT());
   User.findOneAndUpdate({'_id':req.body.user._id}, req.body.user, {new: true} ,function(err,user){
     if(err){ return next(err); }
@@ -22,12 +22,28 @@ router.post('/users/update', function(req, res, next) {
 });
 
 // search users
-router.get('/users/search/:term', function(req,res){
+router.get('/search/:term', function(req,res){
   User.search(req.params.term, function(err,users){
     if(err){ return next(err); }
     res.json(users);
   })
 })
+
+// get goods for sale by user
+router.get('/:user/goods', function(req, res, next) {
+  Good.find({'seller':req.params.user},null,{sort: {type:1}},function(err, goods){
+    if(err){ console.log(err); return next(err); }
+    res.json(goods);
+  });
+});
+
+// simple user lookup, used from auth service
+router.get('/:user', function(req, res, next) {
+  User.findOne({'username':req.params.user},function(err,user){
+    if(err){ return next(err); }
+    return res.json(user);
+  })
+});
 
 // reset password
 router.post('/forgot', function(req, res, next) {
@@ -129,21 +145,7 @@ router.post('/reset/:token', function(req, res, next) {
 });
 
 
-// get goods for sale by user
-router.get('/users/:user/goods', function(req, res, next) {
-  Good.find({'seller':req.params.user},function(err, goods){
-    if(err){ console.log(err); return next(err); }
-    res.json(goods);
-  });
-});
 
-// simple user lookup, used from auth service
-router.get('/users/:user', function(req, res, next) {
-  User.findOne({'username':req.params.user},function(err,user){
-    if(err){ return next(err); }
-    return res.json(user);
-  })
-});
 
 // create new user
 router.post('/register', function(req, res, next){
@@ -195,6 +197,8 @@ router.post('/login', function(req, res, next){
     }
   })(req, res, next);
 });
+
+
 
 
 module.exports = router;
