@@ -21,40 +21,50 @@
   <script src="/javascripts/users/users.controller.js"></script>
 </head>
 <body ng-app="farmersMarket" ng-controller="MainCtrl as main">
-	<nav class="navbar navbar-default" ng-controller="NavCtrl">
+  <nav class="navbar navbar-default" ng-controller="NavCtrl">
     <div class="container-fluid">
-      <div class="col-md-4">
-        <a class="navbar-brand" href="/#/home">
-          <span style="color:#427EED">F</span><span style="color:#82ed96">M</span>
-        </a>
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header col-md-2">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+                <a class="navbar-brand" href="/#/home">
+            <span style="color:#427EED">F</span><span style="color:#82ed96">M</span>
+          </a>
       </div>
-      <ul class="nav navbar-nav col-md-5">
-        <li><a href="/#/home">Home</a></li>
-        <li><a href="/#/goods/produce">Produce</a></li>
-        <li><a href="/#/goods/dairy">Dairy</a></li>
-        <li><a href="/#/goods/meat">Meat</a></li>
-        <li><a href="/#/goods/other">Other</a></li>
-        <li><a href="/#/search">Search</a></li>
-      </ul>
 
-      <ul class="nav navbar-nav col-md-3">
-        <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser().username }}">Reorder</a></li>
-        <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/cart">Cart</a></li>
-        <li ng-show="isLoggedIn()&&currentUser().farmer"><a href="/#/new">Post</a></li>
-        <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-        <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-        <li class="dropdown" ng-show="isLoggedIn()">
-          <a href="#" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ currentUser().username }} <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li ng-show="isLoggedIn()"><a href="/#/users/{{ currentUser().username }}">Profile</a></li>
-            <li ng-show="isLoggedIn()"><a href="/#/users/edit">Edit Profile</a></li>
-            <li ng-show="isLoggedIn()"><a href="/#/favorites">Favorites</a></li>
-            <li role="separator" class="divider"></li>
-            <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav col-md-8">
+            <li><a href="/#/home">Home</a></li>
+            <li><a href="/#/goods/produce">Produce</a></li>
+            <li><a href="/#/goods/dairy">Dairy</a></li>
+            <li><a href="/#/goods/meat">Meat</a></li>
+            <li><a href="/#/goods/other">Other</a></li>
+            <li><a href="/#/search">Search</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right col-md-2">
+          <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser().username }}">Reorder</a></li>
+          <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/cart">Cart</a></li>
+          <li ng-show="isLoggedIn()&&currentUser().farmer"><a href="/#/new">Post</a></li>
+          <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+          <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+          <li class="dropdown navbar-right" ng-show="isLoggedIn()">
+            <a href="#" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ currentUser().username }} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li ng-show="isLoggedIn()"><a href="/#/users/{{ currentUser().username }}">Profile</a></li>
+              <li ng-show="isLoggedIn()"><a href="/#/users/edit">Edit Profile</a></li>
+              <li ng-show="isLoggedIn()"><a href="/#/favorites">Favorites</a></li>
+              <li role="separator" class="divider"></li>
+              <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
   </nav>
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
