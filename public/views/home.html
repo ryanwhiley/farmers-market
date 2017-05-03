@@ -1,10 +1,18 @@
-<div class="page-header">
-  <h1>Farmers Market</h1>
-</div>
+<!-- Header -->
+<header>
+    <div class="parallax_header">
+        <div class="container">
+          <h1>Farmers Market</h1>
+            <div class="blog-text">
+                <p>Welcome to Farmers Market, your online realtor for purchasing the best local goods currently available.</p>
+            </div>
+            <div ng-hide="main.isLoggedIn()">
+              <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+            </div>
+        </div>
+    </div>
+</header>
 
-<div>
-  <p>Welcome to Farmers Market, your online realtor for purchasing the best local goods currently available.</p>
-</div>
 <!-- <div class="row">
   <h2>Filters</h2>
   <div class="form-group">
@@ -40,7 +48,3 @@
     </span>
   </span>
 </div> -->
-
-<div ng-hide="main.isLoggedIn()">
-  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
-</div>
