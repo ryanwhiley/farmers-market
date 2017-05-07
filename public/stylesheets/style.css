@@ -42,8 +42,8 @@ h1, h2, h3, h4, h5, h6{
 hr{
   border-top: 1px solid #FFF1E5;
 }
-.btn-primary {
-  background-color:
+.error_text{
+  color: #9d0a00;
 }
 
 /* Header */
@@ -80,6 +80,8 @@ p{
   -webkit-transition:.5s;
   /* ...and now for the proper property */
   transition:.5s;
+  border-bottom: 1px solid #FFD9B5;
+  border-right: 1px solid #FFD9B5;
 }
 
 /*.good-item:hover{
