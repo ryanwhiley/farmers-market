@@ -1,11 +1,72 @@
-body {
+/* Color Scheme
+
+Green (links)
+Base = #82ed96;
+Darker = #3BCC54;
+Lighter = #B0F7BC;
+Lightest = #E4FEE9;
+Reverse: #074f13;
+
+Blue (links hover)
+Base = #7DD5E1;
+Darker = #55BCCA;
+Light = #ADEAF2;
+Lightest = #E4FAFD;
+Reverse: #0b3a41;
+
+Tan (background)
+Base = #FFD9B5;
+Light = #FFF1E5;
+Lightest = #FFFAF6; (for body)
+Reverse: #934200;
+
+Red (error)
+Base: #FFBAB5;
+Reverse: #9d0a00;
+
+Black (Headings)
+#444;
+
+
+*/
+
+/* Global Styles */
+
+body{
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #FFFAF6;
+}
+h1, h2, h3, h4, h5, h6{
+  color: #444;
+}
+hr{
+  border-top: 1px solid #FFF1E5;
+}
+.btn-primary {
+  background-color:
 }
 
-a {
-  color: #00B7FF;
+/* Header */
+
+header h1, header h2, header h3, header h4, header h5, header h6{
+  color: #E4FAFD;
+}
+header a{
+  color: #82ed96;
+}
+header a:hover{
+  color: #7DD5E1;
+  text-decoration: none;
 }
 
+/* body */
+main a{
+  color: #3BCC54;
+}
+main a:hover{
+  color: #55BCCA;
+  text-decoration: none;
+}
 p{
 	font-size: 14px;
 }
@@ -40,11 +101,16 @@ p{
 	text-decoration: none;
 }
 
+/* Bootstrap Overwrites */
+.page-header{
+  border-bottom: 1px solid #FFF1E5;
+}
+
 /* Home Page */
 /* Parallax */
 header {
     text-align: center;
-    color: #fff;
+    color: #E4FAFD;
     background-attachment: scroll;
     background-image: url('../images/header_1_lg.jpg');
     background-position: center center;
@@ -53,6 +119,9 @@ header {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+.parallax_header{
+  background-repeat: no-repeat;
 }
 @media(min-width: 1100px) {
     .parallax_header{
