@@ -7,8 +7,8 @@
           <p class="capitalize">{{good.seller}}<br>
           {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}</p>
           <a href="/#/{{good.seller}}/{{good._id}}">Details</a><br>
-          <span ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</span>
-          <span ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</span>
+          <span class="btn btn-info" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</span>
+          <span class="btn btn-info" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</span>
       </div>
     </div>
     <div ng-if="goods.goods.length==0" class="alert alert-info text-center row" style="margin-top:20px;">

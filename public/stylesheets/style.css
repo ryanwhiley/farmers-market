@@ -83,7 +83,9 @@ p{
   border-bottom: 1px solid #FFD9B5;
   border-right: 1px solid #FFD9B5;
 }
-
+.good-item h2{
+  text-align:left;
+}
 /*.good-item:hover{
 	background-color: #82ed96;
 	border-radius: 4px;
