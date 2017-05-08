@@ -29,6 +29,11 @@ router.put('/email', function(req,res,next){
   res.json({'good':'good'})
 });
 
+router.put('/lowStock', function(req,res,next){
+  email.lowStockNotice(req.body.goods, req.body.seller);
+  res.json({'success':'success'});
+})
+
 
 // get purchases by user
 router.get('/:user', function(req,res,next){

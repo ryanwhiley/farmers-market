@@ -90,11 +90,15 @@ function goodsService($http,auth){
     return $http.post('/api/purchases', purchase, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
     }).success(function(data){
-      console.log('c,sadfasd')
       return data;
     }).error(function(err){
       console.log(err,'Error purchasing good');
     })
+  };
+  o.sendLowStockEmail = function(goods,seller){
+    if(goods.length){
+      return $http.put('/api/purchases/lowStock', {goods:goods,seller:seller.email});
+    }
   };
   o.purchaseEmail = function(goods, buyer, seller, toSeller){
     return $http.put('/api/purchases/email', {goods: goods, buyer: buyer, seller: seller, toSeller: toSeller});

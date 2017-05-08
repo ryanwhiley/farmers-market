@@ -1,8 +1,8 @@
 angular.module('farmersMarket.config', [])
 .config(configure)
-// .config(function($locationProvider) {
-//     $locationProvider.html5Mode(true); 
-// });
+.config(function($locationProvider) {
+  // $locationProvider.html5Mode(true); 
+});
 
 function configure($stateProvider, $urlRouterProvider){
 	$stateProvider

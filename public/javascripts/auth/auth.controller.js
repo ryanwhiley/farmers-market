@@ -77,5 +77,4 @@ function ResetPwCtrl($state, auth, $stateParams){
 
 
 function SuccessCtrl(){
-  console.log('yeah');
 }
