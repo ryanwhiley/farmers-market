@@ -1,11 +1,72 @@
-body {
+/* Color Scheme
+
+Green (links)
+Base = #82ed96;
+Darker = #3BCC54;
+Lighter = #B0F7BC;
+Lightest = #E4FEE9;
+Reverse: #074f13;
+
+Blue (links hover)
+Base = #7DD5E1;
+Darker = #55BCCA;
+Light = #ADEAF2;
+Lightest = #E4FAFD;
+Reverse: #0b3a41;
+
+Tan (background)
+Base = #FFD9B5;
+Light = #FFF1E5;
+Lightest = #FFFAF6; (for body)
+Reverse: #934200;
+
+Red (error)
+Base: #FFBAB5;
+Reverse: #9d0a00;
+
+Black (Headings)
+#444;
+
+
+*/
+
+/* Global Styles */
+
+body{
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #FFFAF6;
+}
+h1, h2, h3, h4, h5, h6{
+  color: #444;
+}
+hr{
+  border-top: 1px solid #FFF1E5;
+}
+.error_text{
+  color: #9d0a00;
 }
 
-a {
-  color: #00B7FF;
+/* Header */
+
+header h1, header h2, header h3, header h4, header h5, header h6{
+  color: #E4FAFD;
+}
+header a{
+  color: #82ed96;
+}
+header a:hover{
+  color: #7DD5E1;
+  text-decoration: none;
 }
 
+/* body */
+main a{
+  color: #3BCC54;
+}
+main a:hover{
+  color: #55BCCA;
+  text-decoration: none;
+}
 p{
 	font-size: 14px;
 }
@@ -19,8 +80,12 @@ p{
   -webkit-transition:.5s;
   /* ...and now for the proper property */
   transition:.5s;
+  border-bottom: 1px solid #FFD9B5;
+  border-right: 1px solid #FFD9B5;
 }
-
+.good-item h2{
+  text-align:left;
+}
 /*.good-item:hover{
 	background-color: #82ed96;
 	border-radius: 4px;
@@ -38,4 +103,57 @@ p{
 
 .new-good-tooltip:hover{
 	text-decoration: none;
+}
+
+/* Bootstrap Overwrites */
+.page-header{
+  border-bottom: 1px solid #FFF1E5;
+}
+
+/* Home Page */
+/* Parallax */
+header {
+    text-align: center;
+    color: #E4FAFD;
+    background-attachment: scroll;
+    background-image: url('../images/header_1_lg.jpg');
+    background-position: center center;
+    background-repeat: none;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+.parallax_header{
+  background-repeat: no-repeat;
+}
+@media(min-width: 1100px) {
+    .parallax_header{
+        color: #f8f8f8;
+        background-image: url('../images/header_1_lg.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        -webkit-background-size:cover;
+        z-index:100;
+        min-height:600px;
+        width:100%;
+    }
+}
+@media(min-width: 450px) and (max-width: 1024px) {
+    .parallax_header{
+        color: #f8f8f8;
+        background-image: url('../images/header_1_md.jpg');
+        z-index:100;
+        min-height:500px;
+        width:100%;
+    }
+}
+@media(max-width: 450px) {
+    .parallax_header{
+        color: #f8f8f8;
+        background-image: url('../images/header_1_sm.jpg');
+        z-index:100;
+        min-height:400px;
+        width:100%;
+    }
 }

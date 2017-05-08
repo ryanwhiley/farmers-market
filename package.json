@@ -6,6 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "angular-animate": "^1.6.4",
+    "angular-touch": "^1.6.4",
     "async": "^2.3.0",
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
@@ -22,6 +24,14 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-qunit": "^2.0.0",
+    "grunt-contrib-uglify": "^2.3.0",
+    "grunt-contrib-watch": "^1.0.0"
   },
   "engines": {
     "node": "6.9.1"
