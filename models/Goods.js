@@ -19,7 +19,7 @@ var GoodsSchema = new mongoose.Schema({
 })
 
 GoodsSchema.statics.findByType = function(type,cb){
-	return this.find({type: type}).where('quantityForSale').gt(0).exec(cb)
+	return this.find({type: type}).where('quantityForSale').gt(0).sort({category: 1}).exec(cb)
 }
 
 GoodsSchema.statics.findByIDs = function(good_ids,cb){

@@ -1,5 +1,8 @@
 <div class="page-header">
   <div class="row">
+    <div ng-show="favorites.favorites.length===0" class="alert alert-danger row">
+        You have no favorites!
+    </div>
     <div ng-repeat="good in favorites.favorites">
         <div class="clearfix" ng-if="$index % 3 == 0"></div>
         <div class="col-lg-3 good-item text-center" href="/#/{{good.seller}}/{{good._id}}">

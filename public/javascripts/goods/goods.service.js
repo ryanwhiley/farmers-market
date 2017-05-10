@@ -28,6 +28,17 @@ function goodsService($http,auth){
       totals.totalQuantity = totals.totalQuantity+parseFloat(cart[i].quantity);
     }
     return totals;
+  };
+  o.prepareGoodsByType = function(goods){
+    var categoriesGroupings = {};
+    for(var i = 0;i<goods.length;i++){
+      if(categoriesGroupings[goods[i].category]){
+        categoriesGroupings[goods[i].category].push(goods[i]);
+      }else{
+        categoriesGroupings[goods[i].category] = [goods[i]]
+      }
+    }
+    return categoriesGroupings;
   }
 
   // api calls

@@ -1,16 +1,20 @@
 <div class="page-header">
   <div class="row">
-    <div ng-repeat="good in goods.goods">
-      <div class="clearfix" ng-if="$index % 3 == 0&&good.quantityForSale>0"></div>
-      <div class="col-lg-3 good-item text-center" ng-if="good.quantityForSale>0" href="/#/{{good.seller}}/{{good._id}}">
-          <h2 class="capitalize">{{good.name}}</h2>
-          <p class="capitalize">{{good.seller}}<br>
-          {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}</p>
-          <a href="/#/{{good.seller}}/{{good._id}}">Details</a><br>
-          <span class="btn btn-info" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</span>
-          <span class="btn btn-info" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</span>
+    <div ng-repeat="(category,categoryGoods) in goods.goods" class="row" id="{{category}}">
+      <h1>{{category}}</h1>
+      <div ng-repeat="good in categoryGoods">
+        <div class="clearfix" ng-if="$index % 3 == 0&&good.quantityForSale>0"></div>
+        <div class="col-lg-3 good-item text-center" ng-if="good.quantityForSale>0" href="/#/{{good.seller}}/{{good._id}}">
+            <h2 class="capitalize">{{good.name}}</h2>
+            <p class="capitalize">{{good.seller}}<br>
+            {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}</p>
+            <a href="/#/{{good.seller}}/{{good._id}}">Details</a><br>
+            <span class="btn btn-info" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</span>
+            <span class="btn btn-info" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</span>
+        </div>
       </div>
     </div>
+
     <div ng-if="goods.goods.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
       <span>There are currently no goods of this type right now.</span>
     </div>

@@ -13,8 +13,8 @@ require('./models/Users');
 require('./models/Purchases');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/market');
-// mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
+// mongoose.connect('mongodb://localhost/market');
+mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
 
 var passport = require('passport');
 
@@ -34,11 +34,6 @@ app.use(helmet());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-app.use(function(req, res, next) {
-  // console.log(req);
-  next();
-});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
