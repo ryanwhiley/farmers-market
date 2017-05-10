@@ -13,14 +13,15 @@ require('./models/Users');
 require('./models/Purchases');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/market');
-
-// mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
+// mongoose.connect('mongodb://localhost/market');
+mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
 
 var passport = require('passport');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./controllers/index');
+// var users = require('./routes/users');
+
+// console.log(routes);
 
 var app = express();
 
@@ -44,7 +45,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -58,6 +58,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+  console.log('hey');
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {

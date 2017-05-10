@@ -18,6 +18,8 @@ var UserSchema = new mongoose.Schema({
   favorites: Array,
   hash: String,
   salt: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default:Date.now }
 });
@@ -55,6 +57,13 @@ UserSchema.methods.generateJWT = function() {
 
 UserSchema.methods.formatPhoneNumber = function(phone){
   return phone.split('-').join('').split('.').join('').split(' ').join('');
+}
+
+UserSchema.statics.search = function(term,cb){
+  return this.find({ username: { "$regex": term, "$options": "i" } })
+  .select('username email phone')
+  .limit(10)
+  .exec(cb)
 }
 
 mongoose.model('User', UserSchema);

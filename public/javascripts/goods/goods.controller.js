@@ -19,7 +19,8 @@ angular.module('farmersMarket.goods.controller', [])
 function GoodsCtrl($state, goodsService, goods, auth){
 	// $scope.good = good;
 	var vm = this;
-	vm.goods = goods;
+	vm.goods = goodsService.prepareGoodsByType(goods);
+	console.log(vm.goods);
 	vm.currentUser = auth.currentUser();
 
 	vm.favoriteGood = favoriteGood;
@@ -36,7 +37,6 @@ function GoodsCtrl($state, goodsService, goods, auth){
 		vm.currentUser.favorites.splice(vm.currentUser.favorites.indexOf(good_id),1);
 		auth.userUpdate(vm.currentUser).then(function(res){
 			auth.updateToken(res.data.token);
-			console.log(vm.currentUser)
 		})
 	}
 }
@@ -51,7 +51,7 @@ function NewGoodCtrl($state, goodsService, auth){
 	var vm = this;
 	// variable declarations
 	vm.isLoggedIn = auth.isLoggedIn;
-	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1};
+	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1, can_deliver: false, delivery_fee: 0, delivery_time: ''};
 	vm.categories = goodsService.categories;
 	vm.currentUser = auth.currentUser();
 
@@ -67,6 +67,7 @@ function NewGoodCtrl($state, goodsService, auth){
 			!vm.goodDetails.category||
 			!vm.goodDetails.unitOfMeasurement||
 			!vm.goodDetails.unitOfSale||
+			(vm.goodDetails.can_deliver&&(!vm.goodDetails.delivery_fee < 0 || !vm.goodDetails.delivery_time))||
 			vm.goodDetails.quantityForSale < 0 || !vm.goodDetails.quantityForSale
 			){
 			return false;
@@ -85,9 +86,12 @@ function NewGoodCtrl($state, goodsService, auth){
 	    	category: vm.goodDetails.category,
 	    	quantityForSale: vm.goodDetails.quantityForSale,
 	    	unitOfMeasurement: vm.goodDetails.unitOfMeasurement,
-	    	unitOfSale: vm.goodDetails.unitOfSale
+	    	unitOfSale: vm.goodDetails.unitOfSale,
+	    	can_deliver: vm.goodDetails.can_deliver,
+				delivery_fee: vm.goodDetails.delivery_fee,
+	    	delivery_time: vm.goodDetails.delivery_time
 	    })
-	  	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1};
+	  	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1, can_deliver: false, delivery_fee: 0, delivery_time: ''};
 	  	$state.go('home');
 		}else{
 			if(!vm.currentUser.farmer){
@@ -116,6 +120,7 @@ function GoodCtrl(goodsService,good,auth){
 	vm.currentUser = auth.currentUser();
 	vm.good = good;
 	vm.success = '';
+	vm.error = '';
 
 	// functions
 	vm.purchaseGood = purchaseGood;
@@ -124,10 +129,13 @@ function GoodCtrl(goodsService,good,auth){
 	vm.updateUserCart = updateUserCart;
 
 	function addToCart(){
+		if(vm.good.delivery==''||!vm.good.delivery){
+			vm.error = 'Please select pickup or delivery to add this to your cart.';
+			return;
+		}
 		vm.buildPurchaseObject().then(function(res){
 			vm.updateUserCart();
 			vm.success = 'Successfully added to cart!';
-			console.log(vm.currentUser.cart);
 			auth.userUpdate(vm.currentUser).then(function(res){
 				auth.updateToken(res.data.token);
 			})
@@ -202,7 +210,6 @@ function UpdateGoodCtrl($state,goodsService,good,auth){
 	function updateGood(){
 		if(good.seller==vm.currentUser.username){
 			vm.good.updated_at = new Date();
-			console.log(vm.good)
 			goodsService.update(vm.good).then(function(res){
 				if(res.ok){
 					goodsService.get(vm.good._id).then(function(res){
@@ -222,12 +229,11 @@ function UpdateGoodCtrl($state,goodsService,good,auth){
 // =========================
 // template -> cart.html
 // url -> /cart
-// action -> look at/update cart, checkout
+// action -> look at/update cart, purchase
 function CartCtrl($state, goodsService, auth){
 	// variable declarations
 	var vm = this;
 	vm.currentUser = auth.currentUser();
-	console.log(vm.currentUser.cart);
 	vm.quantity = [1,2,3,4,5,6,7,8,9,10];
 	vm.cart = [];
 	vm.quantityPass = true;
@@ -244,6 +250,7 @@ function CartCtrl($state, goodsService, auth){
 	vm.emptyUserCart = emptyUserCart;
 	vm.removeFromCart = removeFromCart;
 	vm.updateUserCart = updateUserCart;
+	vm.getGoodsObject = getGoodsObject;
 
 	// updates user row in table, updates web token, updates totals
 	function updateUserCart(){
@@ -299,7 +306,8 @@ function CartCtrl($state, goodsService, auth){
 	// figure it out stupid
 	function sendPurchaseEmails(){
 		for(var i = 0,len=vm.cart.length;i<len;i++){
-			goodsService.purchaseEmail(vm.cart[i].goods, vm.currentUser, vm.cart[i].seller, 1);
+			// goodsService.purchaseEmail(vm.cart[i].goods, vm.currentUser, vm.cart[i].seller, 1);
+			vm.getGoodsObject(vm.cart[i].goods, vm.cart[i].seller);
 		}
 		goodsService.purchaseEmail(vm.cart, vm.currentUser, null, 0);
 	}
@@ -315,17 +323,38 @@ function CartCtrl($state, goodsService, auth){
 												price:vm.currentUser.cart[i].price,
 												quantity:vm.currentUser.cart[i].quantity,
 												seller:vm.currentUser.cart[i].seller.name};
-			vm.updateRemainingQuantities(vm.currentUser.cart[i].good_id, vm.currentUser.cart[i].quantity)
+			// vm.updateRemainingQuantities(vm.currentUser.cart[i].good_id, vm.currentUser.cart[i].quantity)
 			goodsService.purchase(goodObject);
 		}
 	}
 
+	// !!!! CURRENTLY NOT IN USE !!!!
 	// update sellers remaining quanitities after
 	// need to get good object then update quantity here and then call update fx in service etc
-	function updateRemainingQuantities(id,quantity){
-		goodsService.get(id).then(function(res){
-			res.quantityForSale = parseInt(res.quantityForSale)-parseInt(quantity);
-			goodsService.update(res);
+	function updateRemainingQuantities(res){
+		// res.quantityForSale = parseInt(res.quantityForSale)-parseInt(quantity);
+		// goodsService.update(res);
+	}
+
+	// loads good obj from db
+	// updates quantity remaining on backend
+	// checks if seller has low stock and notifies em if they do
+	// put both of these in same function to limit calls to db
+	function getGoodsObject(goods, seller){
+		var lowGoods = [];
+		var counter = 0;
+		goods.forEach(function(good){
+			goodsService.get(good._id).then(function(res){
+				counter++;
+				res.quantityForSale = parseInt(res.quantityForSale)-parseInt(good.quantity);
+				goodsService.update(res);
+				if(res.quantityForSale<100){
+					lowGoods.push(res);
+				}
+				if(counter===goods.length){
+					goodsService.sendLowStockEmail(lowGoods,seller);
+				}
+			})
 		})
 	}
 
@@ -345,7 +374,7 @@ function CartCtrl($state, goodsService, auth){
 	// updates remaining quantity
 	function purchase(){
 		vm.prepareCart();
-		// vm.sendPurchaseEmails();
+		vm.sendPurchaseEmails();
 		vm.storePurchasesInPurchaseTable();
 		vm.emptyUserCart();
 	}
@@ -391,7 +420,6 @@ function SearchCtrl(goodsService, auth){
 		if(vm.searchTerm){
 			goodsService.search(vm.searchTerm).then(function(res){
 				vm.goodMatches = res.data;
-				console.log(vm.goodMatches);
 			})
 		}else{
 			vm.goodMatches = [];

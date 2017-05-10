@@ -7,6 +7,8 @@ var Good = mongoose.model('Good');
 var User = mongoose.model('User');
 var Purchase = mongoose.model('Purchase');
 var nodemailer = require('nodemailer');
+var crypto = require('crypto');
+var async = require('async');
 // var goods = require('./goods')
 
 
@@ -31,25 +33,22 @@ router.get('/:type', function(req, res, next) {
   res.json(req.goods);
 });
 
-// get good by id
-router.get('/goods/IDs', function(req, res) {
-  Good.find()
-    .where('quantityForSale').gt(0)
-    .where('_id').in(req.query.good_ids)
-    .exec(function (err, goods) {
-      //make magic happen
-      if(err){ return next(err); }
-      res.json(goods);
-    });
+
+
+// get goods by id
+router.get('/goods/ids', function(req, res) {
+  Good.findByIDs(req.query.good_ids, function(err,goods){
+    if(err){ return next(err); }
+    res.json(goods);
+  })
 });
 
 // create new pruchase in purchase table
 router.post('/goods/purchase', auth, function(req, res, next) {
-  var purchase = new Purchase(req.body);
-  purchase.save(function(err, purchase){
-    if(err){ console.log(err); return next(err); }
+  Purchase.create(req.body, function(err,purchase){
+    if(err){ return next(err); }
     res.json(purchase);
-  });
+  })
 });
 
 // get good by id
@@ -59,12 +58,10 @@ router.get('/goods/:good', function(req, res) {
 
 // create new good
 router.post('/goods', auth, function(req, res, next) {
-  var good = new Good(req.body);
-  good.seller = req.payload.username;
-  good.save(function(err, good){
+  Good.create(req.body, req.payload.username, function(err,good){
     if(err){ console.log(err); return next(err); }
     res.json(good);
-  });
+  })
 });
 
 // update user
@@ -72,39 +69,140 @@ router.post('/goods', auth, function(req, res, next) {
 router.post('/users/update', function(req, res, next) {
   // console.log(User.schema.methods.generateJWT());
   User.findOneAndUpdate({'_id':req.body.user._id}, req.body.user, {new: true} ,function(err,user){
-    if(err){ return console.log(err); next(err); }
+    if(err){ return next(err); }
     res.json({token: user.generateJWT()})
   })
 });
 
 // search users
 router.get('/users/search/:term', function(req,res){
-  User.find({ username: { "$regex": req.params.term, "$options": "i" } })
-  .select('username email phone')
-  .limit(10)
-  .exec(function(err,users){
+  User.search(req.params.term, function(err,users){
+    if(err){ return next(err); }
     res.json(users);
   })
+  // User.find({ username: { "$regex": req.params.term, "$options": "i" } })
+  // .select('username email phone')
+  // .limit(10)
+  // .exec(function(err,users){
+  //   res.json(users);
+  // })
 })
 
 // search goods
 router.get('/goods/search/:term', function(req,res){
-  Good.find({$or:[{ name: { "$regex": req.params.term, "$options": "i" } }, { type: { "$regex": req.params.term, "$options": "i" } }, { category: { "$regex": req.params.term, "$options": "i" } }]})
-  .where('quantityForSale').gt(0)
-  .select('name seller type category pricePerUnit')
-  .limit(10)
-  .exec(function(err,goods){
+  Good.search(req.params.term, function(err,goods){
+    if(err){ return next(err); }
     res.json(goods);
   })
 })
 
+
 // get purchases by user
 router.get('/purchases/:user', function(req,res,next){
-  Purchase.find( { $or:[ {'seller':req.params.user}, {'buyer':req.params.user}]}, function(err,purchases){
+  Purchase.findByUser(req.params.user, function(err,purchases){
     if(err){ return next(err); }
     res.json(purchases);
+  })
+})
+
+// reset password
+router.post('/forgot', function(req, res, next) {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          return res.status(500).json({ error: "No account with that email address exists." });
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+    function(token, user, done) {
+      var mailOptions = {
+        to: user.email,
+        from: 'passwordreset@demo.com',
+        subject: 'Node.js Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/#/users/reset/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      transporter.sendMail(mailOptions, function(err) {
+        if (err) throw err;
+        return res.json({email: user.email});
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/forgot');
+  });
+});
+
+router.get('/reset/:token', function(req,res){
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      return res.send({message: 'Password reset token is invalid or has expired.'});
+    }
+    return res.json({});
   });
 })
+
+router.post('/reset/:token', function(req, res, next) {
+  console.log(req.body.password,req.body.confirm);
+  async.waterfall([
+    function(done){
+      if(req.body.password!==req.body.confirm){
+        return res.status(400).json({error:'Password and confirmation password do not match.'})
+      }else{
+        done();
+      }
+    },
+
+    function(done) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+          res.send('error', 'Password reset token is invalid or has expired.');
+          return res.redirect('back');
+        }
+
+        user.password = user.setPassword(req.body.password);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        user.save(function(err) {
+          if(err) throw err;
+          done();
+          return res.json({token: user.generateJWT()});
+        });
+      });
+    },
+    function(user, done) {
+      var mailOptions = {
+        to: user.email,
+        from: 'passwordreset@demo.com',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+      transporter.sendMail(mailOptions, function(err) {
+        return res.json();
+      });
+    }
+  ], function(err) {
+    res.redirect('/');
+  });
+});
 
 // update user in table, get back web token for storage on front end
 // router.post('/users/update', function(req,res,next){
@@ -129,14 +227,13 @@ router.param('good', function(req, res, next, id) {
 
 // type param
 router.param('type', function(req, res, next, id) {
-  var query = Good.find({type: req.params.type}).where('quantityForSale').gt(0);
-  query.exec(function (err, goods){
+  Good.findByType(req.params.type, function(err, goods){
     if (err) { return next(err); }
     if (!goods) { return next(new Error('can\'t find goods')); }
 
     req.goods = goods;
     return next();
-  });
+  })
 });
 
 
@@ -186,12 +283,12 @@ router.get('/users/:user', function(req, res, next) {
 router.post('/register', function(req, res, next){
   var phoneMatch = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   var emailMatch = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  console.log(1);
   if(!req.body.username || !req.body.password || !req.body.email || !req.body.phone){
     return res.status(400).json({message: 'Please fill out all fields'});
   }else if(!req.body.phone.match(phoneMatch)){
     return res.status(400).json({message: 'Please enter a valid phone number'});
   }else if(!emailMatch.test(req.body.email)){
+    console.log(req.body.email);
     return res.status(400).json({message: 'Please enter a valid email'});
   }
   var user = new User();
@@ -203,10 +300,16 @@ router.post('/register', function(req, res, next){
   user.farmer = req.body.farmer;
   user.created_at = new Date();
   user.setPassword(req.body.password)
-  
+  console.log(user);
 
   user.save(function (err, user){
-    if(err){ return next(err); }
+    if(err){ 
+      if(err.code==11000){
+        return res.status(400).json({message: 'The email or username have already been registered.  If you have forgotten your password please click the "Forgot Password" link below.'});
+      }else{
+        return res.status(400).json({message: 'There was an error registering your account, please try again later or contact us.'});
+      }
+    }
     return res.json({token: user.generateJWT()})
   });
 });
@@ -251,7 +354,7 @@ function sendPurchaseEmail(recipient,other,toSeller,goods){
 
 function buildMailOptions(recipient,other,toSeller,goods){
   var mailOptions = {
-    from: '<ryanfarmersmarket@gmail.com>', // sender address
+    from: '<'+process.env.EMAIL_NAME+'>', // sender address
     to: recipient.email, // list of receivers
     subject: buildEmailSubject(toSeller, goods), // Subject line
     // text: 'text' //, // plaintext body

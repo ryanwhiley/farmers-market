@@ -90,12 +90,43 @@
   <!-- description -->
   <div class="form-group">
     <label>
-      Desciption
+      Description
     </label>
     <input type="textbox"
     class="form-control"
     placeholder="Desciption"
     ng-model="goods.goodDetails.description"></input>
+  </div>
+
+  <!-- delivery options -->
+  <div class="form-group">
+    <label>
+      Available for Delivery:
+    </label>
+    <input type="checkbox"
+    ng-model="goods.goodDetails.can_deliver"></input>
+  </div>
+
+  <div class="form-group row" ng-if="goods.goodDetails.can_deliver">
+    <div class="col-md-6">
+      <label>
+        Delivery Fee
+      </label><br>
+      <input type="textbox"
+        class="form-control"
+        placeholder="Delivery Fee"
+        ng-model="goods.goodDetails.delivery_fee"></input>
+    </div>
+
+    <div class="col-md-6">
+      <label>
+        Est. Delivery Time
+      </label><br>
+      <input type="textbox"
+        class="form-control"
+        placeholder="Est. Delivery Time"
+        ng-model="goods.goodDetails.delivery_time"></input>
+    </div>
   </div>
   <button type="submit" class="btn btn-primary">Post</button>
 </form>
