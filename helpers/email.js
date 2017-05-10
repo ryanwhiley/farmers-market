@@ -37,6 +37,29 @@ email.sendPurchaseEmail = function(recipient,other,toSeller,goods){
   });
 }
 
+email.lowStockNotice = function(goods,recipient){
+  var mailOptions = {
+    to: recipient,
+    from: 'whileyryan@gmail.com',
+    subject: 'You have low stock',
+    html: 'Hello!  We are emailing you let you know that the following goods are in low stock on FarmToMeal:<br> '+lowStockHTML(goods)
+  }
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+  });
+}
+
+function lowStockHTML(goods){
+  var htmlString = '';
+  for(var i = 0;i<goods.length;i++){
+    htmlString += '<b>'+goods[i].name+'</b>. Quantity remaining: '+goods[i].quantityForSale+'<br>';
+  }
+  return htmlString;
+}
+
 // functions that dont need to be exposed
 function buildMailOptions(recipient,other,toSeller,goods){
   var mailOptions = {
