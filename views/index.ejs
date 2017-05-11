@@ -14,6 +14,7 @@
   <script src="/javascripts/angular.js"></script>
   <script src="/javascripts/config.js"></script>
   <script src="/javascripts/nav.js"></script>
+  <script src="/javascripts/styles.js"></script>
   <script src="/javascripts/directives.js"></script>
   <script src="/javascripts/auth/auth.controller.js"></script>
   <script src="/javascripts/auth/auth.service.js"></script>
@@ -22,7 +23,7 @@
   <script src="/javascripts/users/users.controller.js?r=<%= Math.random()%>"></script>
 </head>
 <body ng-app="farmersMarket" ng-controller="MainCtrl as main">
-  <nav class="navbar navbar-default" ng-controller="NavCtrl">
+  <nav class="navbar navbar-harvest" ng-controller="NavCtrl">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header col-md-2">
@@ -41,11 +42,49 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav col-md-7">
             <li><a href="/#/home">Home</a></li>
-            <li><a href="/#/goods/produce">Produce</a></li>
-            <li><a href="/#/goods/dairy">Dairy</a></li>
-            <li><a href="/#/goods/meat">Meat</a></li>
-            <li><a href="/#/goods/other">Other</a></li>
-            <li><a href="/#/search">Search</a></li>
+            <li class="dropdown">
+              <a href="/#/goods/produce" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produce</a>
+              <ul class="dropdown-menu">
+                <li><a href="/#/users/{{ currentUser().username }}">Profile</a></li>
+                <li><a href="/#/users/edit">Edit Profile</a></li>
+                <li><a href="/#/favorites">Favorites</a></li>
+                <li><a href="#">Log Out</a></li>
+                <li><a href="#">Log Out</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="/#/goods/dairy" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dairy</a>
+              <ul class="dropdown-menu">
+                <li><a href="/#/users/{{ currentUser().username }}">Profile</a></li>
+                <li><a href="/#/users/edit">Edit Profile</a></li>
+                <li><a href="/#/favorites">Favorites</a></li>
+                <li><a href="#">Log Out</a></li>
+                <li><a href="#">Log Out</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="/#/goods/meat" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Meat</a>
+              <ul class="dropdown-menu">
+                <li><a href="/#/users/{{ currentUser().username }}">Profile</a></li>
+                <li><a href="/#/users/edit">Edit Profile</a></li>
+                <li><a href="/#/favorites">Favorites</a></li>
+                <li><a href="#">Log Out</a></li>
+                <li><a href="#">Log Out</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="/#/goods/other" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Other</a>
+              <ul class="dropdown-menu">
+                <li><a href="/#/users/{{ currentUser().username }}">Profile</a></li>
+                <li><a href="/#/users/edit">Edit Profile</a></li>
+                <li><a href="/#/favorites">Favorites</a></li>
+                <li><a href="#">Log Out</a></li>
+                <li><a href="#">Log Out</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="/#/search">Search</a>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right col-md-3">
           <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser().username }}">Reorder</a></li>

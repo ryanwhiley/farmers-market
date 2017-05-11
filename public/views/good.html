@@ -1,43 +1,48 @@
-<div class="page-header">
-  <h3>
-    <span>
-      <h2 class="capitalize">
-        {{good.good.name}} <br>
-        {{good.good.pricePerUnit | currency}}/{{good.good.unitOfSale}} {{good.good.unitOfMeasurement}}
-        <hr>
-      </h2>
-    </span>
-    <span>
-      <p class="capitalize">Description: {{good.good.description}}</p>
-      <p class="capitalize">Type: {{good.good.type}}</p>
-      <p class="capitalize">Category: {{good.good.category}}</p>
-    </span>
-    <p>
-      Producer: <a href="#/users/{{good.good.seller}}" class="capitalize">{{good.good.seller}}</a>
-    </p>
-  </h3>
-</div>
+<div class="row">
+  <div class="col-md-12" >
+    <h3>
+      <div class="col-md-12">
+        <h2 class="capitalize">
+          {{good.good.name}} <br>
+        </h2>
+        <div class="col-md-3">
+          <img class="img-thumbnail good-img" scr="" />
+        </div>
+      </div>
+    </div>
+  </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p>Price: {{good.good.pricePerUnit | currency}}/{{good.good.unitOfSale}} {{good.good.unitOfMeasurement}}</p>
+          <p class="capitalize">Description: {{good.good.description}}</p>
+          <p class="capitalize">Type: {{good.good.type}}</p>
+          <p class="capitalize">Category: {{good.good.category}}</p>
+          <p>Producer: <a href="#/users/{{good.good.seller}}" class="capitalize">{{good.good.seller}}</a></p>
+        </div>
+    </h3>
+  </div>
 
-<div ng-if="good.currentUser.username!=good.good.seller">
-<label>
-  Quantity
-</label>
-<select ng-model="good.userQuantity">
-  <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
-</select><br>
+  <div ng-if="good.currentUser.username!=good.good.seller">
+  <label>
+    Quantity
+  </label>
+  <select ng-model="good.userQuantity">
+    <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
+  </select><br>
 
-<label>Pickup or Delivery</label>
-<select ng-model="good.delivery" ng-disabled="good.can_deliver">
-  <option value=""></option>
-  <option value="delivery">Delivery</option>
-  <option value="pickup">Pickup</option>
-</select><br>
+  <label>Pickup or Delivery</label>
+  <select ng-model="good.delivery" ng-disabled="good.can_deliver">
+    <option value=""></option>
+    <option value="delivery">Delivery</option>
+    <option value="pickup">Pickup</option>
+  </select><br>
 
 
 
-<button ng-click="good.addToCart()" type="button" class="btn btn-success">Add to Cart</button>
-<button ng-click="good.addToCart()" type="button" class="btn btn-warning">Back</button>
-<div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
-  <span>{{ good.success }}</span>
-</div>
+  <button ng-click="good.addToCart()" type="button" class="btn btn-success">Add to Cart</button>
+  <button ng-click="good.addToCart()" type="button" class="btn btn-warning">Back</button>
+  <div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
+    <span>{{ good.success }}</span>
+  </div>
+  </div>
 </div>
