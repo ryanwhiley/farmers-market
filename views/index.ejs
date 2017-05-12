@@ -118,9 +118,9 @@
     </div>
   </header>
   <main>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+    <div class="container" ng-hide="currentPath ==='/#/goods/meat'">
+      <div class="row" ng-hide="currentPath ==='/#/goods/meat'">
+        <div class="col-md-8 col-md-offset-2" ng-hide="currentPath ==='/#/goods/meat'">
           <ui-view></ui-view>
         </div>
       </div>

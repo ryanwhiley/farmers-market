@@ -1,7 +1,7 @@
-angular.module('farmersMarket', ['ui.router', 
-  'farmersMarket.config', 
-  'farmersMarket.nav', 
-  'farmersMarket.directives', 
+angular.module('farmersMarket', ['ui.router',
+  'farmersMarket.config',
+  'farmersMarket.nav',
+  'farmersMarket.directives',
   'farmersMarket.auth.controller',
   'farmersMarket.auth.service',
   'farmersMarket.goods.controller',
@@ -11,6 +11,7 @@ angular.module('farmersMarket', ['ui.router',
 // config
 .controller('MainCtrl',MainCtrl)
 .filter('goodsFilter',goodsFilter)
+
 // .run(function() {
 //   console.log(angular)
 //   debugger;
