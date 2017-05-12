@@ -2,6 +2,7 @@ angular.module('farmersMarket.directives', [])
 
 .directive('tooltip', tooltip);
 
+
 function tooltip(){
 	return {
     restrict: 'A',

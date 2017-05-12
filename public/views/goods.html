@@ -1,5 +1,23 @@
+<div class="row">
+    <!-- uncomment code for absolute positioning tweek see top comment in css -->
+    <!-- <div class="absolute-wrapper"> </div> -->
+    <!-- Menu -->
+
+    <!-- Main Menu -->
+    <div class="side-menu-container">
+        <ul class="nav navbar-nav">
+
+            <li><a href="#"><span class="glyphicon glyphicon-send"></span> Link</a></li>
+            <li class="active"><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Link</a></li>
+
+
+            <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>
+
+        </ul>
+    </div>
+<div class="container-fluid">
 <div class="page-header">
-  <div class="row">
     <div ng-repeat="good in goods.goods">
       <div class="clearfix" ng-if="$index % 3 == 0&&good.quantityForSale>0"></div>
       <div class="col-lg-3 good-item text-center" ng-if="good.quantityForSale>0" href="/#/{{good.seller}}/{{good._id}}">
@@ -15,4 +33,5 @@
       <span>There are currently no goods of this type right now.</span>
     </div>
   </div>
+</div>
 </div>
