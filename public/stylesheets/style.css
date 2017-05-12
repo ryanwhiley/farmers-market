@@ -26,14 +26,12 @@ Reverse: #9d0a00;
 
 Black (Headings)
 #444;
-
-
 */
 
 /* Global Styles */
 
 body{
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Roboto", Helvetica, Arial, sans-serif;
   background-color: #FFFAF6;
 }
 h1, h2, h3, h4, h5, h6{
@@ -58,6 +56,28 @@ header a:hover{
   color: #7DD5E1;
   text-decoration: none;
 }
+
+/* Nav */
+.navbar .navbar-nav > li:hover > a,
+.navbar .navbar-nav > li:hover > a:hover,
+.navbar .navbar-nav > li:hover > a:focus {
+    background-color: #E4FEE9;
+}
+.navbar li ul{
+
+}
+
+.navbar a{
+  color: #0b3a41;
+}
+li.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+.side-menu-container a:hover{
+  background-color: transparent!important;
+}
+
 
 /* body */
 main a{
@@ -86,6 +106,11 @@ p{
 .good-item h2{
   text-align:left;
 }
+.good-img{
+  width:auto;
+  max-width:200px;
+
+}
 /*.good-item:hover{
 	background-color: #82ed96;
 	border-radius: 4px;
@@ -109,6 +134,22 @@ p{
 .page-header{
   border-bottom: 1px solid #FFF1E5;
 }
+nav li:hover,nav li:focus {
+  background-color: #E4FEE9;
+  color: #0b3a41;
+
+}
+nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
+  background-color: #E4FEE9;
+  color: #0b3a41;
+}
+.navbar-toggle{
+  border: 1px solid #3BCC54;
+}
+.icon-bar{
+  background-color: #3BCC54;
+}
+
 
 /* Home Page */
 /* Parallax */

@@ -303,7 +303,7 @@ router.post('/register', function(req, res, next){
   console.log(user);
 
   user.save(function (err, user){
-    if(err){ 
+    if(err){
       if(err.code==11000){
         return res.status(400).json({message: 'The email or username have already been registered.  If you have forgotten your password please click the "Forgot Password" link below.'});
       }else{
