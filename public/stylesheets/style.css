@@ -149,6 +149,15 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
 .icon-bar{
   background-color: #3BCC54;
 }
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+
 
 
 /* Home Page */
