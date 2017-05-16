@@ -1,10 +1,13 @@
-angular.module('farmersMarket', ['ui.router',
+angular.module('farmersMarket',
+  ['ui.router',
+  'ui.bootstrap',
   'farmersMarket.config',
   'farmersMarket.nav',
   'farmersMarket.directives',
   'farmersMarket.auth.controller',
   'farmersMarket.auth.service',
   'farmersMarket.goods.controller',
+  'farmersMarket.goods-ui.controller',
   'farmersMarket.goods.service',
   'farmersMarket.users.controller'])
 
