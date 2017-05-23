@@ -29,14 +29,14 @@
 <label>Pickup or Delivery</label>
 <select ng-model="good.good.delivery" ng-disabled="!good.good.can_deliver">
   <option value=""></option>
-  <option value="delivery">Delivery</option>
+  <option value="Delivery">Delivery</option>
   <option value="pickup">Pickup</option>
 </select><br>
 
 
 {{good.good.delivery}}
 
-<span ng-if="good.good.delivery=='delivery'">
+<span ng-if="good.good.delivery=='Delivery'">
   <b>Delivery Fee:</b> {{good.good.delivery_fee | currency}}<br>
   <b>Estimated Delivery Time:</b> {{good.good.delivery_time}}<br>
 </span><br>
@@ -51,80 +51,5 @@ Total: {{good.good.pricePerUnit*good.userQuantity+(good.good.delivery=='delivery
 <div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
   <span>{{ good.success }}</span>
 </div>
-
   </div>
 </div>
-
-<div ng-controller="CarouselDemoCtrl">
-  <div style="height: 305px">
-    <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-      <div uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
-        <img ng-src="{{slide.image}}" style="margin:auto;">
-        <div class="carousel-caption">
-          <h4>Slide {{slide.id}}</h4>
-          <p>{{slide.text}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-angular.module('ui.bootstrap.demo').controller('CarouselDemoCtrl', function ($scope) {
-  $scope.myInterval = 5000;
-  $scope.noWrapSlides = false;
-  $scope.active = 0;
-  var slides = $scope.slides = [];
-  var currIndex = 0;
-
-  $scope.addSlide = function() {
-    var newWidth = 600 + slides.length + 1;
-    slides.push({
-      image: '//unsplash.it/' + newWidth + '/300',
-      text: ['Nice image','Awesome photograph','That is so cool','I love that'][slides.length % 4],
-      id: currIndex++
-    });
-  };
-
-  $scope.randomize = function() {
-    var indexes = generateIndexesArray();
-    assignNewIndexesToSlides(indexes);
-  };
-
-  for (var i = 0; i < 4; i++) {
-    $scope.addSlide();
-  }
-
-  // Randomize logic below
-
-  function assignNewIndexesToSlides(indexes) {
-    for (var i = 0, l = slides.length; i < l; i++) {
-      slides[i].id = indexes.pop();
-    }
-  }
-
-  function generateIndexesArray() {
-    var indexes = [];
-    for (var i = 0; i < currIndex; ++i) {
-      indexes[i] = i;
-    }
-    return shuffle(indexes);
-  }
-
-  // http://stackoverflow.com/questions/962802#962890
-  function shuffle(array) {
-    var tmp, current, top = array.length;
-
-    if (top) {
-      while (--top) {
-        current = Math.floor(Math.random() * (top + 1));
-        tmp = array[current];
-        array[current] = array[top];
-        array[top] = tmp;
-      }
-    }
-
-    return array;
-  }
-});
-</script>

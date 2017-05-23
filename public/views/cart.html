@@ -1,3 +1,6 @@
+<div ng-show="cart.success" class="alert alert-success row" style="margin-top:20px;">
+  <span>{{ cart.success }}</span>
+</div>
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-4">
@@ -45,8 +48,3 @@
 </div>
 <hr />
 <button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-click="cart.purchase()">Purchase</button>
-
-
-<div ng-show="cart.success" class="alert alert-success row" style="margin-top:20px;">
-  <span>{{ cart.success }}</span>
-</div>

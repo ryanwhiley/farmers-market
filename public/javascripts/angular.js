@@ -29,7 +29,7 @@ angular.module('farmersMarket',
 // auth.$inject = [$http, $window];
 
 // FUNCTIONS
-function MainCtrl($scope,goodsService,auth){
+function MainCtrl($scope, $location, goodsService,auth){
   var vm = this;
   vm.isLoggedIn = auth.isLoggedIn;
 	// $scope.isLoggedIn = auth.isLoggedIn;
@@ -37,6 +37,7 @@ function MainCtrl($scope,goodsService,auth){
   // $scope.goods = goods.goods;
   vm.price = '';
   vm.type = '';
+  vm.currentPath = $location.path();
   // $scope.price = false;
 }
 

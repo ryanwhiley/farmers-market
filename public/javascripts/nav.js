@@ -6,7 +6,7 @@ function NavCtrl($scope, $state, $location, auth){
 	$scope.isLoggedIn = auth.isLoggedIn;
   $scope.currentUser = auth.currentUser;
   $scope.logOut = logOut;
-	$scope.currentPath = $location.path();
+
 
   function logOut(){
   	auth.logOut();
