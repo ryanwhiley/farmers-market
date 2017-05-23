@@ -1,4 +1,7 @@
 <div class="row">
+  <div ng-show="good.error" class="alert alert-danger row text-center">
+    <span>{{ good.error }}</span>
+  </div>
   <div class="col-md-12" >
         <h2 class="capitalize">
           {{good.good.name}} <br>
@@ -27,22 +30,20 @@
   </select><br>
 
 <label>Pickup or Delivery</label>
-<select ng-model="good.good.delivery" ng-disabled="!good.good.can_deliver">
+<select ng-model="good.good.delivery">
   <option value=""></option>
-  <option value="Delivery">Delivery</option>
+
+  <option ng-disabled="!good.good.can_deliver" value="delivery">Delivery</option>
   <option value="pickup">Pickup</option>
 </select><br>
 
-
-{{good.good.delivery}}
-
-<span ng-if="good.good.delivery=='Delivery'">
+<span ng-if="good.good.delivery=='delivery'">
   <b>Delivery Fee:</b> {{good.good.delivery_fee | currency}}<br>
   <b>Estimated Delivery Time:</b> {{good.good.delivery_time}}<br>
 </span><br>
 
 <span ng-if="good.good.delivery=='pickup'">
-  pickup
+  <!-- pickup -->
 </span><br>
 
 Total: {{good.good.pricePerUnit*good.userQuantity+(good.good.delivery=='delivery' ? good.good.delivery_fee : 0) | currency}}<br>

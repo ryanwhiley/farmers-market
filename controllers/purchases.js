@@ -3,7 +3,8 @@ var express = require('express'),
     jwt = require('express-jwt'),
     mongoose = require('mongoose'),
     Purchase = mongoose.model('Purchase'),
-    email = require('../helpers/email');
+    email = require('../helpers/email'),
+    general = require('../helpers/general');
 
 
 var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
@@ -32,6 +33,13 @@ router.put('/email', function(req,res,next){
 router.put('/lowStock', function(req,res,next){
   email.lowStockNotice(req.body.goods, req.body.seller);
   res.json({'success':'success'});
+})
+
+router.get('/mostPopular/:count', function(req,res,next){
+  Purchase.mostPopular(req.params.count, function(err,purchases){
+    if(err){ return next(err); }
+    res.json(general.consolidateMostPopularGoods(purchases));
+  })
 })
 
 

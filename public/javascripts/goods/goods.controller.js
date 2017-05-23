@@ -20,11 +20,18 @@ function GoodsCtrl($state, goodsService, goods, auth){
 	// $scope.good = good;
 	var vm = this;
 	vm.goods = goodsService.prepareGoodsByType(goods);
-	console.log(vm.goods);
 	vm.currentUser = auth.currentUser();
 
 	vm.favoriteGood = favoriteGood;
 	vm.unfavoriteGood = unfavoriteGood;
+
+	goodsService.mostPopular(3)
+  .then(function(res){
+    goodsService.getByIDs(res.data)
+    .then(function(res){
+      console.log(res);
+    })
+  })
 
 	function favoriteGood(good_id){
 		vm.currentUser.favorites.push(good_id);
@@ -118,6 +125,7 @@ function GoodCtrl(goodsService,good,auth){
 	vm.purchase = {};
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.currentUser = auth.currentUser();
+	console.log(vm.currentUser);
 	vm.good = good;
 	vm.success = '';
 	vm.error = '';
@@ -131,6 +139,9 @@ function GoodCtrl(goodsService,good,auth){
 	function addToCart(){
 		if(vm.good.delivery==''||!vm.good.delivery){
 			vm.error = 'Please select pickup or delivery to add this to your cart.';
+			return;
+		}else if(!vm.currentUser){
+			vm.error = 'Please login to add this to your cart.';
 			return;
 		}
 		vm.buildPurchaseObject().then(function(res){

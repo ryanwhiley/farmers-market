@@ -45,6 +45,14 @@ router.get('/:user', function(req, res, next) {
   })
 });
 
+router.put('/email/farmer', function(req,res,next){
+  return res.json({email: email.sendNewFarmerEmail(req.body.user)})
+})
+
+router.put('/email/user', function(req,res,next){
+  return res.json({email: email.sendNewUserEmail(req.body.user)})
+})
+
 // reset password
 router.post('/forgot', function(req, res, next) {
   async.waterfall([

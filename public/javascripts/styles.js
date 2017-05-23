@@ -3,3 +3,4 @@ $(".nav a").on("click", function(){
    $(this).parent().addClass("active");
 	 console.log("hello");
 });
+
