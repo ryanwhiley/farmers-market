@@ -29,14 +29,14 @@
 <label>Pickup or Delivery</label>
 <select ng-model="good.good.delivery" ng-disabled="!good.good.can_deliver">
   <option value=""></option>
-  <option value="delivery">Delivery</option>
+  <option value="Delivery">Delivery</option>
   <option value="pickup">Pickup</option>
 </select><br>
 
 
 {{good.good.delivery}}
 
-<span ng-if="good.good.delivery=='delivery'">
+<span ng-if="good.good.delivery=='Delivery'">
   <b>Delivery Fee:</b> {{good.good.delivery_fee | currency}}<br>
   <b>Estimated Delivery Time:</b> {{good.good.delivery_time}}<br>
 </span><br>
@@ -51,6 +51,5 @@ Total: {{good.good.pricePerUnit*good.userQuantity+(good.good.delivery=='delivery
 <div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
   <span>{{ good.success }}</span>
 </div>
-
   </div>
 </div>

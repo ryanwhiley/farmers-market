@@ -1,10 +1,13 @@
-angular.module('farmersMarket', ['ui.router',
+angular.module('farmersMarket',
+  ['ui.router',
+  'ui.bootstrap',
   'farmersMarket.config',
   'farmersMarket.nav',
   'farmersMarket.directives',
   'farmersMarket.auth.controller',
   'farmersMarket.auth.service',
   'farmersMarket.goods.controller',
+  'farmersMarket.goods-ui.controller',
   'farmersMarket.goods.service',
   'farmersMarket.users.controller'])
 
@@ -26,7 +29,7 @@ angular.module('farmersMarket', ['ui.router',
 // auth.$inject = [$http, $window];
 
 // FUNCTIONS
-function MainCtrl($scope,goodsService,auth){
+function MainCtrl($scope, $location, goodsService,auth){
   var vm = this;
   vm.isLoggedIn = auth.isLoggedIn;
 	// $scope.isLoggedIn = auth.isLoggedIn;
@@ -34,6 +37,7 @@ function MainCtrl($scope,goodsService,auth){
   // $scope.goods = goods.goods;
   vm.price = '';
   vm.type = '';
+  vm.currentPath = $location.path();
   // $scope.price = false;
 }
 

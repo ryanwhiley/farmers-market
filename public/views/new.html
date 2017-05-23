@@ -1,6 +1,5 @@
 <form ng-submit="goods.newGood()"
-	ng-show="goods.isLoggedIn()"
-  style="margin-top:30px;">
+	ng-show="goods.isLoggedIn()">
   <h3>Post new Good</h3>
 
   <div ng-show="goods.error" class="alert alert-danger row">
@@ -14,7 +13,7 @@
     <input type="text"
       class="form-control"
       placeholder="Name"
-      ng-model="goods.goodDetails.name"></input>
+      ng-model="goods.goodDetails.name" required></input>
   </div>
 
   <!-- type & category & quantity -->
@@ -23,7 +22,7 @@
       <label>
         Type
       </label><br>
-      <select ng-model="goods.goodDetails.type">
+      <select ng-model="goods.goodDetails.type" required>
         <option value="produce">Produce</option>
         <option value="dairy">Dairy</option>
         <option value="meat">Meat</option>
@@ -35,7 +34,7 @@
         Category
       </label><br>
       <select ng-model="goods.goodDetails.category">
-        <option ng-repeat="category in goods.categories[goods.goodDetails.type]" value="{{category}}">{{category}}</option>
+        <option ng-repeat="category in goods.categories[goods.goodDetails.type]" value="{{category}}" required>{{category}}</option>
       </select>
     </div>
     <div class="col-md-4">
@@ -45,8 +44,8 @@
       <input type="text"
       class="form-control"
       placeholder="Quantity"
-      ng-model="goods.goodDetails.quantityForSale"></input>
-    </div> 
+      ng-model="goods.goodDetails.quantityForSale" required></input>
+    </div>
   </div>
 
   <!-- units & price per unit -->
@@ -55,7 +54,7 @@
       <label>
         Unit of Measurement
       </label><a href="" class="new-good-tooltip" title="The unit of measurement that this is sold in." data-toggle="tooltip" data-placement="top" tooltip> <span class="glyphicon glyphicon-question-sign"></span></a><br>
-      <select ng-model="goods.goodDetails.unitOfMeasurement">
+      <select ng-model="goods.goodDetails.unitOfMeasurement" required>
         <option value="lb">LBs</option>
         <option value="oz">Oz</option>
         <option value="fl oz">Fl Oz</option>
@@ -73,7 +72,7 @@
       <input type="text"
         class="form-control"
         placeholder="Unit of Sale"
-        ng-model="goods.goodDetails.unitOfSale"></input> 
+        ng-model="goods.goodDetails.unitOfSale"></input>
     </div>
 
     <div class="col-md-4">
@@ -83,10 +82,10 @@
       <input type="text"
         class="form-control"
         placeholder="Price per Unit"
-        ng-model="goods.goodDetails.pricePerUnit"></input> 
+        ng-model="goods.goodDetails.pricePerUnit"></input>
     </div>
   </div>
-  
+
   <!-- description -->
   <div class="form-group">
     <label>

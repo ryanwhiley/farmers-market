@@ -1,27 +1,64 @@
-<!-- currentUser && farmer --> 
+<!-- currentUser && farmer -->
 <!-- lists out farmers inventory -->
+
 <div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
+  <h1>
+    Dashboard
+  </h1>
     <h3>
       Your Inventory
     </h3>
-      <table class="table-striped">
-        <thead>
-          <tr style="padding:10px;">
-            <th width="25%">Good</th>
-            <th width="40%">Quantity Remaining</th>
-            <th width="25%">Price Per Unit</th>
-            <th width="25%">Update</th>
+
+      <table  class="table table-striped" summary="Inventory">
+      <thead class="thead-inverse">
+        <tr>
+            <th scope="col"></th>
+              <th scope="col">Good</th>
+              <th scope="col">Quantity Remaining</th>
+              <th scope="col">Price Per Unit</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
           </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="good in user.goods" style="padding:10px;">
-            <td width="25%">{{good.name}}</td>
-            <td width="40%">{{good.quantityForSale}}</td>
-            <td width="25%">{{good.pricePerUnit | currency}}</td>
-            <td width="25%"><a href="/#/goods/{{good._id}}/update">Update</a></td>
+      </thead>
+      <tbody>
+        <tr>
+            <td><input type="checkbox" name="" /></td>
+              <td>Test Good Name</td>
+              <td>Test Good quanity</td>
+              <td>Test price per unti and urency</td>
+              <td><a href="#"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
+              <td><a href="#" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
           </tr>
+        <div ng-controller="pagination-controller">
+        <tr ng-repeat="good in user.goods">
+            <td><input type="checkbox" name="" /></td>
+              <td>{{good.name}}</td>
+              <td>{{good.quantityForSale}}</td>
+              <td>{{good.pricePerUnit | currency}}</td>
+              <td><a href="#"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
+              <td><a href="#" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
+          </tr>
+          <tr>
+          <uib-pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></uib-pagination>
+        </tr>
+ </div>
         </tbody>
       </table>
+
+
+      <a href="/#/new" ><button type="button" class="btn btn-success" aria-label="Add New Item">
+Add new item
+</button></a>
+       <a href="/#/new" ><button type="button" class="btn btn-warning" aria-label="Delete Items">
+ Delete items
+ </button></a>
+ <!-- Replace with inventory logic -->
+     <div ng-if="cart.currentUser.cart.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
+       <span>You have no goods in your cart.</span>
+     </div>
+
+
+
     <!-- <div class="col-md-6">
       <h3>
         Your Inventory
@@ -43,7 +80,7 @@
         <b>Price:</b> {{good.price | currency}}<br>
         <b>Buyer:</b> {{good.buyer}}<br>
       </div>
-    </div> -->  
+    </div> -->
 </div>
 
 
@@ -65,9 +102,9 @@
 <!-- !currentUser && farmer -->
 <div ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
   <div class="row">
-    <h3>
-      Goods {{user.user.username}} has for sale.
-    </h3>
+    <h1>
+      {{user.user.username}}'s Goods.
+    </h1>
     <div class="row" ng-repeat="good in user.goods">
       <b class="capitalize">{{good.name}}</b>
       <p class="capitalize">{{good.seller}}<br>
@@ -75,4 +112,3 @@
       <a href="/#/{{good.seller}}/{{good._id}}">Details</a><br></p>
     </div>
 </div>
-

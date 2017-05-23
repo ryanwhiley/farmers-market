@@ -1,5 +1,5 @@
 <head>
-  <title>Farmers Market</title>
+  <title>Farm2Meal</title>
   <meta charset="utf-8">
 
   <base href="/">
@@ -13,6 +13,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/javascripts/angular.js"></script>
+  <script src="/javascripts/angular-ui-bootstrap.js"></script>
   <script src="/javascripts/config.js"></script>
   <script src="/javascripts/nav.js"></script>
   <script src="/javascripts/styles.js"></script>
@@ -20,6 +21,7 @@
   <script src="/javascripts/auth/auth.controller.js"></script>
   <script src="/javascripts/auth/auth.service.js"></script>
   <script src="/javascripts/goods/goods.controller.js?r=<%= Math.random()%>"></script>
+  <script src="/javascripts/goods/goods-ui.controller.js"></script>
   <script src="/javascripts/goods/goods.service.js?r=<%= Math.random()%>"></script>
   <script src="/javascripts/users/users.controller.js?r=<%= Math.random()%>"></script>
 </head>
@@ -89,14 +91,14 @@
         </ul>
         <ul class="nav navbar-nav navbar-right col-md-3">
           <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser().username }}">Reorder</a></li>
-          <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/cart">Cart</a></li>
+          <li><a href="/#/cart">Cart</a></li>
           <li ng-show="isLoggedIn()&&currentUser().farmer"><a href="/#/new">Post</a></li>
           <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
           <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
           <li class="dropdown navbar-right" ng-show="isLoggedIn()">
             <a href="#" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ currentUser().username }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li ng-show="isLoggedIn()"><a href="/#/users/{{ currentUser().username }}">Profile</a></li>
+              <li ng-show="isLoggedIn()"><a href="/#/users/{{ currentUser().username }}">Dashboard</a></li>
               <li ng-show="isLoggedIn()"><a href="/#/users/edit">Edit Profile</a></li>
               <li ng-show="isLoggedIn()"><a href="/#/favorites">Favorites</a></li>
               <li role="separator" class="divider"></li>
@@ -119,10 +121,10 @@
     </div>
   </header>
   <main>
-    <div class="container" ng-hide="currentPath ==='/#/goods/meat'">
-      <div class="row" ng-hide="currentPath ==='/#/goods/meat'">
-        <div class="col-md-8 col-md-offset-2" ng-hide="currentPath ==='/#/goods/meat'">
-          <ui-view></ui-view>
+    <div class="container" ng-hide="main.currentPath ==='/goods/meat'">
+      <div class="row" ng-hide="main.currentPath ==='/goods/meat'">
+        <div class="col-md-8 col-md-offset-2" ng-hide="main.currentPath ==='/goods/meat'">
+          <ui-view>{{currentPath}}</ui-view>
         </div>
       </div>
     </div>
