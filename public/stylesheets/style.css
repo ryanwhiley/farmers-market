@@ -166,7 +166,7 @@ header {
     text-align: center;
     color: #E4FAFD;
     background-attachment: scroll;
-    background-image: url('../images/header_1_lg.jpg');
+    /*background-image: url('../images/header_1_lg.jpg');*/
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
@@ -180,7 +180,7 @@ header {
 @media(min-width: 1100px) {
     .parallax_header{
         color: #f8f8f8;
-        background-image: url('../images/header_1_lg.jpg');
+        /*background-image: url('../images/header_1_lg.jpg');*/
         background-size: cover;
         background-attachment: fixed;
         -webkit-background-size:cover;
@@ -192,7 +192,7 @@ header {
 @media(min-width: 450px) and (max-width: 1024px) {
     .parallax_header{
         color: #f8f8f8;
-        background-image: url('../images/header_1_md.jpg');
+        /*background-image: url('../images/header_1_md.jpg');*/
         z-index:100;
         min-height:500px;
         width:100%;
@@ -201,7 +201,7 @@ header {
 @media(max-width: 450px) {
     .parallax_header{
         color: #f8f8f8;
-        background-image: url('../images/header_1_sm.jpg');
+        /*background-image: url('../images/header_1_sm.jpg');*/
         z-index:100;
         min-height:400px;
         width:100%;

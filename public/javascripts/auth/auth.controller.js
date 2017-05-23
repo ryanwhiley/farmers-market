@@ -4,6 +4,8 @@ angular.module('farmersMarket.auth.controller', [])
 .controller('SuccessCtrl',SuccessCtrl)
 .controller('ForgotPwCtrl',ForgotPwCtrl)
 .controller('ResetPwCtrl',ResetPwCtrl)
+.controller('NewFarmerCtrl',NewFarmerCtrl)
+.controller('NewUserCtrl',NewUserCtrl)
 
 function AuthCtrl($scope, $state, auth){
   var vm = this;
@@ -17,8 +19,17 @@ function AuthCtrl($scope, $state, auth){
     auth.register(vm.user).error(function(error){
       vm.error = error;
     }).then(function(){
-      $state.go('home');
+      if(vm.user.farmer===1){
+        $state.go('newFarmer');
+      }else{
+        $state.go('newUser');
+      }
     });
+    if(vm.user.farmer===0){
+      auth.sendNewFarmerEmail(vm.user);
+    }else{
+      auth.sendNewUserEmail(vm.user);
+    }
   }
 
   function logIn(){
@@ -78,3 +89,30 @@ function ResetPwCtrl($state, auth, $stateParams){
 
 function SuccessCtrl(){
 }
+
+// template -> newFarmer.html
+// url -> /newFarmer
+// |actions|
+// when farmer first signs up theyre taken here and there should be a slideshow or something that shows them useful stuff
+function NewFarmerCtrl(auth){
+  vm.currentUser = auth.currentUser(); 
+  console.log(vm.currentUser);
+}
+
+// template -> newUser.html
+// url -> /newUser 
+// |actions|
+// welcomes users when they sign up, prolly no slideshow but useful links. most popular goods maybe
+function NewUserCtrl(auth, goodsService){
+  goodsService.mostPopular(3)
+  .then(function(res){
+    goodsService.getByIDs(res)
+    .then(function(res){
+      console.log(res);
+    })
+  })
+}
+
+
+
+

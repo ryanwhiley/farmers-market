@@ -155,6 +155,22 @@ function configure($stateProvider, $urlRouterProvider){
       controller: 'NewGoodCtrl',
       controllerAs: 'goods'
     })
+
+    // farmer welcome page
+    .state('newFarmer', {
+      url: '/newFarmer',
+      templateUrl: 'views/newFarmer.html',
+      controller: 'NewFarmerCtrl',
+      controllerAs: 'newFarmer'
+    })
+
+    // user welcome page
+    .state('newUser', {
+      url: '/newUser',
+      templateUrl: 'views/newUser.html',
+      controller: 'NewUserCtrl',
+      controllerAs: 'newUser'
+    })
     
     // update specific good
     .state('update', {

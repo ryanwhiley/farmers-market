@@ -83,6 +83,7 @@ function goodsService($http,auth){
     });
   };
   o.getByIDs = function(good_ids){
+    console.log(good_ids);
     return $http.get('/api/goods/ids', {params: { good_ids: good_ids }}).then(function(res){
       return res.data;
     })
@@ -117,6 +118,13 @@ function goodsService($http,auth){
   o.update = function(good){
     return $http.put('/api/goods/update',{good:good}).then(function(res){
       return res.data;
+    })
+  };
+  o.mostPopular = function(count){
+    console.log('here');
+    return $http.get('/api/purchases/mostPopular/'+count)
+    .then(function(res){
+      return res;
     })
   }
 

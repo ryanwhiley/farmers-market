@@ -13,7 +13,7 @@ router.get('/type/:type', function(req, res, next) {
 });
 
 // get goods by id
-router.get('/ids', function(req, res) {
+router.get('/ids', function(req, res, next) {
   Good.findByIDs(req.query.good_ids, function(err,goods){
     if(err){ return next(err); }
     res.json(goods);

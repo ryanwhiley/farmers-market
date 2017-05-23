@@ -4,4 +4,4 @@ $(".nav a").on("click", function(){
 	 console.log("hello");
 });
 
-$scope.currentPath = $location.path();
+// $scope.currentPath = $location.path();

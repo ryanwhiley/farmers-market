@@ -37,4 +37,13 @@ PruchasesSchema.statics.findByUser = function(user,cb){
 	return this.find( { $or:[ {'seller':user}, {'buyer':user}]}).exec(cb);
 }
 
+PruchasesSchema.statics.mostPopular = function(count,cb){
+	count = parseInt(count)+3;
+	return this.aggregate([
+			{ $group: { _id: "$good_id", total: { $sum: "$quantity" } } },
+			{ $sort: { total: -1 } },
+			{$limit: count}
+		]).exec(cb);
+}
+
 mongoose.model('Purchase', PruchasesSchema);

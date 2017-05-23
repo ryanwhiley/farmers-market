@@ -85,6 +85,24 @@ function auth($http, $window){
     .error(function(err){
       return err;
     })
+  };
+  auth.sendNewFarmerEmail = function(user){
+    return $http.put('/api/users/email/farmer',{user:user})
+    .success(function(res){
+      return res;
+    })
+    .error(function(err){
+      return err;
+    })
+  };
+  auth.sendNewFarmerEmail = function(user){
+    return $http.put('/api/users/email/user',{user:user})
+    .success(function(res){
+      return res;
+    })
+    .error(function(err){
+      return err;
+    })
   }
   return auth;
 }

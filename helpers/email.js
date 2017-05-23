@@ -19,31 +19,51 @@ email.sendForgotPasswordEmail = function(email,token,host){
         'http://' + host + '/#/users/reset/' + token + '\n\n' +
         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
     };
-    transporter.sendMail(mailOptions, function(err) {
-      if (err) throw err;
-      return email;
-    });
+    sendEmail(mailOptions);
 }
 
 email.sendPurchaseEmail = function(recipient,other,toSeller,goods){
 	// buyer-> buyer email, seller info (name, phone, address), good info
   // seller-> buyer email, seller info (name, phone, address), good info
   var mailOptions = buildMailOptions(recipient,other,toSeller,goods);
-  transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-        return console.log(error);
-    }
-    console.log('Message sent: ' + info.response);
-  });
+  sendEmail(mailOptions);
 }
 
 email.lowStockNotice = function(goods,recipient){
   var mailOptions = {
     to: recipient,
-    from: 'whileyryan@gmail.com',
+    from: 'hello@farmtomeal.com',
     subject: 'You have low stock',
     html: 'Hello!  We are emailing you let you know that the following goods are in low stock on FarmToMeal:<br> '+lowStockHTML(goods)
   }
+  sendEmail(mailOptions);
+}
+
+email.sendNewFarmerEmail = function(user){
+  var mailOptions = {
+    to: user.email,
+    from: 'hello@farmtomeal.com',
+    subject: 'Welcome to Farm to Meal!',
+    html: 'Hello '+user.username+' and welcome to Farm to Meal!<br> Here are some helpful links for you to use Farm to Meal.<br>'+
+    '<a href="http://localhost:3000/#/new">Post New Good</a><br>'+
+    '<a href="http://localhost:3000/#/users/'+user.username+'">Your Dashboard</a><br>'
+  };
+  sendEmail(mailOptions);
+  return 'success';
+}
+
+email.sendNewUserEmail = function(user){
+  var mailOptions = {
+    to: user.email,
+    from: 'hello@farmtomeal.com',
+    subject: 'Welcome to Farm to Meal!',
+    html: 'Hello '+user.username+' and welcome to Farm to Meal!<br> Here are some helpful links or something.'
+  };
+  sendEmail(mailOptions);
+  return 'success';
+}
+
+function sendEmail(mailOptions){
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
         return console.log(error);
