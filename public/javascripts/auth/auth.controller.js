@@ -95,6 +95,7 @@ function SuccessCtrl(){
 // |actions|
 // when farmer first signs up theyre taken here and there should be a slideshow or something that shows them useful stuff
 function NewFarmerCtrl(auth){
+  var vm = this;
   vm.currentUser = auth.currentUser(); 
   console.log(vm.currentUser);
 }

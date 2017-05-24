@@ -32,10 +32,10 @@ function goodsService($http,auth){
   o.prepareGoodsByType = function(goods){
     var categoriesGroupings = {};
     for(var i = 0;i<goods.length;i++){
-      if(categoriesGroupings[goods[i].category]){
-        categoriesGroupings[goods[i].category].push(goods[i]);
+      if(categoriesGroupings[goods[i].category.toLowerCase()]){
+        categoriesGroupings[goods[i].category.toLowerCase()].push(goods[i]);
       }else{
-        categoriesGroupings[goods[i].category] = [goods[i]]
+        categoriesGroupings[goods[i].category.toLowerCase()] = [goods[i]]
       }
     }
     return categoriesGroupings;

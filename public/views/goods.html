@@ -15,7 +15,10 @@
     </div>
       <div class="row">
       <div ng-repeat="(category,categoryGoods) in goods.goods" class="row" id="{{category}}">
-        <h2>{{category}}</h2>
+        <h2 class="capitalize">{{category}}</h2>
+        <div ng-if="categoryGoods.length==0" class="alert alert-success row text-center">
+          <span>There are currently no {{category}} listing, please check back later.</span>
+        </div>
         <div ng-repeat="good in categoryGoods">
           <div class="clearfix" ng-if="$index % 3 == 0&&good.quantityForSale>0"></div>
 

@@ -23,8 +23,7 @@ GoodsSchema.statics.findByType = function(type,cb){
 }
 
 GoodsSchema.statics.findByTypeOrCategory = function(search,cb){
-	console.log(search);
-	return this.find({$or: [{type:search},{category:search}]}).where('quantityForSale').gt(0).sort({category: 1}).exec(cb)
+	return this.find({$or: [{type:{"$regex": search, "$options": "i"}},{category:{"$regex": search, "$options": "i"}}]}).where('quantityForSale').gt(0).sort({category: 1}).exec(cb)
 }
 
 GoodsSchema.statics.findByIDs = function(good_ids,cb){

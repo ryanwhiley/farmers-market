@@ -16,22 +16,28 @@ angular.module('farmersMarket.goods.controller', [])
 // template -> goods.html
 // url -> /goods/{type}
 // actions -> list out all goods by type
-function GoodsCtrl($state, goodsService, goods, auth){
+function GoodsCtrl($state, $stateParams, goodsService, goods, auth){
 	// $scope.good = good;
 	var vm = this;
+	vm.label = $stateParams.type;
 	vm.goods = goodsService.prepareGoodsByType(goods);
+	console.log(vm.goods);
+	if(!vm.goods[vm.label]){
+		vm.goods[vm.label] = [];
+	}
 	vm.currentUser = auth.currentUser();
 
 	vm.favoriteGood = favoriteGood;
 	vm.unfavoriteGood = unfavoriteGood;
 
-	goodsService.mostPopular(3)
-  .then(function(res){
-    goodsService.getByIDs(res.data)
-    .then(function(res){
-      console.log(res);
-    })
-  })
+	// need to put this in auth.newUser ctrl
+	// goodsService.mostPopular(3)
+ //  .then(function(res){
+ //    goodsService.getByIDs(res.data)
+ //    .then(function(res){
+ //      console.log(res);
+ //    })
+ //  })
 
 	function favoriteGood(good_id){
 		vm.currentUser.favorites.push(good_id);
@@ -86,11 +92,11 @@ function NewGoodCtrl($state, goodsService, auth){
 	function newGood(){
 		if(vm.currentUser.farmer&&vm.goodsFieldCheck()){
 	    goodsService.create({
-	    	name: vm.goodDetails.name.toLowerCase(),
+	    	name: vm.goodDetails.name,
 	    	pricePerUnit: vm.goodDetails.pricePerUnit, 
 	    	description: vm.goodDetails.description, 
-	    	type: vm.goodDetails.type.toLowerCase(),
-	    	category: vm.goodDetails.category.toLowerCase(),
+	    	type: vm.goodDetails.type,
+	    	category: vm.goodDetails.category,
 	    	quantityForSale: vm.goodDetails.quantityForSale,
 	    	unitOfMeasurement: vm.goodDetails.unitOfMeasurement,
 	    	unitOfSale: vm.goodDetails.unitOfSale,
