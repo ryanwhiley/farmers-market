@@ -29,7 +29,7 @@
   <nav class="navbar navbar-harvest" ng-controller="NavCtrl">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header col-md-2">
+      <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
@@ -43,7 +43,7 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav col-md-7">
+        <ul class="nav navbar-nav">
             <li><a href="/#/home">Home</a></li>
             <li class="dropdown">
               <a href="/#/goods/produce" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produce</a>
@@ -81,7 +81,7 @@
               <a href="/#/search">Search</a>
             </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right col-md-3">
+        <ul class="nav navbar-nav navbar-right">
           <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser().username }}">Reorder</a></li>
           <li><a href="/#/cart">Cart</a></li>
           <li ng-show="isLoggedIn()&&currentUser().farmer"><a href="/#/new">Post</a></li>
@@ -113,10 +113,20 @@
     </div>
   </header>
   <main>
-    <div class="container" ng-hide="main.currentPath ==='/goods/meat'">
-      <div class="row" ng-hide="main.currentPath ==='/goods/meat'">
-        <div class="col-md-8 col-md-offset-2" ng-hide="main.currentPath ==='/goods/meat'">
-          <ui-view>{{currentPath}}</ui-view>
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-sm-3 col-lg-2" ng-show="main.arr.indexOf(main.currentPath)>=0">
+            <nav class="navbar navbar-default navbar-fixed-side">
+              <h4>Search by Category</h4>
+              <ul class="nav navbar-nav">
+                    <li><a href="#"><span class="glyphicon glyphicon-send"></span> Link</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Link</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>
+              </ul>
+          </div>
+          <div class="col-sm-9 col-sm-offset-3">
+          <ui-view></ui-view>
         </div>
       </div>
     </div>

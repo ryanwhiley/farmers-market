@@ -29,7 +29,7 @@ angular.module('farmersMarket',
 // auth.$inject = [$http, $window];
 
 // FUNCTIONS
-function MainCtrl($scope, $location, goodsService,auth){
+function MainCtrl($scope, $rootScope, $location, goodsService, auth){
   var vm = this;
   vm.isLoggedIn = auth.isLoggedIn;
 	// $scope.isLoggedIn = auth.isLoggedIn;
@@ -38,6 +38,10 @@ function MainCtrl($scope, $location, goodsService,auth){
   vm.price = '';
   vm.type = '';
   vm.currentPath = $location.path();
+  vm.arr = ['/goods/meat','/goods/dairy','/goods/produce', '/goods/other']
+  $rootScope.$on('$locationChangeSuccess', function () {
+     vm.currentPath = $location.path();
+  });
   // $scope.price = false;
 }
 
