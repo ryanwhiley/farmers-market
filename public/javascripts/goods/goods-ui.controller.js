@@ -12,7 +12,7 @@ angular.module('farmersMarket.goods-ui.controller', [])
     $log.log('Page changed to: ' + $scope.currentPage);
   };
 
-  $scope.maxSize = 5;
+  $scope.maxSize = 1;
   $scope.bigTotalItems = 175;
   $scope.bigCurrentPage = 1;
 });
