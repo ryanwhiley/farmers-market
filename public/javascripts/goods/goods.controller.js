@@ -86,11 +86,11 @@ function NewGoodCtrl($state, goodsService, auth){
 	function newGood(){
 		if(vm.currentUser.farmer&&vm.goodsFieldCheck()){
 	    goodsService.create({
-	    	name: vm.goodDetails.name,
+	    	name: vm.goodDetails.name.toLowerCase(),
 	    	pricePerUnit: vm.goodDetails.pricePerUnit, 
 	    	description: vm.goodDetails.description, 
-	    	type: vm.goodDetails.type,
-	    	category: vm.goodDetails.category,
+	    	type: vm.goodDetails.type.toLowerCase(),
+	    	category: vm.goodDetails.category.toLowerCase(),
 	    	quantityForSale: vm.goodDetails.quantityForSale,
 	    	unitOfMeasurement: vm.goodDetails.unitOfMeasurement,
 	    	unitOfSale: vm.goodDetails.unitOfSale,

@@ -9,7 +9,11 @@ var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
 
 // get goods by type
 router.get('/type/:type', function(req, res, next) {
-  res.json(req.goods);
+  // res.json(req.goods);
+  Good.findByTypeOrCategory(req.params.type, function(err,goods){
+    if(err){ return next(err); }
+    res.json(goods);
+  })
 });
 
 // get goods by id
