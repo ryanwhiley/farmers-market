@@ -97,7 +97,6 @@ function SuccessCtrl(){
 function NewFarmerCtrl(auth){
   var vm = this;
   vm.currentUser = auth.currentUser(); 
-  console.log(vm.currentUser);
 }
 
 // template -> newUser.html

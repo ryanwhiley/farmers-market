@@ -2,6 +2,7 @@
 <!-- lists out farmers inventory -->
 
 <div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
+  <div class="row">
   <h1>
     Dashboard
   </h1>
@@ -81,6 +82,18 @@ Add new item
         <b>Buyer:</b> {{good.buyer}}<br>
       </div>
     </div> -->
+    </div>
+    <div class="row">
+      <h3>
+        Your Orders
+      </h3>
+      <div class="row" ng-repeat="good in user.purchases">
+        <h4>{{good.good}}</h4>
+        <b>Quanity Remaining:</b> {{good.quantity}}<br>
+        <b>Price:</b> {{good.price | currency}}<br>
+        <b>Buyer:</b> {{good.buyer}}<br>
+      </div>
+    </div>
 </div>
 
 

@@ -17,6 +17,7 @@ function UserCtrl($scope, $stateParams, goodsService, auth, good, user, purchase
 	vm.goods = good;
 	vm.purchases = purchases;
 	vm.currentUser = auth.currentUser();
+	console.log(vm.goods,vm.purchases);
 
 	vm.deleteGood = deleteGood;
 
