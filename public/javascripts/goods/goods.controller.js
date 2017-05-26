@@ -21,14 +21,14 @@ function GoodsCtrl($state, $stateParams, goodsService, goods, auth){
 	var vm = this;
 	vm.label = $stateParams.type;
 	vm.goods = goodsService.prepareGoodsByType(goods);
-	console.log(vm.goods);
-	if(!vm.goods[vm.label]){
+	if(Object.keys(vm.goods).length===0){
 		vm.goods[vm.label] = [];
 	}
 	vm.currentUser = auth.currentUser();
 
 	vm.favoriteGood = favoriteGood;
 	vm.unfavoriteGood = unfavoriteGood;
+	vm.addToCartDetails = addToCartDetails;
 
 	// need to put this in auth.newUser ctrl
 	// goodsService.mostPopular(3)
@@ -51,6 +51,10 @@ function GoodsCtrl($state, $stateParams, goodsService, goods, auth){
 		auth.userUpdate(vm.currentUser).then(function(res){
 			auth.updateToken(res.data.token);
 		})
+	}
+
+	function addToCartDetails(good){
+
 	}
 }
 
@@ -131,7 +135,6 @@ function GoodCtrl(goodsService,good,auth){
 	vm.purchase = {};
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.currentUser = auth.currentUser();
-	console.log(vm.currentUser);
 	vm.good = good;
 	vm.success = '';
 	vm.error = '';
@@ -142,6 +145,9 @@ function GoodCtrl(goodsService,good,auth){
 	vm.addToCart = addToCart;
 	vm.updateUserCart = updateUserCart;
 
+	// if we want to put add to cart functionality then we'll need to take some of these functions and put them into
+	// a service
+	// specifically -> addToCart, buildPurchaseObject, 
 	function addToCart(){
 		if(vm.good.delivery==''||!vm.good.delivery){
 			vm.error = 'Please select pickup or delivery to add this to your cart.';
@@ -150,9 +156,19 @@ function GoodCtrl(goodsService,good,auth){
 			vm.error = 'Please login to add this to your cart.';
 			return;
 		}
-		vm.buildPurchaseObject().then(function(res){
-			vm.updateUserCart();
+		// vm.buildPurchaseObject().then(function(res){
+		// 	vm.updateUserCart();
+		// 	vm.success = 'Successfully added to cart!';
+		// 	auth.userUpdate(vm.currentUser).then(function(res){
+		// 		auth.updateToken(res.data.token);
+		// 	})
+		// })
+		auth.buildPurchaseObject(vm.good,vm.currentUser,vm.userQuantity)
+		.then(function(res){
+			vm.purchase = res;
+			auth.updateUserCart(vm.purchase,vm.currentUser,vm.good);
 			vm.success = 'Successfully added to cart!';
+			vm.error = '';
 			auth.userUpdate(vm.currentUser).then(function(res){
 				auth.updateToken(res.data.token);
 			})
@@ -160,6 +176,10 @@ function GoodCtrl(goodsService,good,auth){
 	}
 
 	function updateUserCart(){
+		// checks to see if the good the user is adding is already in the cart
+		// only compares by good_id, which means that the price should be the same
+		// bc if a user wants to update the price of a good they must create a 
+		// new listing of that good, thus good_id will be diff
 		var inCart = false;
 		for(var i = 0,len=vm.currentUser.cart.length;i<len;i++){
 			if(vm.purchase.good_id==vm.currentUser.cart[i].good_id){
@@ -190,6 +210,7 @@ function GoodCtrl(goodsService,good,auth){
 		})
 	}
 	
+	// i dont think this is in use right now, however im not totally sure
 	function purchaseGood(){
 		vm.good.quantityForSale -= vm.userQuantity;
 		vm.buildPurchaseObject();
@@ -255,6 +276,7 @@ function CartCtrl($state, goodsService, auth){
 	vm.cart = [];
 	vm.quantityPass = true;
 	vm.totals = goodsService.calculateCartTotals(vm.currentUser.cart);
+	vm.submissionError = false;
 
 	// function declarations
 	vm.buildGoodObject = buildGoodObject;
@@ -268,6 +290,7 @@ function CartCtrl($state, goodsService, auth){
 	vm.removeFromCart = removeFromCart;
 	vm.updateUserCart = updateUserCart;
 	vm.getGoodsObject = getGoodsObject;
+	vm.checkQuantity = checkQuantity;
 
 	// updates user row in table, updates web token, updates totals
 	function updateUserCart(){
@@ -295,6 +318,24 @@ function CartCtrl($state, goodsService, auth){
 				}
 			})
 		}
+	}
+
+	// if a user edits the quantity they want, then
+	// this function will ensure that the seller
+	// has the necessary quantity
+	function checkQuantity(good){
+		good.error = false;
+		vm.submissionError = false;
+		goodsService.get(good.good_id)
+		.then(function(res){
+			if(!/^\d+$/.test(good.quantity)){
+				good.error = 'Please ensure that quantity is all numbers.'
+				vm.submissionError = true;
+			}else if(good.quantity>res.quantityForSale){
+				good.error = 'Please select a number less than '+res.quantityForSale+' in order to purchase this.';
+				vm.submissionError = true;
+			}
+		})
 	}
 
 	// sorts cart by seller, so that we are not sending multiple emails to the same seller for the same sale.
@@ -390,10 +431,12 @@ function CartCtrl($state, goodsService, auth){
 	// creates purchase in purchase table
 	// updates remaining quantity
 	function purchase(){
-		vm.prepareCart();
-		vm.sendPurchaseEmails();
-		vm.storePurchasesInPurchaseTable();
-		vm.emptyUserCart();
+		if(!vm.submissionError){
+			vm.prepareCart();
+			vm.sendPurchaseEmails();
+			vm.storePurchasesInPurchaseTable();
+			vm.emptyUserCart();
+		}
 	}
 }
 

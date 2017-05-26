@@ -1,6 +1,7 @@
 <div ng-show="cart.success" class="alert alert-success row" style="margin-top:20px;">
   <span>{{ cart.success }}</span>
 </div>
+
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-4">
@@ -24,6 +25,14 @@
 			<b>{{(good.price*good.quantity) | currency}}</b>
 		</div>
 		<div class="col-md-4">
+			<input type='text'
+        ng-model="good.quantity"
+        ng-model-options='{ debounce: 300 }'
+        ng-change='cart.checkQuantity(good)'
+    	/>
+    	<div ng-show="good.error" class="alert alert-danger row">
+			  <span>{{good.error}}</span>
+			</div>
 			<select ng-model="good.quantity" ng-dropdown ng-change="cart.updateUserCart()" ng-options="quantity for quantity in cart.quantity">
 			  <!-- <option ng-repeat="q in cart.quantity" value="{{q}}">{{q}}</option> -->
 			</select>
@@ -47,4 +56,4 @@
 	</div>
 </div>
 <hr />
-<button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-click="cart.purchase()">Purchase</button>
+<button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-disabled="cart.submissionError" ng-click="cart.purchase()">Purchase</button>

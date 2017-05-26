@@ -34,9 +34,9 @@
               <div class="btn-group" role="group" aria-label="...">
                 <!--  <button type="button" class="btn btn-info">Details</button> -->
 
-                <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</button>
-                <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</button>
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add to Cart <span class="caret"></span></button>
+                <button type="button" class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</button>
+                <button type="button" class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</button>
+                <button type="button" ng-if="good.seller!=goods.currentUser.username" ng-click="goods.addToCartDetails(good)" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add to Cart <span class="caret"></span></button>
               </div>
 
         </div>

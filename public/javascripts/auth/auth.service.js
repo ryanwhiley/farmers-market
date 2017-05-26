@@ -4,6 +4,7 @@ angular.module('farmersMarket.auth.service', [])
 
 function auth($http, $window){
 	var auth = {};
+  // functions that dont hit api
   auth.saveToken = function (token){
     $window.localStorage['farmers-market-token'] = token;
   };
@@ -32,6 +33,43 @@ function auth($http, $window){
       return payload;
     }
   };
+  auth.buildPurchaseObject = function(good,currentUser,userQuantity){
+    var purchase = {};
+    purchase.good = good.name;
+    purchase.good_id = good._id;
+    purchase.buyer = currentUser.username;
+    purchase.quantity = parseInt(userQuantity);
+    purchase.price = parseFloat(good.pricePerUnit);
+    return this.userLookUp(good.seller).then(function(res){
+      purchase.seller = {};
+      purchase.seller.name = res.data.username;
+      purchase.seller.email = res.data.email;
+      purchase.seller.phone = res.data.phone;
+      purchase.seller.address = res.data.address;
+      return purchase;
+    })
+  };
+  auth.updateUserCart = function(purchase,currentUser,good){
+    // checks to see if the good the user is adding is already in the cart
+    // only compares by good_id, which means that the price should be the same
+    // bc if a user wants to update the price of a good they must create a 
+    // new listing of that good, thus good_id will be diff
+    var inCart = false;
+    for(var i = 0,len=currentUser.cart.length;i<len;i++){
+      if(purchase.good_id==currentUser.cart[i].good_id){
+        inCart = true;
+        currentUser.cart[i].quantity = parseInt(purchase.quantity)+parseInt(currentUser.cart[i].quantity);
+        currentUser.cart[i].price = parseFloat(good.pricePerUnit);
+        return
+      }
+    }
+    if(!inCart){
+      currentUser.cart.push(purchase)
+    }
+    return currentUser;
+  }
+
+  // api calls
   auth.userLookUp = function(user){
     return $http.get('/api/users/'+user).success(function(data){
       return data;

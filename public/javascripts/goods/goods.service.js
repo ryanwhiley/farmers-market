@@ -39,7 +39,7 @@ function goodsService($http,auth){
       }
     }
     return categoriesGroupings;
-  }
+  };
 
   // api calls
   o.getAll = function() {
@@ -121,12 +121,11 @@ function goodsService($http,auth){
     })
   };
   o.mostPopular = function(count){
-    console.log('here');
     return $http.get('/api/purchases/mostPopular/'+count)
     .then(function(res){
       return res;
     })
-  }
+  };
 
   return o;
 }
