@@ -1,5 +1,5 @@
-<div ng-show="cart.success" class="alert alert-success row" style="margin-top:20px;">
-  <span>{{ cart.success }}</span>
+<div ng-show="cart.success" class="alert alert-success row">
+  <div class="col-md-6"> {{ cart.success }}</div>
 </div>
 <div class="page-header">
 	<div class="row">
@@ -33,7 +33,6 @@
 	<div ng-if="cart.currentUser.cart.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
     <span>You have no goods in your cart.</span>
   </div>
-
 <hr />
 <div class="row">
 	<div class="col-md-4">
@@ -48,3 +47,26 @@
 </div>
 <hr />
 <button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-click="cart.purchase()">Purchase</button>
+
+
+<table  class="table table-striped" summary="Inventory">
+<thead class="thead-inverse">
+  <tr>
+        <th>Product Details</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+</thead>
+<tbody>
+
+  <tr ng-repeat="good in cart.currentUser.cart">
+        <td>{{good.seller.name}}</td>
+        <td><a href="/#/{{good.seller.name}}/{{good.good_id}}">{{good.good}}</a></td>
+        <td>{{good.pricePerUnit | currency}}</td>
+        <td><a href="#"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
+        <td><a href="#" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
+    </tr>
+    <tr>
+  </tr>
+  </tbody>
+</table>

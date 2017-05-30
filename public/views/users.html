@@ -1,11 +1,13 @@
 <!-- currentUser && farmer -->
 <!-- lists out farmers inventory -->
 
-<div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
-  <div class="row">
+<div class="container-fluid" ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
+<div class="row">
   <h1>
     Dashboard
   </h1>
+</div>
+  <div class="row">
     <h3>
       Your Inventory
     </h3>
@@ -22,14 +24,7 @@
           </tr>
       </thead>
       <tbody>
-        <tr>
-            <td><input type="checkbox" name="" /></td>
-              <td>Test Good Name</td>
-              <td>Test Good quanity</td>
-              <td>Test price per unti and urency</td>
-              <td><a href="#"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
-              <td><a href="#" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
-          </tr>
+
         <div ng-controller="pagination-controller">
         <tr ng-repeat="good in user.goods">
             <td><input type="checkbox" name="" /></td>
@@ -87,11 +82,32 @@ Add new item
       <h3>
         Your Orders
       </h3>
-      <div class="row" ng-repeat="good in user.purchases">
-        <h4>{{good.good}}</h4>
-        <b>Quanity Remaining:</b> {{good.quantity}}<br>
-        <b>Price:</b> {{good.price | currency}}<br>
-        <b>Buyer:</b> {{good.buyer}}<br>
+      <div ng-repeat="good in user.purchases">
+        <table  class="table table-striped" summary="Inventory">
+        <thead class="thead-inverse">
+          <tr>
+                <th scope="col">Good</th>
+                <th scope="col">Quantity Remaining</th>
+                <th scope="col">Status</th>
+                <th scope="col">Price Per Unit</th>
+                <th>Seller</th>
+            </tr>
+        </thead>
+        <tbody>
+          <div ng-controller="pagination-controller">
+          <tr ng-repeat="good in user.purchases">
+                <td>{{good.good}}</td>
+                <td>{{good.quantity}}</td>
+                <td>Fulfilled/Not fulfilled/In transit</td>
+                <td>{{good.price | currency}}</td>
+                <td>{{good.seller}}</td>
+          </tr>
+            <tr>
+            <uib-pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></uib-pagination>
+          </tr>
+          </div>
+          </tbody>
+        </table>
       </div>
     </div>
 </div>
@@ -103,17 +119,36 @@ Add new item
     <h3>
       Your Orders
     </h3>
-    <div class="row" ng-repeat="good in user.purchases">
-      <h4>{{good.good}}</h4>
-      <b>Quanity Remaining:</b> {{good.quantity}}<br>
-      <b>Price:</b> {{good.price | currency}}<br>
-      <b>Seller:</b> {{good.seller}}<br>
-    </div>
+    <table  class="table table-striped" summary="Inventory">
+    <thead class="thead-inverse">
+      <tr>
+            <th scope="col">Good</th>
+            <th scope="col">Quantity Remaining</th>
+            <th scope="col">Status</th>
+            <th scope="col">Price Per Unit</th>
+            <th>Seller</th>
+        </tr>
+    </thead>
+    <tbody>
+      <div ng-controller="pagination-controller">
+      <tr ng-repeat="good in user.purchases">
+            <td>{{good.good}}</td>
+            <td>{{good.quantity}}</td>
+            <td>Fulfilled/Not fulfilled/In transit</td>
+            <td>{{good.price | currency}}</td>
+            <td>{{good.seller}}</td>
+      </tr>
+        <tr>
+        <uib-pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></uib-pagination>
+      </tr>
+      </div>
+      </tbody>
+    </table>
   </div>
 </div>
 
 <!-- !currentUser && farmer -->
-<div ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
+<div class="container-fluid" ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
   <div class="row">
     <h1>
       {{user.user.username}}'s Goods.
@@ -124,4 +159,5 @@ Add new item
       {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}<br>
       <a href="/#/{{good.seller}}/{{good._id}}">Details</a><br></p>
     </div>
+</div>
 </div>
