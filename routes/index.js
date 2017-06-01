@@ -1,3 +1,6 @@
+// dis shit aint in use no more
+// but leave it here just in case
+
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
