@@ -17,13 +17,11 @@
               </a>
               <hr>
               <div class="btn-group" role="group" aria-label="...">
-                <!--  <button type="button" class="btn btn-info">Details</button> -->
-                <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</button>
-                <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</button>
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add to Cart <span class="caret"></span></button>
+                <button type="button" class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</button>
+                <button type="button" class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</button>
+                <button type="button" ng-if="good.seller!=goods.currentUser.username" ng-click="goods.addToCartDetails(good)" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add to Cart <span class="caret"></span></button>
               </div>
-
-        </div>
+            </div>
       <div ng-if="goods.goods.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
         <span>There are currently no goods of this type right now.</span>
       </div>
