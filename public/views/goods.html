@@ -23,7 +23,7 @@
                       <button type="button" ng-if="good.seller!=goods.currentUser.username" ng-click="goods.addToCartDetails(good)" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add to Cart <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                     <li>
-                      <div ng-if="good.currentUser.username!=good.good.seller">
+                      <div ng-if="good.seller!=goods.currentUser.username">
                     <label>
                       Quantity
                     </label>

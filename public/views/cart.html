@@ -1,7 +1,7 @@
 <div ng-show="cart.success" class="alert alert-success row">
   <div class="col-md-6"> {{ cart.success }}</div>
 </div>
-<div class="page-header">
+<!-- <div class="page-header">
 	<div class="row">
 		<div class="col-md-4">
 			<h4>Product Details</h4>
@@ -24,17 +24,15 @@
 			<b>{{(good.price*good.quantity) | currency}}</b>
 		</div>
 		<div class="col-md-4">
-			<input type='text'
+			<input type='number'
         ng-model="good.quantity"
         ng-model-options='{ debounce: 300 }'
         ng-change='cart.checkQuantity(good)'
     	/>
-    	<div ng-show="good.error" class="alert alert-danger row">
-			  <span>{{good.error}}</span>
-			</div>
-			<select ng-model="good.quantity" ng-dropdown ng-change="cart.updateUserCart()" ng-options="quantity for quantity in cart.quantity">
-			  <!-- <option ng-repeat="q in cart.quantity" value="{{q}}">{{q}}</option> -->
-			</select>
+      <div ng-show="good.error" class="alert alert-danger row">
+        <span>{{good.error}}</span>
+      </div>
+
 		</div>
 		<hr />
 	</div>
@@ -55,27 +53,50 @@
 </div>
 <hr />
 
-<button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-disabled="cart.submissionError" ng-click="cart.purchase()">Purchase</button>
+<button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-disabled="cart.submissionError" ng-click="cart.purchase()">Purchase</button> -->
 
 
 <table  class="table table-striped" summary="Inventory">
 <thead class="thead-inverse">
   <tr>
         <th>Product Details</th>
-        <th>Price</th>
         <th>Quantity</th>
+        <th>Price</th>
+        <th>Remove</th>
     </tr>
 </thead>
 <tbody>
 
-  <tr ng-repeat="good in cart.currentUser.cart">
-        <td>{{good.seller.name}}</td>
+    <tr ng-repeat="good in cart.currentUser.cart">
         <td><a href="/#/{{good.seller.name}}/{{good.good_id}}">{{good.good}}</a></td>
-        <td>{{good.pricePerUnit | currency}}</td>
-        <td><a href="#"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
-        <td><a href="#" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
+        <td>			<input type='number'
+                ng-model="good.quantity"
+                ng-model-options='{ debounce: 300 }'
+                ng-change='cart.checkQuantity(good)'
+              />
+        </td>
+        <td>{{(good.price*good.quantity) | currency}}</td>
+        <div ng-show="good.error" class="alert alert-danger row">
+          <span>{{good.error}}</span>
+        </div>
+
+        <td><img ng-click="cart.removeFromCart($index)" src="images/trash.png" alt="" title="" border="0" /></td>
     </tr>
-    <tr>
-  </tr>
   </tbody>
+
 </table>
+<div class="row">
+	<div class="col-md-3">
+		<h5><b>Totals:</b></h5>
+	</div>
+	<div class="col-md-3">
+		<h5>{{cart.totals.totalPrice | currency}}</h5>
+	</div>
+	<div class="col-md-3">
+		<h5>{{cart.totals.totalQuantity}}</h5>
+	</div>
+  <div class="col-md-3">
+    <button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-disabled="cart.submissionError" ng-click="cart.purchase()">Purchase</button>
+</div>
+
+</div>

@@ -1,12 +1,13 @@
 <!-- currentUser && farmer -->
 <!-- lists out farmers inventory -->
+
 <div class="container-fluid" ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
 <div class="row">
   <h1>
     Dashboard
   </h1>
 </div>
-<div ng-controller="TabsDemoCtrl" class="col-md-6">
+<div ng-controller="TabsDemoCtrl" class="col-md-8">
 <uib-tabset active="activeJustified" justified="true">
   <uib-tab index="0" heading="Inventory">
     <div class="row">
@@ -37,7 +38,7 @@
                 <td><a href="#" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
             </tr>
             <tr>
-              <uib-pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></uib-pagination>
+
             </tr>
 
           </tbody>
@@ -103,7 +104,7 @@
                 <td>{{good.seller}}</td>
           </tr>
             <tr>
-            <uib-pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></uib-pagination>
+
           </tr>
 
           </tbody>
@@ -143,7 +144,6 @@
             <td>{{good.seller}}</td>
       </tr>
         <tr>
-        <uib-pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></uib-pagination>
       </tr>
 
       </tbody>
