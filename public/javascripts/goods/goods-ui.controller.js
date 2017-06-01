@@ -15,4 +15,8 @@ angular.module('farmersMarket.goods-ui.controller', [])
   $scope.maxSize = 1;
   $scope.bigTotalItems = 175;
   $scope.bigCurrentPage = 1;
+})
+
+.controller('TabsDemoCtrl', function ($scope, $window) {
+
 });

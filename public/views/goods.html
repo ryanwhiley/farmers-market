@@ -16,7 +16,6 @@
               </div>
               </a>
               <hr>
-
                 <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</button>
                 <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</button>
 
