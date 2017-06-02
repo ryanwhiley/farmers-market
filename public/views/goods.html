@@ -1,8 +1,8 @@
 <div class="container-fluid">
       <div ng-repeat="(category,categoryGoods) in goods.goods" class="row" id="{{category}}">
         <h2 class="capitalize">{{category}}</h2>
-        <div ng-if="categoryGoods.length==0" class="alert alert-success row text-center">
-          <div class="col-md-6">There are currently no {{category}} listing, please check back later.</div>
+        <div ng-if="categoryGoods.length==0" class="alert alert-success row text-center col-md-6">
+          <div class="">There are currently no {{category}} listing, please check back later.</div>
         </div>
         <div ng-repeat="good in categoryGoods">
           <div class="clearfix" ng-if="$index % 3 == 0&&good.quantityForSale>0"></div>

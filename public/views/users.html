@@ -27,8 +27,6 @@
             </tr>
         </thead>
         <tbody>
-
-
           <tr ng-repeat="good in user.goods">
               <td><input type="checkbox" name="" /></td>
                 <td>{{good.name}}</td>
@@ -83,7 +81,7 @@
       <h3>
         Your Orders
       </h3>
-      <div ng-repeat="good in user.purchases">
+      <div>
         <table  class="table table-striped" summary="Inventory">
         <thead class="thead-inverse">
           <tr>
