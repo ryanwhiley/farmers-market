@@ -170,6 +170,7 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
         border: 0;
         z-index:0;
         background-color: transparent;
+        text-align: center;
     }
 }
 
@@ -212,7 +213,7 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
     }
     .navbar-fixed-side .navbar-nav {
         float: none;
-        margin: 0 -15px
+        margin: 0;
     }
     .navbar-fixed-side .navbar-nav>li {
         float: none
