@@ -23,6 +23,9 @@ function GoodsCtrl($state, $stateParams, goodsService, goods, auth){
 	vm.goods = goodsService.prepareGoodsByType(goods);
 	if(Object.keys(vm.goods).length===0){
 		vm.goods[vm.label] = [];
+		vm.emptyResults = true;
+	}else{
+		vm.emptyResults = false;
 	}
 	vm.currentUser = auth.currentUser();
 

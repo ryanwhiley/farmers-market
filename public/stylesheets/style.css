@@ -364,3 +364,62 @@ header {
     }
 }
 /* Dashboard */
+
+
+
+
+/* Stuff Ryan Added*/
+
+table {
+        width: 100%;
+    }
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 30px;
+    z-index: 10000;
+    /*text-align: left;*/
+}
+
+tbody {
+    height: 350px;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+thead {
+    /* fallback */
+    z-index: 10000;
+}
+
+
+tbody td, thead th {
+    width: 20%;
+    float: left;
+}
+
+.width-30{
+    width:30% !important;
+}
+
+.width-5{
+    width:5% !important;
+}
+
+.modal-dialog {
+    position: absolute;
+    left: 25%;
+    top: 20%;
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-70%, -70%);
+}
