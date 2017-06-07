@@ -1,72 +1,32 @@
 <div class="container-fluid">
-      <div ng-repeat="(category,categoryGoods) in goods.goods" class="row" id="{{category}}">
-        <h2 class="capitalize">{{category}}</h2>
-        <div ng-if="categoryGoods.length==0" class="alert alert-success row text-center col-md-6">
-          <div class="">There are currently no {{category}} listing, please check back later.</div>
+  <div ng-repeat="(category,categoryGoods) in goods.goods" class="row" id="{{category}}" ng-if="!goods.emptyResults">
+    <h2 class="capitalize">{{category}}</h2>
+    <div ng-if="categoryGoods.length==0" class="alert alert-success row text-center col-md-6">
+      <div class="">There are currently no {{category}} listing, please check back later.</div>
+    </div>
+    <div ng-repeat="good in categoryGoods">
+      <div class="clearfix" ng-if="$index % 3 == 0&&good.quantityForSale>0"></div>
+        <div class="col-lg-5 good-item text-center" ng-if="good.quantityForSale>0" href="/#/{{good.seller}}/{{good._id}}">
+          <a href="/#/{{good.seller}}/{{good._id}}">
+          <div class="col-lg-12">
+          <h3 class="capitalize">{{good.name}}</h3>
+          <p class="capitalize">Sold by: {{good.seller}}<br>
+          {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}</p>
+          </div>
+          </a>
+          <hr>
+            <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</button>
+            <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</button>
+              
         </div>
-        <div ng-repeat="good in categoryGoods">
-          <div class="clearfix" ng-if="$index % 3 == 0&&good.quantityForSale>0"></div>
-
-            <div class="col-lg-5 good-item text-center" ng-if="good.quantityForSale>0" href="/#/{{good.seller}}/{{good._id}}">
-              <a href="/#/{{good.seller}}/{{good._id}}">
-              <div class="col-lg-12">
-              <h3 class="capitalize">{{good.name}}</h3>
-              <p class="capitalize">Sold by: {{good.seller}}<br>
-              {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}</p>
-              </div>
-              </a>
-              <hr>
-                <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)<0" ng-click="goods.favoriteGood(good._id)">Favorite</button>
-                <button type="button"class="btn btn-success" ng-if="goods.currentUser.favorites.indexOf(good._id)>=0" ng-click="goods.unfavoriteGood(good._id)">Unfavorite</button>
-
-                  <div class="btn-group">
-                      <button type="button" ng-if="good.seller!=goods.currentUser.username" ng-click="goods.addToCartDetails(good)" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add to Cart <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                    <li>
-                      <div ng-if="good.seller!=goods.currentUser.username">
-                    <label>
-                      Quantity
-                    </label>
-                    <select ng-model="good.userQuantity">
-                      <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
-                    </select><br>
-
-                  <label>Pickup or Delivery</label>
-                  <select ng-model="good.good.delivery">
-                    <option value=""></option>
-                    <option ng-disabled="!good.good.can_deliver" value="delivery">Delivery</option>
-                    <option value="pickup">Pickup</option>
-                  </select><br>
-
-                  <span ng-if="good.good.delivery=='delivery'">
-                    <b>Delivery Fee:</b> {{good.good.delivery_fee | currency}}<br>
-                    <b>Estimated Delivery Time:</b> {{good.good.delivery_time}}<br>
-                  </span><br>
-
-                  <span ng-if="good.good.delivery=='pickup'">
-                    <!-- pickup -->
-                  </span><br>
-
-                  Total: {{good.good.pricePerUnit*good.userQuantity+(good.good.delivery=='delivery' ? good.good.delivery_fee : 0) | currency}}<br>
-                  <button ng-click="good.addToCart()" type="button" class="btn btn-success">Add to Cart</button>
-                  <button ng-click="good.addToCart()" type="button" class="btn btn-warning">Back</button>
-                  <div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
-                    <span>{{ good.success }}</span>
-                  </div></li>
-                    <li><a href="/#/goods/vegetables">Vegetables</a></li>
-                  </ul>
-                </div>
-                <div ng-if="goods.goods.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
-                  <span>There are currently no goods of this type right now.</span>
-                </div>
-
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div ng-controller="pagination-controller" ng-if="categoryGoods.length>=2">
-                  <uib-pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></uib-pagination>
-              </div>
-            </div>
-        </div>
+    </div>
+  </div>
+  <div class="row" ng-if="goods.emptyResults">
+    <div class="col-lg-8 col-lg-offset-2">
+      <h2 class="capitalize text-center">{{goods.label}}</h2>
+      <div class="alert alert-success text-center row" style="margin-top:20px;">
+        <span>There are currently no goods of this type right now.</span>
       </div>
     </div>
+  </div>
+</div>

@@ -7,7 +7,7 @@
     Dashboard
   </h1>
 </div>
-<div ng-controller="TabsDemoCtrl" class="col-md-8">
+<div ng-controller="TabsDemoCtrl" class="col-md-12">
 <uib-tabset active="activeJustified" justified="true">
   <uib-tab index="0" heading="Inventory">
     <div class="row">
@@ -15,38 +15,32 @@
         Your Inventory
       </h3>
 
-        <table  class="table table-striped" summary="Inventory">
-        <thead class="thead-inverse">
-          <tr>
-              <th scope="col"></th>
-                <th scope="col">Good</th>
-                <th scope="col">Quantity Remaining</th>
-                <th scope="col">Price Per Unit</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="good in user.goods">
-              <td><input type="checkbox" name="" /></td>
-                <td>{{good.name}}</td>
-                <td>{{good.quantityForSale}}</td>
-                <td>{{good.pricePerUnit | currency}}</td>
-                <td><a href="#"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
-                <td><a href="#" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
-            </tr>
+        <table class="table table-striped" summary="Inventory">
+          <thead class="thead-inverse">
             <tr>
-
+              <th scope="col" class="width-30">Good</th>
+              <th scope="col" class="width-30">Quantity Remaining</th>
+              <th scope="col" class="width-30">Price Per Unit</th>
+              <th scope="col" class="width-5"></th>
+              <th scope="col" class="width-5"></th>
             </tr>
-
+          </thead>
+          <tbody>
+            <tr ng-repeat="good in user.goods">
+              <td class="width-30">{{good.name}}</td>
+              <td class="width-30">{{good.quantityForSale}}</td>
+              <td class="width-30">{{good.pricePerUnit | currency}}</td>
+              <td class="width-5"><a href="/#/goods/{{good._id}}/update"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
+              <td class="width-5"><a ng-click="user.prepareForDeletion(good)" data-toggle="modal" data-target="#myModal" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
+            </tr>
           </tbody>
         </table>
         <a href="/#/new" ><button type="button" class="btn btn-success" aria-label="Add New Item">
           Add new item
         </button></a>
-         <a href="/#/new" ><button type="button" class="btn btn-warning" aria-label="Delete Items">
+         <!-- <a href="/#/new" ><button type="button" class="btn btn-warning" aria-label="Delete Items">
    Delete items
-   </button></a>
+   </button></a> -->
       <!-- Replace with inventory logic -->
        <div ng-if="cart.currentUser.cart.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
          <span>You have no goods in your cart.</span>
@@ -73,6 +67,25 @@
           <b>Buyer:</b> {{good.buyer}}<br>
         </div>
       </div> -->
+
+      <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title text-center">Are you sure you want to delete {{user.goodToDelete.name}}?</h4>
+            </div>
+            <div class="modal-body text-center">
+              <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="user.theyDontWantToDeleteThisGood()">No, I don't want to delete {{user.goodToDelete.name}}.</button><br><br><br>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="user.deleteGood(user.goodToDelete._id)">Yes, delete it.</button>
+            </div>
+            
+          </div>
+
+        </div>
+      </div>
     </div>
 
   </uib-tab>
@@ -86,10 +99,10 @@
         <thead class="thead-inverse">
           <tr>
                 <th scope="col">Good</th>
-                <th scope="col">Quantity Remaining</th>
+                <th scope="col">Quantity Sold</th>
                 <th scope="col">Status</th>
-                <th scope="col">Price Per Unit</th>
-                <th>Seller</th>
+                <th scope="col">Amount</th>
+                <th>Buyer</th>
             </tr>
         </thead>
         <tbody>
@@ -97,9 +110,14 @@
           <tr ng-repeat="good in user.purchases">
                 <td>{{good.good}}</td>
                 <td>{{good.quantity}}</td>
-                <td>Fulfilled/Not fulfilled/In transit</td>
-                <td>{{good.price | currency}}</td>
-                <td>{{good.seller}}</td>
+                <td>
+                  <select name="delivered" ng-model="good.delivered" ng-change="user.updateDeliveryStatus(good)">
+                    <option value="true">Delivered</option>
+                    <option value="false">Not Delivered</option>
+                  </select>
+                </td>
+                <td>{{good.price*good.quantity | currency}}</td>
+                <td>{{good.buyer}}</td>
           </tr>
             <tr>
 
@@ -137,7 +155,12 @@
       <tr ng-repeat="good in user.purchases">
             <td>{{good.good}}</td>
             <td>{{good.quantity}}</td>
-            <td>Fulfilled/Not fulfilled/In transit</td>
+            <td>
+              <select name="delivered" ng-model="good.delivered">
+                <option value="true">Delivered</option>
+                <option value="false">Not Delivered</option>
+              </select>
+            </td>
             <td>{{good.price | currency}}</td>
             <td>{{good.seller}}</td>
       </tr>
@@ -163,3 +186,6 @@
     </div>
   </div>
 </div>
+
+
+

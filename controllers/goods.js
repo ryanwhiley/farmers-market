@@ -54,7 +54,7 @@ router.put('/update', function(req, res, next) {
 });
 
 // delete good
-router.delete('/', function(req, res, next) {
+router.delete('/:good', function(req, res, next) {
   Good.remove({'_id':req.params.good},function(err,goods){
     if(err){ return next(err); }
     res.json(goods);

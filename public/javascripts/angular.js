@@ -9,6 +9,7 @@ angular.module('farmersMarket',
   'farmersMarket.goods.controller',
   'farmersMarket.goods-ui.controller',
   'farmersMarket.goods.service',
+  'farmersMarket.purchases.service',
   'farmersMarket.users.controller'])
 
 // config
