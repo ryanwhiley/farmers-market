@@ -39,7 +39,7 @@ function MainCtrl($scope, $rootScope, $location, goodsService, auth){
   vm.type = '';
   vm.currentPath = $location.path();
   vm.arr =
-  ['/goods/meat','/goods/dairy','/goods/produce','/goods/fruit','/goods/vegetables','/goods/greens','/goods/mushroom','/goods/garlic','/goods/onions',
+  ['/goods/meat','/goods/dairy','/goods/produce','/goods/fruit','/goods/vegetables','/goods/greens','/goods/mushrooms','/goods/garlic','/goods/onions',
    '/goods/other','/goods/milk','/goods/eggs','/goods/cheese','/goods/yogurt','/goods/butter','/goods/poultry','/goods/beef','/goods/pork','/goods/fish','/goods/other',]
   $rootScope.$on('$locationChangeSuccess', function () {
      vm.currentPath = $location.path();
