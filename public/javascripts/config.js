@@ -167,7 +167,7 @@ function configure($stateProvider, $urlRouterProvider){
     // user welcome page
     .state('newUser', {
       url: '/newUser',
-      templateUrl: 'views/newUser.html',
+      templateUrl: 'views/newuser.html',
       controller: 'NewUserCtrl',
       controllerAs: 'newUser'
     })
