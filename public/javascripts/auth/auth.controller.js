@@ -109,11 +109,9 @@ function NewUserCtrl(auth, goodsService){
   vm.mostPopular = [];
   goodsService.mostPopular(3)
   .then(function(res){
-    // console.log(res);
     goodsService.getByIDs(res.data)
     .then(function(goods){
       vm.mostPopular = goods;
-      console.log(vm.mostPopular);
     })
   })
 }

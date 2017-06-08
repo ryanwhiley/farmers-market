@@ -23,8 +23,7 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 	vm.sortBy = 'created_at';
 	vm.reverseSort = false;
 
-	console.log(vm.goods,vm.purchases);
-
+	// functions
 	vm.deleteGood = deleteGood;
 	vm.prepareForDeletion = prepareForDeletion;
 	vm.theyDontWantToDeleteThisGood = theyDontWantToDeleteThisGood;
@@ -59,7 +58,6 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 	function updateSort(sort){
 		if(sort==vm.sortBy){
 			vm.reverseSort = !vm.reverseSort;
-			console.log(vm.reverseSort);
 		}else{
 			vm.sortBy = sort;
 		}
