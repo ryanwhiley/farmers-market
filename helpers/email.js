@@ -1,6 +1,8 @@
 var nodemailer = require('nodemailer')
 		, email = {};
 
+console.log(process.env.EMAIL_NAME, process.env.EMAIL_PW);
+
 var transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
@@ -8,7 +10,7 @@ var transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PW // Your password
   },
   secure: true
-  console.log(process.env.EMAIL_NAME, process.env.EMAIL_PW);
+
 });
 
 email.sendForgotPasswordEmail = function(email,token,host){
