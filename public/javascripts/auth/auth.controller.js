@@ -96,7 +96,7 @@ function SuccessCtrl(){
 // when farmer first signs up theyre taken here and there should be a slideshow or something that shows them useful stuff
 function NewFarmerCtrl(auth){
   var vm = this;
-  vm.currentUser = auth.currentUser(); 
+  vm.currentUser = auth.currentUser();
 }
 
 // template -> newUser.html
@@ -104,11 +104,16 @@ function NewFarmerCtrl(auth){
 // |actions|
 // welcomes users when they sign up, prolly no slideshow but useful links. most popular goods maybe
 function NewUserCtrl(auth, goodsService){
+  var vm = this;
+  vm.currentUser = auth.currentUser();
+  vm.mostPopular = [];
   goodsService.mostPopular(3)
   .then(function(res){
-    goodsService.getByIDs(res)
-    .then(function(res){
-      console.log(res);
+    // console.log(res);
+    goodsService.getByIDs(res.data)
+    .then(function(goods){
+      vm.mostPopular = goods;
+      console.log(vm.mostPopular);
     })
   })
 }

@@ -18,12 +18,18 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 	vm.purchases = purchases;
 	vm.currentUser = auth.currentUser();
 	vm.goodToDelete = null;
+	vm.orderSearch = '';
+	vm.deliveryStatus = false;
+	vm.sortBy = 'created_at';
+	vm.reverseSort = false;
+
 	console.log(vm.goods,vm.purchases);
 
 	vm.deleteGood = deleteGood;
 	vm.prepareForDeletion = prepareForDeletion;
 	vm.theyDontWantToDeleteThisGood = theyDontWantToDeleteThisGood;
 	vm.updateDeliveryStatus = updateDeliveryStatus;
+	vm.updateSort = updateSort;
 
 	function deleteGood(good){
 		goodsService.remove(good).then(function(res){
@@ -45,9 +51,18 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 	function updateDeliveryStatus(purchase){
 		purchase.delivered = (purchase.delivered == "true");
 		purchaseService.updatePurchase(purchase)
-		.then(function(res){
-			console.log(res);
+		.error(function(err){
+			console.log(err);
 		})
+	}
+
+	function updateSort(sort){
+		if(sort==vm.sortBy){
+			vm.reverseSort = !vm.reverseSort;
+			console.log(vm.reverseSort);
+		}else{
+			vm.sortBy = sort;
+		}
 	}
 }
 
@@ -64,7 +79,6 @@ function EditProfileCtrl(auth){
 
 	function submitEdits(){
 		auth.userUpdate(vm.currentUser).then(function(res){
-			console.log(res.data.token);
 			auth.updateToken(res.data.token);
 			vm.success = 'Profile successfully updated!';
 		});

@@ -48,13 +48,11 @@ function goodsService($http,auth){
     });
   };
   o.search = function(term){
-    console.log(term);
     return $http.get('/api/goods/search/'+term).success(function(res){
       return res;
     })
   }
   o.create = function(good) {
-    console.log(good);
     return $http.post('/api/goods', good, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
     }).success(function(data){

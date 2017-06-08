@@ -25,7 +25,7 @@
               <th scope="col" class="width-5"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="height:350px;">
             <tr ng-repeat="good in user.goods">
               <td class="width-30">{{good.name}}</td>
               <td class="width-30">{{good.quantityForSale}}</td>
@@ -94,30 +94,41 @@
       <h3>
         Your Orders
       </h3>
+      <div class="row" style="margin-top:10px;margin-bottom:10px;pad:10px;">
+        <input class="width-70" ng-model="user.orderSearch" placeholder="Search Goods Sold and Buyers" /></input>
+        <label>Delivery Status</label>
+        <select name="deliveryStatus" ng-model="user.deliveryStatus">
+          <option value="false">N/A</option>
+          <option value="1">Delivered</option>
+          <option value="0">Not Delivered</option>
+        </select>
+      </div>
       <div>
         <table  class="table table-striped" summary="Inventory">
         <thead class="thead-inverse">
           <tr>
-                <th scope="col">Good</th>
-                <th scope="col">Quantity Sold</th>
-                <th scope="col">Status</th>
-                <th scope="col">Amount</th>
-                <th>Buyer</th>
+                <th scope="col" class="width-10" ng-click="user.updateSort('created_at')">Date</th>
+                <th scope="col" class="width-20" ng-click="user.updateSort('good')">Good</th>
+                <th scope="col" class="width-10" ng-click="user.updateSort('quantity')">Sold</th>
+                <th scope="col" class="width-20" ng-click="user.updateSort('delivered')">Status</th>
+                <th scope="col" class="width-20" ng-click="user.updateSort('price')">$ Amount</th>
+                <th scope="col" class="width-20" ng-click="user.updateSort('buyer')">Buyer</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="height:350px;">
 
-          <tr ng-repeat="good in user.purchases">
-                <td>{{good.good}}</td>
-                <td>{{good.quantity}}</td>
-                <td>
+          <tr ng-repeat="good in user.purchases | filterPurchases:user.orderSearch:user.deliveryStatus:'buyer' | orderBy:user.sortBy:user:reverseSort">
+                <td class="width-10">{{good.created_at | date:'M/d'}}</td>
+                <td class="width-20">{{good.good}}</td>
+                <td class="width-10">{{good.quantity}}</td>
+                <td class="width-20">
                   <select name="delivered" ng-model="good.delivered" ng-change="user.updateDeliveryStatus(good)">
                     <option value="true">Delivered</option>
                     <option value="false">Not Delivered</option>
                   </select>
                 </td>
-                <td>{{good.price*good.quantity | currency}}</td>
-                <td>{{good.buyer}}</td>
+                <td class="width-20">{{good.price*good.quantity | currency}}</td>
+                <td class="width-20">{{good.buyer}}</td>
           </tr>
             <tr>
 
@@ -137,39 +148,53 @@
 <!-- currentUser && !farmer -->
 <div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==0">
   <div class="row">
-    <h3>
-      Your Orders
-    </h3>
-    <table  class="table table-striped" summary="Inventory">
-    <thead class="thead-inverse">
-      <tr>
-            <th scope="col">Good</th>
-            <th scope="col">Quantity Remaining</th>
-            <th scope="col">Status</th>
-            <th scope="col">Price Per Unit</th>
-            <th>Seller</th>
-      </tr>
-    </thead>
-    <tbody>
+      <h3>
+        Your Orders
+      </h3>
+      <div class="row" style="margin-top:10px;margin-bottom:10px;pad:10px;border-top:2px solid #000;border-bottom:2px solid #000;">
+        <input class="width-70" ng-model="user.orderSearch" placeholder="Search Goods Sold and Sellers" /></input>
+        <label>Delivery Status</label>
+        <select name="deliveryStatus" ng-model="user.deliveryStatus">
+          <option value="false">N/A</option>
+          <option value="1">Delivered</option>
+          <option value="0">Not Delivered</option>
+        </select>
+      </div>
+      <div>
+        <table  class="table table-striped" summary="Inventory">
+        <thead class="thead-inverse">
+          <tr>
+                <th scope="col" class="width-10">Date</th>
+                <th scope="col" class="width-20">Good</th>
+                <th scope="col" class="width-10">Sold</th>
+                <th scope="col" class="width-20">Status</th>
+                <th scope="col" class="width-20">$ Amount</th>
+                <th scope="col" class="width-20">Seller</th>
+            </tr>
+        </thead>
+        <tbody style="height:350px;">
 
-      <tr ng-repeat="good in user.purchases">
-            <td>{{good.good}}</td>
-            <td>{{good.quantity}}</td>
-            <td>
-              <select name="delivered" ng-model="good.delivered">
-                <option value="true">Delivered</option>
-                <option value="false">Not Delivered</option>
-              </select>
-            </td>
-            <td>{{good.price | currency}}</td>
-            <td>{{good.seller}}</td>
-      </tr>
-        <tr>
-      </tr>
+          <tr ng-repeat="good in user.purchases | filterPurchases:user.orderSearch:user.deliveryStatus:'seller'">
+                <td class="width-10">{{good.created_at | date:'M/d'}}</td>
+                <td class="width-20">{{good.good}}</td>
+                <td class="width-10">{{good.quantity}}</td>
+                <td class="width-20">
+                  <select name="delivered" ng-model="good.delivered" ng-change="user.updateDeliveryStatus(good)">
+                    <option value="true">Delivered</option>
+                    <option value="false">Not Delivered</option>
+                  </select>
+                </td>
+                <td class="width-20">{{good.price*good.quantity | currency}}</td>
+                <td class="width-20 capitalize">{{good.seller}}</td>
+          </tr>
+            <tr>
 
-      </tbody>
-    </table>
-  </div>
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
 </div>
 
 <!-- !currentUser && farmer -->

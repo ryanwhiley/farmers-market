@@ -48,7 +48,7 @@
 
 Total: {{good.good.pricePerUnit*good.userQuantity+(good.good.delivery=='delivery' ? good.good.delivery_fee : 0) | currency}}<br>
 <button ng-click="good.addToCart()" type="button" class="btn btn-success">Add to Cart</button>
-<button onclick="history.back()" type="button" class="btn btn-warning">Back</button>
+<!-- <button onclick="history.back()" type="button" class="btn btn-warning">Back</button> -->
 <div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
   <div class="col-md-6">{{ good.success }}</div>
 </div>
