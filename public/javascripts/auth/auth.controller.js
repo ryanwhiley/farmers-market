@@ -25,11 +25,11 @@ function AuthCtrl($scope, $state, auth){
         $state.go('newUser');
       }
     });
-    if(vm.user.farmer===0){
-      auth.sendNewFarmerEmail(vm.user);
-    }else{
-      auth.sendNewUserEmail(vm.user);
-    }
+    // if(vm.user.farmer===0){
+    //   auth.sendNewFarmerEmail(vm.user);
+    // }else{
+    //   auth.sendNewUserEmail(vm.user);
+    // }
   }
 
   function logIn(){
