@@ -1,22 +1,21 @@
 var nodemailer = require('nodemailer')
 		, email = {};
 
-console.log(process.env.EMAIL_NAME, process.env.EMAIL_PW);
+// console.log(process.env.EMAIL_NAME, process.env.EMAIL_PW);
 
 var transporter = nodemailer.createTransport({
-  service: "Gmail",
+  service: "Yahoo",
   auth: {
-    user: process.env.EMAIL_NAME, // Your email id
-    pass: process.env.EMAIL_PW // Your password
-  },
-  secure: true
+    user: process.env.YAHOO_EMAIL, // Your email id
+    pass: process.env.YAHOO_PW // Your password
+  }
 
 });
 
 email.sendForgotPasswordEmail = function(email,token,host){
 	var mailOptions = {
       to: email,
-      from: process.env.EMAIL_NAME,
+      from: process.env.YAHOO_EMAIL,
       subject: 'Farm to Meal Password Reset',
       text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account on Farmers Market.\n\n' +
         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
