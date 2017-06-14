@@ -46,8 +46,8 @@ hr{
 
 /* Header */
 
-header h1, header h2, header h3, header h4, header h5, header h6{
-  color: #E4FAFD;
+header p{
+  color: #444444;
 }
 header a{
   color: #82ed96;
@@ -57,10 +57,19 @@ header a:hover{
   text-decoration: none;
 }
 
-/* Nav */
-.navbar-harvest{
-      border-bottom: 3px solid #FFD9B5;
+/* Styles */
+
+.border-bottom{
+    border-bottom: 3px solid #FFD9B5;
 }
+.pointer{
+  cursor: pointer;
+}
+.center{
+  text-align: center;
+  margin: 0 auto;
+}
+/* Nav */
 .navbar .navbar-nav > li:hover > a,
 .navbar .navbar-nav > li:hover > a:hover,
 .navbar .navbar-nav > li:hover > a:focus {
@@ -167,10 +176,7 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
 /* Sidebar */
 @media (max-width: 768px) {
     .navbar-fixed-side {
-        border: 0;
-        z-index:0;
-        background-color: transparent;
-        text-align: center;
+        display:none;
     }
 }
 
@@ -187,6 +193,7 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
         z-index:0;
         background-color: transparent;
         border-right: 0;
+        padding-bottom: 150px;
     }
     .navbar-fixed-side .container,
     .navbar-fixed-side .container-fluid {

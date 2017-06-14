@@ -1,13 +1,16 @@
 var nodemailer = require('nodemailer')
 		, email = {};
+var inLineCss = require('nodemailer-juice');
 
 var transporter = nodemailer.createTransport({
+
   service: 'Gmail',
   auth: {
     user: process.env.EMAIL_NAME, // Your email id
     pass: process.env.EMAIL_PW // Your password
   }
 });
+transporter.use('compile', inLineCss());
 
 email.sendForgotPasswordEmail = function(email,token,host){
 	var mailOptions = {
@@ -34,7 +37,7 @@ email.lowStockNotice = function(goods,recipient){
     to: recipient,
     from: 'hello@farmtomeal.com',
     subject: 'You have low stock',
-    html: 'Hello!  We are emailing you let you know that the following goods are in low stock on FarmToMeal:<br> '+lowStockHTML(goods)
+    html: '<style>p { color: #fff; }</style><p>Hello! <br> We are emailing you let you know that the following goods are in low stock on FarmToMeal:<br><br> '+lowStockHTML(goods)+'</p>'
   }
   sendEmail(mailOptions);
 }
@@ -57,7 +60,7 @@ email.sendNewUserEmail = function(user){
     to: user.email,
     from: 'hello@farmtomeal.com',
     subject: 'Welcome to Farm to Meal!',
-    html: 'Hello '+user.username+' and welcome to Farm to Meal!<br> Here are some helpful links or something.'
+    html: '<style>p { color: red; }</style><p>Hello '+user.username+' and welcome to Farm to Meal!</p><br> '
   };
   sendEmail(mailOptions);
   return 'success';
@@ -104,13 +107,13 @@ function buildEmailSubject(toSeller, goods){
   if(toSeller){
     return 'Hello, You just made a sale!';
   }else{
-    return 'Hello, You just bought cool shit!';
+    return 'Hello, You just bought cool stuff!';
   }
 }
 
 function buildEmailHTMLSeller(toSeller, user, goods){
   return "<b>Hey</b><br>"+
-          "<p>We're emailing you to notify that your following good(s) have been pruchased!</p>"+buildGoodsStringSeller(goods)+
+          "<p>We're emailing you to notify that your following good(s) have been purchased!</p>"+buildGoodsStringSeller(goods)+
           "<b>Buyer Info</b><p>"+user.username+"</p><p>"+user.address+"</p><p>"+user.email+"</p><p>"+user.phone+"</p>";
 }
 
@@ -145,4 +148,3 @@ function buildGoodsStringBuyer(cart){
 }
 
 module.exports = email;
-

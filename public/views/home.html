@@ -1,9 +1,11 @@
 <!-- currentUser && farmer -->
 <!-- lists out farmers inventory -->
-<h1>
-  Dashboard
-</h1>
+
+
 <div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
+  <h1>
+    Dashboard
+  </h1>
     <h3>
       Your Inventory
     </h3>
@@ -98,6 +100,9 @@
 
 <!-- currentUser && !farmer -->
 <div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==0">
+  <h1>
+    Dashboard
+  </h1>
   <div class="row">
     <h3>
       Your Orders
