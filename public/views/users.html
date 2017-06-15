@@ -151,7 +151,6 @@
       </tr>
     </thead>
     <tbody>
-
       <tr ng-repeat="good in user.purchases">
             <td>{{good.good}}</td>
             <td>{{good.quantity}}</td>
@@ -163,11 +162,15 @@
             </td>
             <td>{{good.price | currency}}</td>
             <td>{{good.seller}}</td>
-      </tr>
-        <tr>
-      </tr>
 
-      </tbody>
+      </tr>
+    </tbody>
+      <tfoot>
+        <!-- Need to make this do something -->
+      <tr align="right">
+        <td align="right"><button class="btn btn-success" value="update">Update</button></td>
+      </tr>
+    </tfoot>
     </table>
   </div>
 </div>

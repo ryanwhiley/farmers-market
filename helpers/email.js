@@ -37,7 +37,12 @@ email.lowStockNotice = function(goods,recipient){
     to: recipient,
     from: 'hello@farmtomeal.com',
     subject: 'You have low stock',
-    html: '<style>p { color: #fff; }</style><p>Hello! <br> We are emailing you let you know that the following goods are in low stock on FarmToMeal:<br><br> '+lowStockHTML(goods)+'</p>'
+    html: '<style>body{ margin: 0; padding: 0;}table{ border-collapse: collapse; text-align: center;}td{ background-color: #70bbd9; padding: 40px 0 30px 0;}img{ width:300px; height: 230px; display:block;}</style>\
+		<body> <table> <tr> <td> <table> <tr> <td> <img /> </td> </tr> <tr> <td> <table> <tr> <td> Lorem ipsum dolor sit amet! </td> </tr> <tr> <td> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat. </td> </tr> <tr> <td> <table> <tr> <td> <table> <tr> <td> <img /> </td> </tr> <tr> <td> Lorem ipsum dolor sit amet, consectetur\
+		adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat. </td> </tr> </table> </td> <td> &nbsp; </td> <td> <table> <tr> <td> <img /> </td> </tr> <tr> <td> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque\
+		at erat. </td> </tr> </table> </td> </tr> </table> </td> </tr> </table> </td> </tr> <tr> <td> </td> </tr> </table> </td> </tr> </table><p>Hello! <br> We are emailing you let you know that the following goods are in low stock on FarmToMeal:<br><br> '
+		+lowStockHTML(goods)
+		+'</p></body>'
   }
   sendEmail(mailOptions);
 }
