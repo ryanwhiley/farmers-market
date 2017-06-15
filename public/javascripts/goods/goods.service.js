@@ -9,7 +9,7 @@ function goodsService($http,auth){
     categories: {
       'produce':['Fruit','Vegetables','Greens','Mushrooms','Garlic','Onions','Other'],
       'dairy':['Milk','Eggs','Cheese','Yogurt','Butter','Other'],
-      'meat':['Poultry','Beef','Pork','Other'],
+      'meat':['Poultry','Beef','Pork','Fish','Other'],
       'other':['Other']
     }
   };

@@ -28,7 +28,7 @@
   <script src="/javascripts/users/users.controller.js?r=<%= Math.random()%>"></script>
 </head>
 <body ng-app="farmersMarket" ng-controller="MainCtrl as main">
-  <nav class="navbar navbar-harvest" ng-controller="NavCtrl">
+  <nav class="navbar border-bottom" ng-controller="NavCtrl">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -86,7 +86,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser().username }}">Reorder</a></li>
-          <li><a href="/#/cart">Cart</a></li>
+          <li ng-show="isLoggedIn()"><a href="/#/cart">Cart</a></li>
           <li ng-show="isLoggedIn()&&currentUser().farmer"><a href="/#/new">Post</a></li>
           <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
           <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
@@ -104,7 +104,7 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-  
+
   <main>
     <div class="container-fluid">
       <div class="row">
