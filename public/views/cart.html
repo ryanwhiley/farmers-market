@@ -3,7 +3,6 @@
 <div ng-show="cart.success" class="alert alert-success row">
   <div class="col-md-6"> {{ cart.success }}</div>
 </div>
-<<<<<<< HEAD
 <!-- <div class="page-header">
 	<div class="row">
 		<div class="col-md-4">
@@ -73,7 +72,7 @@
 
     <tr ng-repeat="good in cart.currentUser.cart">
         <td class="width-25"><a href="/#/{{good.seller.name}}/{{good.good_id}}">{{good.good}}</a></td>
-        <td class="width-25">			
+        <td class="width-25">
         	<input type='number'
             ng-model="good.quantity"
             ng-model-options='{ debounce: 300 }'
@@ -94,7 +93,7 @@
 
 <div class="row">
 	<div class="col-md-3">
-		<h5><b>Totals:</b></h5>
+		<h5><b>Total:</b></h5>
 	</div>
 	<div class="col-md-3">
 		<h5>{{cart.totals.totalPrice | currency}}</h5>
