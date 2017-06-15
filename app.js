@@ -13,8 +13,8 @@ require('./models/Users');
 require('./models/Purchases');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/market');
-// mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
+// mongoose.connect('mongodb://localhost/market');
+mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
 
 var passport = require('passport');
 
