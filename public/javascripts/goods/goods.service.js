@@ -9,7 +9,7 @@ function goodsService($http,auth){
     categories: {
       'produce':['Fruit','Vegetables','Greens','Mushrooms','Garlic','Onions','Other'],
       'dairy':['Milk','Eggs','Cheese','Yogurt','Butter','Other'],
-      'meat':['Poultry','Beef','Pork','Other'],
+      'meat':['Poultry','Beef','Pork','Fish','Other'],
       'other':['Other']
     }
   };
@@ -48,13 +48,11 @@ function goodsService($http,auth){
     });
   };
   o.search = function(term){
-    console.log(term);
     return $http.get('/api/goods/search/'+term).success(function(res){
       return res;
     })
   }
   o.create = function(good) {
-    console.log(good);
     return $http.post('/api/goods', good, {
       headers: {Authorization: 'Bearer '+auth.getToken()}
     }).success(function(data){
@@ -83,7 +81,6 @@ function goodsService($http,auth){
     });
   };
   o.getByIDs = function(good_ids){
-    console.log(good_ids);
     return $http.get('/api/goods/ids', {params: { good_ids: good_ids }}).then(function(res){
       return res.data;
     })

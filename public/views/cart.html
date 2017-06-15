@@ -1,6 +1,9 @@
+
+
 <div ng-show="cart.success" class="alert alert-success row">
   <div class="col-md-6"> {{ cart.success }}</div>
 </div>
+<<<<<<< HEAD
 <!-- <div class="page-header">
 	<div class="row">
 		<div class="col-md-4">
@@ -55,36 +58,40 @@
 
 <button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-disabled="cart.submissionError" ng-click="cart.purchase()">Purchase</button> -->
 
+<div class="row">
+<table  class="table table-striped col-md-12" summary="Inventory">
 
-<table  class="table table-striped" summary="Inventory">
 <thead class="thead-inverse">
   <tr>
-        <th>Product Details</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Remove</th>
+        <th class="width-25">Product Details</th>
+        <th class="width-25">Quantity</th>
+        <th class="width-25">Price</th>
+        <th class="width-25">Remove</th>
     </tr>
 </thead>
 <tbody>
 
     <tr ng-repeat="good in cart.currentUser.cart">
-        <td><a href="/#/{{good.seller.name}}/{{good.good_id}}">{{good.good}}</a></td>
-        <td>			<input type='number'
-                ng-model="good.quantity"
-                ng-model-options='{ debounce: 300 }'
-                ng-change='cart.checkQuantity(good)'
-              />
+        <td class="width-25"><a href="/#/{{good.seller.name}}/{{good.good_id}}">{{good.good}}</a></td>
+        <td class="width-25">			
+        	<input type='number'
+            ng-model="good.quantity"
+            ng-model-options='{ debounce: 300 }'
+            ng-change='cart.checkQuantity(good)'
+          />
+	        <div ng-show="good.error" class="alert alert-danger row">
+	          <span>{{good.error}}</span>
+	        </div>
         </td>
-        <td>{{(good.price*good.quantity) | currency}}</td>
-        <div ng-show="good.error" class="alert alert-danger row">
-          <span>{{good.error}}</span>
-        </div>
+        <td class="width-25">{{(good.price*good.quantity) | currency}}</td>
 
-        <td><img ng-click="cart.removeFromCart($index)" src="images/trash.png" alt="" title="" border="0" /></td>
+        <td class="width-25"><img class="pointer" ng-click="cart.removeFromCart($index)" src="images/trash.png" alt="" title="" border="0" /></td>
     </tr>
   </tbody>
 
 </table>
+</div>
+
 <div class="row">
 	<div class="col-md-3">
 		<h5><b>Totals:</b></h5>

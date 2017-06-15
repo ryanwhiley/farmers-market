@@ -5,11 +5,28 @@
 
 <div class="page-header">
   <div class="row">
-    <h2>Welcome to Farm to Meal, NEW USER!</h2>
-    <p>This page is meant to help you get accustomed to Farm to Meal with links to useful pages and some of our favorite goods.</p>
+    <h2>Welcome to Farm to Meal, {{newUser.currentUser.username}}!</h2>
+    <p>Here at Farm to Meal, our mission is to provide you with the means to easily purchase
+    	locally grown food from local farmers.  In order to make that easier for you, we've provided
+    	several useful links and notes below to get started, as well as some of our most popular foods.</p>
   </div>
 
   <div class="row">
+  	<p>Along the top of the page you will see several links that will take you food listings by
+  		type.  Navigate through these pages to find whatever type of food you'd like.</p>
 
+  	<h3><a href="/#/cart">Cart</a></h3>
+  	<p>Once you have added goods to you cart, this page is where you will place the order.  The link to this
+  		page is located in the upper right-hand corner of the page.</p>
+
+  	<h3><a href="/#/users/{{newUser.currentuser.username}}">Dashboard</a></h3>
+  	<p>On this page, you view a list of all the orders you have placed.  You can also mark orders as delivered on this page.</p>
+  </div>
+
+  <div class="row">
+  	<h3>Below are some of our most popular goods.</h3>
+  	<div ng-repeat="good in newUser.mostPopular">
+  		<h4><a href="/#/good/{{good._id}}" class="capitalize">{{good.name}}</a> by <span class="capitalize">{{good.seller}}</span></h4>
+  	</div>
   </div>
 </div>

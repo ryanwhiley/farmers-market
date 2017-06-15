@@ -3,11 +3,35 @@
 <!-- link to dashboard -->
 <div class="page-header">
   <div class="row">
-    <h2>Welcome to Farm to Meal, NEW FARMER!</h2>
-    <p>This is a quick slideshow meant to show you useful links on this site.</p>
+    <h2>Welcome to Farm to Meal, <span class="capitalize">{{newFarmer.currentUser.username}}!</span></h2>
+    <p>As a farmer, we believe that it is crucial that you can easily organize your inventory and post new inventory.  
+    	So we've provided you will several links below to do just that.</p>
   </div>
 
   <div class="row">
-  	SLIDESHOW
+  	<h3><a href="/#/new">Post</a></h3>
+  	<p>This is the page where you post new goods. All the information you need to post is located here.
+  		(The link is also located in the upper right-hand side of every page).
+  	</p>
+  	<hr/>
+  	<h3><a href="/#/users/{{newFarmer.currentUser.username}}">Dashboard</a></h3>
+  	<p>Two very important tools are located on this page: Inventory and Orders. So we will cover them separately.</p>
+  	<h5><u>Inventory</u></h5>
+  	<p>The Inventory tab on this page contains a full list of all your inventory and information regarding your invertory, 
+  		including quantity remaining.  You can also update goods from this page by click the update button at the right side 
+  		of a given row.  <b>Most importantly</b>, the update page where you can update quantity remaining so that you do not have to 
+  	re-post the same good.  You will also receive an email when you have low stock of a certain good.</p>
+  	
+  	<h5><u>Orders</u></h5>
+  	<p>The Orders tab is a list of all the orders you have sold, delivered and undelivered.  From here you have the option
+  		to "close out" orders by marking them as delivered, assuming they have been delivered.  But doing this is merely for
+  		your own records.</p>
+
+  	<p><b>PS:</b> you can access this page by hovering over your username in the upper right-hand corner of the screen
+  		and selecting "Dashboard" from the dropdown menu.</p>
+  		<hr/>
+  	<h3><a href="/#/cart">Cart</a></h3>
+  	<p>As a Farmer, you are still able to purchase goods from other farmers.  If you choose to do so, all goods that you
+  		have added to your cart will be here and this is where you place your order.</p>
   </div>
 </div>

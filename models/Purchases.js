@@ -34,7 +34,7 @@ PruchasesSchema.statics.create = function(purchase,cb){
 }
 
 PruchasesSchema.statics.findByUser = function(user,cb){
-	return this.find( { $or:[ {'seller':user}, {'buyer':user}]}).exec(cb);
+	return this.find( { $or:[ {'seller':user}, {'buyer':user}]}).sort({created_at: -1}).exec(cb);
 }
 
 PruchasesSchema.statics.mostPopular = function(count,cb){

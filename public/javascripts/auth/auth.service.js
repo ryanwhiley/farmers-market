@@ -133,7 +133,7 @@ function auth($http, $window){
       return err;
     })
   };
-  auth.sendNewFarmerEmail = function(user){
+  auth.sendNewuserEmail = function(user){
     return $http.put('/api/users/email/user',{user:user})
     .success(function(res){
       return res;

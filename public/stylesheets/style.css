@@ -46,8 +46,8 @@ hr{
 
 /* Header */
 
-header h1, header h2, header h3, header h4, header h5, header h6{
-  color: #E4FAFD;
+header p{
+  color: #444444;
 }
 header a{
   color: #82ed96;
@@ -57,10 +57,19 @@ header a:hover{
   text-decoration: none;
 }
 
-/* Nav */
-.navbar-harvest{
-      border-bottom: 3px solid #FFD9B5;
+/* Styles */
+
+.border-bottom{
+    border-bottom: 3px solid #FFD9B5;
 }
+.pointer{
+  cursor: pointer;
+}
+.center{
+  text-align: center;
+  margin: 0 auto;
+}
+/* Nav */
 .navbar .navbar-nav > li:hover > a,
 .navbar .navbar-nav > li:hover > a:hover,
 .navbar .navbar-nav > li:hover > a:focus {
@@ -167,9 +176,7 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
 /* Sidebar */
 @media (max-width: 768px) {
     .navbar-fixed-side {
-        border: 0;
-        z-index:0;
-        background-color: transparent;
+        display:none;
     }
 }
 
@@ -186,6 +193,7 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
         z-index:0;
         background-color: transparent;
         border-right: 0;
+        padding-bottom: 150px;
     }
     .navbar-fixed-side .container,
     .navbar-fixed-side .container-fluid {
@@ -212,7 +220,7 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
     }
     .navbar-fixed-side .navbar-nav {
         float: none;
-        margin: 0 -15px
+        margin: 0;
     }
     .navbar-fixed-side .navbar-nav>li {
         float: none
@@ -363,3 +371,78 @@ header {
     }
 }
 /* Dashboard */
+
+
+
+
+/* Stuff Ryan Added*/
+
+table {
+        width: 100%;
+    }
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 30px;
+    z-index: 10000;
+    /*text-align: left;*/
+}
+
+tbody {
+    overflow-y: auto;
+    z-index: 1;
+}
+
+thead {
+    /* fallback */
+    z-index: 10000;
+}
+
+
+tbody td, thead th {
+    width: 15%;
+    float: left;
+}
+
+.width-5{
+    width:5% !important;
+}
+
+.width-10{
+    width:10% !important;
+}
+
+.width-20{
+    width:20% !important;
+}
+
+.width-25{
+    width:25% !important;
+}
+
+.width-30{
+    width:30% !important;
+}
+
+.width-70{
+    width:70% !important;
+}
+
+
+.modal-dialog {
+    position: absolute;
+    left: 25%;
+    top: 20%;
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-70%, -70%);
+}

@@ -35,6 +35,13 @@ router.put('/lowStock', function(req,res,next){
   res.json({'success':'success'});
 })
 
+router.put('/update', function(req, res, next) {
+  Purchase.update({'_id':req.body.purchase._id}, req.body.purchase ,function(err,purchase){
+    if(err){ return console.log(err); next(err); }
+    res.json(purchase);
+  })
+});
+
 router.get('/mostPopular/:count', function(req,res,next){
   Purchase.mostPopular(req.params.count, function(err,purchases){
     if(err){ return next(err); }
