@@ -9,12 +9,9 @@
 </div>
 <div ng-controller="TabsDemoCtrl" class="col-md-12">
 <uib-tabset active="activeJustified" justified="true">
-  <uib-tab index="0" heading="Inventory">
-    <div class="row">
-      <h3>
-        Your Inventory
-      </h3>
-
+  <uib-tab index="0" heading="Your Inventory">
+    <div class="container-fluid">
+      <div class="row">
         <table class="table table-striped" summary="Inventory">
           <thead class="thead-inverse">
             <tr>
@@ -25,7 +22,7 @@
               <th scope="col" class="width-5"></th>
             </tr>
           </thead>
-          <tbody style="height:350px;">
+          <tbody>
             <tr ng-repeat="good in user.goods">
               <td class="width-30">{{good.name}}</td>
               <td class="width-30">{{good.quantityForSale}}</td>
@@ -38,8 +35,10 @@
         <a href="/#/new" ><button type="button" class="btn btn-success" aria-label="Add New Item">
           Add new item
         </button></a>
-         <!-- <a href="/#/new" ><button type="button" class="btn btn-warning" aria-label="Delete Items">
-   Delete items
+        </div>
+         <!-- <a href="/#/new" ><button type="button" class="btn btn-warning" aria-label="Delete Items"> -->
+
+   <!-- Delete items
    </button></a> -->
       <!-- Replace with inventory logic -->
        <div ng-if="cart.currentUser.cart.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
@@ -70,7 +69,6 @@
 
       <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
@@ -81,21 +79,19 @@
               <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="user.theyDontWantToDeleteThisGood()">No, I don't want to delete {{user.goodToDelete.name}}.</button><br><br><br>
               <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="user.deleteGood(user.goodToDelete._id)">Yes, delete it.</button>
             </div>
-
           </div>
-
         </div>
       </div>
     </div>
 
   </uib-tab>
-  <uib-tab index="1" heading="Orders">
-    <div class="row">
-      <h3>
-        Your Orders
-      </h3>
+  <uib-tab index="1" heading="Your Orders">
+    <div class="container-fluid">
       <div class="row" style="margin-top:10px;margin-bottom:10px;pad:10px;">
-        <input class="width-70" ng-model="user.orderSearch" placeholder="Search Goods Sold and Buyers" /></input>
+        <div class="form-group center">
+          <label>Search Goods Sold and Buyers:</label><input class="width-70 search-field" ng-model="user.orderSearch"/></input>
+        </div>
+      </hr>
         <label>Delivery Status</label>
         <select name="deliveryStatus" ng-model="user.deliveryStatus">
           <option value="false">N/A</option>
@@ -115,7 +111,7 @@
                 <th scope="col" class="width-20" ng-click="user.updateSort('buyer')">Buyer</th>
             </tr>
         </thead>
-        <tbody style="height:350px;">
+        <tbody>
 
           <tr ng-repeat="good in user.purchases | filterPurchases:user.orderSearch:user.deliveryStatus:'buyer' | orderBy:user.sortBy:user:reverseSort">
                 <td class="width-10">{{good.created_at | date:'M/d'}}</td>
@@ -130,10 +126,8 @@
                 <td class="width-20">{{good.price*good.quantity | currency}}</td>
                 <td class="width-20">{{good.buyer}}</td>
           </tr>
-            <tr>
-
+          <tr>
           </tr>
-
           </tbody>
         </table>
       </div>
@@ -152,7 +146,7 @@
         Your Orders
       </h3>
       <div class="row" style="margin-top:10px;margin-bottom:10px;pad:10px;border-top:2px solid #000;border-bottom:2px solid #000;">
-        <input class="width-70" ng-model="user.orderSearch" placeholder="Search Goods Sold and Sellers" /></input>
+        <label>Search Goods Sold and Sellers:</label><input class="width-70" ng-model="user.orderSearch" /></input>
         <label>Delivery Status</label>
         <select name="deliveryStatus" ng-model="user.deliveryStatus">
           <option value="false">N/A</option>
@@ -172,7 +166,7 @@
                 <th scope="col" class="width-20">Seller</th>
             </tr>
         </thead>
-        <tbody style="height:350px;">
+        <tbody>
 
           <tr ng-repeat="good in user.purchases | filterPurchases:user.orderSearch:user.deliveryStatus:'seller'">
                 <td class="width-10">{{good.created_at | date:'M/d'}}</td>

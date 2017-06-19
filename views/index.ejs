@@ -38,15 +38,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-            <a class="navbar-brand" href="/#/home">
+        <a class="navbar-brand" href="/#/home">
           <img src="/images/farmtomeal.png" alt="farmtomeal">
-          </a>
+        </a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav" style="margin-left:23%;border-right:1px solid #eee;border-left:1px solid #eee;pad-bottom:5px;pad-top:5px;">
-            <li><a href="/#/home">Home</a></li>
+          <ul class="nav navbar-nav" >
+            <!-- <li><a href="/#/home">Home</a></li> -->
             <li class="dropdown">
               <a href="/#/goods/produce" class="dropdown-toggle capitalize goods-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produce</a>
               <ul class="dropdown-menu">
@@ -83,8 +83,9 @@
             <li class="dropdown">
               <a href="/#/search">Search</a>
             </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
+          </ul>
+          <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
           <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser().username }}">Reorder</a></li>
           <li ng-show="isLoggedIn()"><a href="/#/cart">Cart</a></li>
           <li ng-show="isLoggedIn()&&currentUser().farmer"><a href="/#/new">Post</a></li>
@@ -101,39 +102,53 @@
             </ul>
           </li>
         </ul>
+          </div>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-
   <main>
     <div class="container-fluid">
       <div class="row">
-          <div class="col-md-2">
+          <div class="col-xs-4 col-md-2">
             <nav class="navbar navbar-default navbar-fixed-side" ng-show="main.arr.indexOf(main.currentPath)>=0">
-              <h4>Search by Category</h4>
-              <ul class="nav navbar-nav">
-                <h4>Produce</h4>
-                  <li><a href="/#/goods/fruit">Fruits</a></li>
-                  <li><a href="/#/goods/vegetables">Vegetables</a></li>
-                  <li><a href="/#/goods/greens">Greens</a></li>
-                  <li><a href="/#/goods/mushrooms">Mushrooms</a></li>
-                  <li><a href="/#/goods/garlic">Garlic</a></li>
-                  <li><a href="/#/goods/onions">Onions</a></li>
-                <h4>Dairy</h4>
-                  <li><a href="/#/goods/milk">Milk</a></li>
-                  <li><a href="/#/goods/eggs">Eggs</a></li>
-                  <li><a href="/#/goods/cheese">Cheese</a></li>
-                  <li><a href="/#/goods/yogurt">Yogurt</a></li>
-                  <li><a href="/#/goods/butter">Butter</a></li>
-                <h4>Meat</h4>
-                  <li><a href="/#/goods/poultry">Poultry</a></li>
-                  <li><a href="/#/goods/beef">Beef</a></li>
-                  <li><a href="/#/goods/pork">Pork</a></li>
-                  <li><a href="/#/goods/fish">Fish</a></li>
-                  <a href="/#/goods/other"><h4>Other</h4></a>
-              </ul>
-          </div>
-          <div class="col-sm-8">
+              <h5>Search by Category</h5>
+              <div ng-controller="AccordionCtrl">
+                <uib-accordion close-others="oneAtATime">
+                  <ul class="nav navbar-nav">
+                    <div class="panel-default" uib-accordion-group heading="Produce" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                      <a href="/#/goods/produce"><li>All Produce</li></a>
+                      <a href="/#/goods/fruit"><li>Fruits</li></a>
+                      <a href="/#/goods/vegetables"><li>Vegetables</li></a>
+                      <a href="/#/goods/greens"><li>Greens</li></a>
+                      <a href="/#/goods/mushrooms"><li>Mushrooms</li></a>
+                      <a href="/#/goods/garlic"><li>Garlic</li></a>
+                      <a href="/#/goods/onions"><li>Onions</li></a>
+                    </div>
+                    <div uib-accordion-group heading="Dairy" is-disabled="status.isFirstDisabled">
+                      <a href="/#/goods/dairy"><li>All Dairy</li></a>
+                      <a href="/#/goods/milk"><li>Milk</li></a>
+                      <a href="/#/goods/eggs"><li>Eggs</li></a>
+                      <a href="/#/goods/cheese"><li>Cheese</li></a>
+                      <a href="/#/goods/yogurt"><li>Yogurt</li></a>
+                      <a href="/#/goods/butter"><li>Butter</li></a>
+                    </div>
+                    <div uib-accordion-group heading="Meat" is-disabled="status.isFirstDisabled">
+                      <a href="/#/goods/meat"><li>All Meat</li></a>
+                      <a href="/#/goods/poultry"><li>Poultry</li></a>
+                      <a href="/#/goods/beef"><li>Beef</li></a>
+                      <a href="/#/goods/pork"><li>Pork</li></a>
+                      <a href="/#/goods/fish"><li>Fish</li></a>
+                    </div>
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <a href="/#/goods/other"><h4>Other</h4></a>
+                        </div>
+                      </div>
+                  </ul>
+                </uib-accordion>
+              </div>
+            </div>
+          <div class="col-xs-8 col-md-8" ng-show="main.arr.indexOf(main.currentPath)>=0">
           <ui-view></ui-view>
         </div>
       </div>

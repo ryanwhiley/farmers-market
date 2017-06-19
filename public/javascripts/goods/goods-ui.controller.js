@@ -19,4 +19,14 @@ angular.module('farmersMarket.goods-ui.controller', [])
 
 .controller('TabsDemoCtrl', function ($scope, $window) {
 
+})
+
+.controller('AccordionCtrl', function ($scope) {
+  $scope.oneAtATime = true;
+
+  $scope.status = {
+    isCustomHeaderOpen: false,
+    isFirstOpen: true,
+    isFirstDisabled: false
+  };
 });

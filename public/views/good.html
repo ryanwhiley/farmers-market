@@ -19,46 +19,44 @@
         <p class="capitalize">Type: {{good.good.type}}</p>
         <p class="capitalize">Category: {{good.good.category}}</p>
         <p>Producer: <a href="#/users/{{good.good.seller}}" class="capitalize">{{good.good.seller}}</a></p>
-
       </div>
     </div>
-
+<!-- Current user is not seller of good-->
   <div ng-if="good.currentUser.username!=good.good.seller">
-  <div ng-if="good.good.quantityForSale>0">
-  <label>
-    Quantity
-  </label>
-  <select ng-model="good.userQuantity">
-    <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
-  </select>
-</div>
+    <div ng-if="good.good.quantityForSale>0">
+    <label>
+      Quantity
+    </label>
+    <select ng-model="good.userQuantity">
+      <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
+    </select>
+    </div>
     <div ng-model="good.userQuantity">
       <p class="error_text" ng-if="good.good.quantityForSale == 0">Sold out</p>
     </div>
 
+    <label>Pickup or Delivery</label>
 
+    <select ng-model="good.good.delivery">
+      <option value=""></option>
+      <option ng-disabled="!good.good.can_deliver" value="delivery">Delivery</option>
+      <option value="pickup">Pickup</option>
+    </select><br>
 
-<label>Pickup or Delivery</label>
-<select ng-model="good.good.delivery">
-  <option value=""></option>
-  <option ng-disabled="!good.good.can_deliver" value="delivery">Delivery</option>
-  <option value="pickup">Pickup</option>
-</select><br>
+    <span ng-if="good.good.delivery=='delivery'">
+      <b>Delivery Fee:</b> {{good.good.delivery_fee | currency}}<br>
+      <b>Estimated Delivery Time:</b> {{good.good.delivery_time}}<br>
+    </span><br>
 
-<span ng-if="good.good.delivery=='delivery'">
-  <b>Delivery Fee:</b> {{good.good.delivery_fee | currency}}<br>
-  <b>Estimated Delivery Time:</b> {{good.good.delivery_time}}<br>
-</span><br>
+    <span ng-if="good.good.delivery=='pickup'">
+      <!-- pickup -->
+    </span><br>
 
-<span ng-if="good.good.delivery=='pickup'">
-  <!-- pickup -->
-</span><br>
-
-Total: {{good.good.pricePerUnit*good.userQuantity+(good.good.delivery=='delivery' ? good.good.delivery_fee : 0) | currency}}<br>
-<button ng-click="good.addToCart()" type="button" class="btn btn-success">Add to Cart</button>
-<!-- <button onclick="history.back()" type="button" class="btn btn-warning">Back</button> -->
-<div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
-  <div class="col-md-6">{{ good.success }}</div>
-</div>
+    Total: {{good.good.pricePerUnit*good.userQuantity+(good.good.delivery=='delivery' ? good.good.delivery_fee : 0) | currency}}<br>
+    <button ng-click="good.addToCart()" type="button" class="btn btn-success">Add to Cart</button>
+    <button onclick="history.back()" type="button" class="btn btn-warning">Back</button>
+    <div ng-show="good.success" class="alert alert-success row" style="margin-top:20px;">
+      <div class="col-md-6">{{ good.success }}</div>
+    </div>
   </div>
 </div>

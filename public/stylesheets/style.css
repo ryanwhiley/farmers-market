@@ -115,8 +115,7 @@ p{
   -webkit-transition:.5s;
   /* ...and now for the proper property */
   transition:.5s;
-  border-bottom: 1px solid #FFD9B5;
-  border-right: 1px solid #FFD9B5;
+  border: 1px solid #FFD9B5;
 }
 .good-item h2{
   text-align:left;
@@ -126,17 +125,12 @@ p{
   max-width:200px;
 
 }
-/*.good-item:hover{
-	background-color: #82ed96;
-	border-radius: 4px;
-	opacity: 0.9;
-	cursor: pointer;
-}*/
-
 .capitalize {
    text-transform: capitalize;
 }
-
+.center{
+  margin: auto;
+}
 .new-good-tooltip{
 	color:#82ed96;
 }
@@ -174,18 +168,43 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
 }
 
 /* Sidebar */
-@media (max-width: 768px) {
+
+.navbar-fixed-side h4{
+  font-size: 22px;
+  text-align: left;
+  padding: .5em;
+  background-color: #FFF1E5;
+  color: #074f13;
+}
+
+.navbar-fixed-side h5{
+  text-align: center;
+}
+.panel-body{
+  transition-duration: 1s;
+  transition-timing-function: ease;
+  -webkit-transition-duration: 1s;
+  -webkit-transition-timing-function: ease;
+  background-color: #fff1e5;
+}
+.panel-body li{
+  font-size: 14px;
+  color: color: #074f13;
+  padding: .5em;
+}
+.panel-default > .panel-heading{
+  background-color: #fff1e5;
+}
+/*@media (max-width: 768px) {
     .navbar-fixed-side {
         display:none;
     }
-}
+}*/
 
-@media (min-width: 768px) {
+
     .navbar-fixed-side {
-        position: fixed;
         margin: 0 -15px;
         height: 100vh;
-        width: inherit;
         overflow: auto;
         border-top-width: 0;
         border-bottom-width: 0;
@@ -193,7 +212,6 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
         z-index:0;
         background-color: transparent;
         border-right: 0;
-        padding-bottom: 150px;
     }
     .navbar-fixed-side .container,
     .navbar-fixed-side .container-fluid {
@@ -321,7 +339,7 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
     .navbar-fixed-side.navbar-inverse .dropdown>.dropdown-toggle {
         color: #777777 !important
     }
-}
+
 
 /* Home Page */
 /* Parallax */
@@ -372,9 +390,18 @@ header {
 }
 /* Dashboard */
 
-
-
-
+/* Forms */
+select {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0
+}
+.form-control{
+  border-radius: 0
+}
+.search-field{
+  padding: 5px;
+}
 /* Stuff Ryan Added*/
 
 table {
