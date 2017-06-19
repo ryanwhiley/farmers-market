@@ -7,6 +7,7 @@ var express = require('express'),
 		passport = require('passport'),
 		crypto = require('crypto'),
 		async = require('async'),
+    sendgrid = require('../helpers/sendgrid-email'),
     email = require('../helpers/email');
 
 var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
@@ -77,7 +78,8 @@ router.post('/forgot', function(req, res, next) {
       });
     },
     function(token, user, done) {
-      return res.json({email: email.sendForgotPasswordEmail(user.email,token,req.headers.host)});
+      return res.json({email: sendgrid.sendForgotPasswordEmail(user.email,token)})
+      // return res.json({email: email.sendForgotPasswordEmail(user.email,token,req.headers.host)});
       // var mailOptions = {
       //   to: user.email,
       //   from: 'passwordreset@demo.com',

@@ -26,9 +26,10 @@
   <label>
     Quantity
   </label>
-  <select ng-model="good.userQuantity">
-    <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
-  </select><br>
+  <select ng-model="good.userQuantity" ng-options="n for n in [] | limitQuantitySelectable:good.good.quantityForSale"></select>
+  <!-- <select ng-model="good.userQuantity">
+    <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}} {{parseFloat(q)<=parseFloat(good.good.quantityForSale)}}</option>
+  </select> --><br>
 
 <label>Pickup or Delivery</label>
 <select ng-model="good.good.delivery">
