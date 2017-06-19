@@ -61,7 +61,7 @@ function buildStandardRequest(email,template_id){
 function buildLowStockHTML(goods){
 	var htmlString = '';
 	for(var i = 0;i<goods.length;i++){
-		htmlString+='<div><strong class="capitalize">'+goods[i].name+'</strong>&nbsp;'+goods[i].quantityForSale+' units remaining</div>  <div><a href="http://localhost:3000/#/goods/'+goods[i]._id+'/update">Update</a></div><hr />';
+		htmlString+='<div><strong class="capitalize">'+goods[i].name+'</strong>&nbsp;'+goods[i].quantityForSale+' units remaining</div>  <div><a href="http://www.farmtomeal.com/goods/'+goods[i]._id+'/update">Update</a></div><hr />';
 	}
 	return htmlString;
 }
