@@ -31,7 +31,7 @@
               <td class="width-30">{{good.quantityForSale}}</td>
               <td class="width-30">{{good.pricePerUnit | currency}}</td>
               <td class="width-5"><a href="/#/goods/{{good._id}}/update"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
-              <td class="width-5"><a ng-click="user.prepareForDeletion(good)" data-toggle="modal" data-target="#myModal" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
+              <td class="width-5"><a ng-click="user.prepareForDeletion(good)" data-toggle="modal" data-target="#deleteGoodModal" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
             </tr>
           </tbody>
         </table>
@@ -68,7 +68,10 @@
         </div>
       </div> -->
 
-      <div id="myModal" class="modal fade" role="dialog">
+      <!-- ========================= -->
+      <!-- === DELETE GOOD MODAL === -->
+      <!-- ========================= -->
+      <div id="deleteGoodModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
           <!-- Modal content-->
@@ -86,6 +89,9 @@
 
         </div>
       </div>
+      <!-- ========================= -->
+      <!-- === DELETE GOOD MODAL === -->
+      <!-- ========================= -->
     </div>
 
   </uib-tab>
@@ -202,6 +208,9 @@
   <div class="row">
     <h1>
       {{user.user.username}}'s Goods.
+      <span ng-click="user.messageUser()" data-toggle="modal" data-target="#sendMessageModal">
+        Message User
+      </span>
     </h1>
     <div class="row" ng-repeat="good in user.goods">
       <b class="capitalize">{{good.name}}</b>
@@ -209,7 +218,42 @@
       {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}<br>
       <a href="/#/{{good.seller}}/{{good._id}}">Details</a><br></p>
     </div>
+
+    <!-- ========================== -->
+    <!-- === SEND MESSAGE MODAL === -->
+    <!-- ========================== -->
+    <div id="sendMessageModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title text-center">Contact User</h4>
+          </div>
+          <div class="modal-body text-center" ng-if="!user.successfullySentMessage">
+            <label for="message">Message:</label>
+            <textarea class="form-control" rows="5" id="comment" ng-model="user.message"></textarea>
+            <button type="button" class="btn btn-default" ng-click="user.sendMessage()">Send Message</button><br><br><br>
+            <p class="text-center">This will send a message and an email to <span class="capitalize">{{user.user.userName}}</span> so that they can get back to you as quickly as possible.
+              However, if you have attachements or would prefer to simply email them directly, you can contact them at <a href="meailto:{{user.user.email}}">{{user.user.email}}</a>.
+            </p>
+          </div>
+
+          <div class="modal-body text-center" ng-if="user.successfullySentMessage">
+            <p>Your message has been sent to {{user.userName}}, along with an email notifying them.</p>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button><br><br><br>
+          </div>
+          
+        </div>
+
+      </div>
+    </div>
+    <!-- ========================== -->
+    <!-- === SEND MESSAGE MODAL === -->
+    <!-- ========================== -->
   </div>
+
 </div>
 
 

@@ -11,6 +11,8 @@ var mongoose = require('mongoose');
 require('./models/Goods');
 require('./models/Users');
 require('./models/Purchases');
+require('./models/Conversation');
+require('./models/Messages');
 require('./config/passport');
 
 // mongoose.connect('mongodb://localhost/market');

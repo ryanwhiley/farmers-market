@@ -23,11 +23,19 @@ sgemail.sendLowStockEmail = function(recipient,goods){
 }
 
 sgemail.sendPurchaseEmail = function(recipient,other,toSeller,goods){
-	console.log(toSeller,recipient, 'seller')
 	var template_id = sg_lu['purchase-buyer'];
 	var request = buildStandardRequest(recipient.email,template_id);
 	request.body.personalizations[0].substitutions = purchaseHTMLSub(determinePurchaseEmailHTMLFunction(toSeller,other,goods));
 	request.body.personalizations[0].subject = getProperPurchaseSubject(toSeller);
+	sendEmail(request);
+}
+
+sgemail.sendNewMessageEmail = function(recipient,sender,content){
+	var template_id = sg_lu['new-message'];
+	var request = buildStandardRequest(recipient.email,template_id);
+	request.body.personalizations[0].substitutions = newMessageHTMLSub(recipient.username,sender.username,content);
+	request.body.personalizations[0].subject = 'New Message on Farm to Meal';
+	console.log(request)
 	sendEmail(request);
 }
 
@@ -132,6 +140,10 @@ function lowStockHTMLSub(html,name){
 
 function purchaseHTMLSub(goods){
 	return {'-goods-':goods};
+}
+
+function newMessageHTMLSub(receiver_name,sender_name,content){
+	return {'-receiver-':receiver_name,'-sender-':sender_name,'-content-':content};
 }
 
 // ======================
