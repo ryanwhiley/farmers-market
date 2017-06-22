@@ -23,18 +23,16 @@
     </div>
 <!-- Current user is not seller of good-->
   <div ng-if="good.currentUser.username!=good.good.seller">
-    <div ng-if="good.good.quantityForSale>0">
-    <label>
-      Quantity
-    </label>
-    <select ng-model="good.userQuantity">
-      <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}}</option>
-    </select>
-    </div>
-    <div ng-model="good.userQuantity">
-      <p class="error_text" ng-if="good.good.quantityForSale == 0">Sold out</p>
-    </div>
-
+  <label>
+    Quantity
+  </label>
+  <select ng-model="good.userQuantity" ng-options="n for n in [] | limitQuantitySelectable:good.good.quantityForSale"></select>
+  <!-- <select ng-model="good.userQuantity">
+    <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}} {{parseFloat(q)<=parseFloat(good.good.quantityForSale)}}</option>
+  </select> --><br>
+  <div ng-model="good.userQuantity">
+    <p class="error_text" ng-if="good.good.quantityForSale == 0">Sold out</p>
+  </div>
     <label>Pickup or Delivery</label>
 
     <select ng-model="good.good.delivery">

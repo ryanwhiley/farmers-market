@@ -14,7 +14,7 @@ require('./models/Purchases');
 require('./config/passport');
 
 // mongoose.connect('mongodb://localhost/market');
-mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
+// mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
 
 var passport = require('passport');
 
@@ -24,6 +24,13 @@ var routes = require('./controllers/index');
 // console.log(routes);
 
 var app = express();
+
+// set db
+if(app.get('env')==='development'){
+  mongoose.connect('mongodb://localhost/market');
+}else{
+  mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
+}
 
 
 // use helmet for security headers

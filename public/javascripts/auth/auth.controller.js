@@ -34,6 +34,7 @@ function AuthCtrl($scope, $state, auth){
 
   function logIn(){
     auth.logIn(vm.user).error(function(error){
+      vm.user.password = '';
       vm.error = error;
     }).then(function(){
       $state.go('home');
@@ -75,6 +76,8 @@ function ResetPwCtrl($state, auth, $stateParams){
     auth.updatePassword(vm.password,vm.confirm,$stateParams.token)
     .then(function(res){
       vm.successfulPasswordUpdate = true;
+      vm.password = '';
+      vm.confirm = '';
       setTimeout(function(){
         $state.go('home');
         vm.successfulPasswordUpdate = false;

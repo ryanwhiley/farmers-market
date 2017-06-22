@@ -1,7 +1,7 @@
 angular.module('farmersMarket.goods.controller', [])
 
 .controller('GoodsCtrl',GoodsCtrl)
-.controller('NewGoodCtrl',NewGoodCtrl)
+.controller('NewGoodCtrl',NewGoodCtrl) //create good, still being used
 .controller('GoodCtrl',GoodCtrl)
 .controller('UpdateGoodCtrl',UpdateGoodCtrl)
 .controller('CartCtrl',CartCtrl)
@@ -224,8 +224,15 @@ function GoodCtrl(goodsService,good,auth){
 		// send seller and buyer emails
 		auth.userLookUp(vm.good.seller).then(function(res){
 			goodsService.purchaseEmail(vm.good, vm.currentUser, res.data);
-			vm.success = 'Good successfully purchased, we have emailed you with details and notified the seller.';
+			successfulNotification();
 		})
+	}
+
+	function successfulNotification(){
+		vm.success = 'Good successfully purchased, we have emailed you with details and notified the seller.';
+		setTimeout(function(){
+			vm.success = '';
+		},3000)
 	}
 }
 
@@ -367,7 +374,7 @@ function CartCtrl($state, goodsService, auth){
 	// figure it out stupid
 	function sendPurchaseEmails(){
 		for(var i = 0,len=vm.cart.length;i<len;i++){
-			// goodsService.purchaseEmail(vm.cart[i].goods, vm.currentUser, vm.cart[i].seller, 1);
+			goodsService.purchaseEmail(vm.cart[i].goods, vm.currentUser, vm.cart[i].seller, 1);
 			vm.getGoodsObject(vm.cart[i].goods, vm.cart[i].seller);
 		}
 		goodsService.purchaseEmail(vm.cart, vm.currentUser, null, 0);

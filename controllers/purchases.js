@@ -4,6 +4,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     Purchase = mongoose.model('Purchase'),
     email = require('../helpers/email'),
+    sendgrid = require('../helpers/sendgrid-email'),
     general = require('../helpers/general');
 
 
@@ -23,15 +24,18 @@ router.put('/email', function(req,res,next){
   // send one email to buyer
   // use flag from controller through service
   if(req.body.toSeller){
-    email.sendPurchaseEmail(req.body.seller, req.body.buyer, req.body.toSeller, req.body.goods)
+    sendgrid.sendPurchaseEmail(req.body.seller, req.body.buyer, req.body.toSeller, req.body.goods)
   }else{
-    email.sendPurchaseEmail(req.body.buyer, req.body.seller, req.body.toSeller, req.body.goods)
+    sendgrid.sendPurchaseEmail(req.body.buyer, req.body.seller, req.body.toSeller, req.body.goods)
+    // email.sendPurchaseEmail(req.body.buyer, req.body.seller, req.body.toSeller, req.body.goods)
   }
   res.json({'good':'good'})
 });
 
 router.put('/lowStock', function(req,res,next){
-  email.lowStockNotice(req.body.goods, req.body.seller);
+  console.log('low stock');
+  sendgrid.sendLowStockEmail(req.body.seller, req.body.goods);
+  // email.lowStockNotice(req.body.goods, req.body.seller);
   res.json({'success':'success'});
 })
 
