@@ -33,7 +33,6 @@ router.put('/email', function(req,res,next){
 });
 
 router.put('/lowStock', function(req,res,next){
-  console.log('low stock');
   sendgrid.sendLowStockEmail(req.body.seller, req.body.goods);
   // email.lowStockNotice(req.body.goods, req.body.seller);
   res.json({'success':'success'});

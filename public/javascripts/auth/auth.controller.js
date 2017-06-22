@@ -65,6 +65,12 @@ function ForgotPwCtrl(auth){
   }
 }
 
+
+// template -> reset.html
+// url -> /users/reset/:token
+// |actions|
+// users are prompted to reset pw
+// to do: confirm pws match before inserting (i dont think this is happening now)
 function ResetPwCtrl($state, auth, $stateParams){
   var vm = this;
   vm.password = '';

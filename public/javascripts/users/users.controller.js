@@ -10,9 +10,11 @@ angular.module('farmersMarket.users.controller', [])
 // farmers -> can view inventory and update inventory
 // farmers -> can view orders sold
 // users -> can view orders placed
+// users -> can message farmers from here
 function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, good, user, purchases){
 	var vm = this;
 	vm.user = user.data;
+	console.log(vm.user);
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.goods = good;
 	vm.purchases = purchases;
@@ -22,6 +24,8 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 	vm.deliveryStatus = false;
 	vm.sortBy = 'created_at';
 	vm.reverseSort = false;
+	vm.message = '';
+	vm.successfullySentMessage = false;
 
 	// functions
 	vm.deleteGood = deleteGood;
@@ -29,6 +33,8 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 	vm.theyDontWantToDeleteThisGood = theyDontWantToDeleteThisGood;
 	vm.updateDeliveryStatus = updateDeliveryStatus;
 	vm.updateSort = updateSort;
+	vm.messageUser = messageUser;
+	vm.sendMessage = sendMessage;
 
 	function deleteGood(good){
 		goodsService.remove(good).then(function(res){
@@ -45,6 +51,26 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 
 	function theyDontWantToDeleteThisGood(){
 		vm.goodToDelete = null;
+	}
+
+	function messageUser(){
+		auth.getConversationId([1,23])
+		.then(function(res){
+			if(res.data.found){
+				vm.convo_id = res.data.convo._id;
+				auth.getMessages(res.data.convo._id)
+				.then(function(messages){
+					console.log(messages);
+				})
+			}
+		})
+	}
+
+	function sendMessage(){
+		auth.sendNewMessage({conversation_id:vm.convo_id,sender:vm.currentUser,content:vm.message,receiver:vm.user})
+		.then(function(res){
+			vm.successfullySentMessage = true;
+		})
 	}
 
 	function updateDeliveryStatus(purchase){

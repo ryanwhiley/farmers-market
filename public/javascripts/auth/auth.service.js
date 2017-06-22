@@ -142,5 +142,39 @@ function auth($http, $window){
       return err;
     })
   }
+  auth.getConversationId = function(users){
+    return $http.put('/api/conversations/getConversation',{users:users})
+    .success(function(res){
+      console.log(res);
+      return res;
+    })
+    .error(function(err){
+      return err;
+    })
+  };
+  auth.getInbox = function(user_id){
+    return $http.get('/api/conversations/getInbox/'+user_id)
+    .success(function(res){
+      return res;
+    })
+  };
+  auth.getMessages = function(convo_id){
+    return $http.get('/api/messages/get/'+convo_id)
+    .success(function(res){
+      return res;
+    })
+    .error(function(err){
+      return err;
+    })
+  }
+  auth.sendNewMessage = function(message){
+    return $http.post('/api/messages/new',message)
+    .success(function(res){
+      return res;
+    })
+    .error(function(err){
+      return err;
+    })
+  }
   return auth;
 }
