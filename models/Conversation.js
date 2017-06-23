@@ -20,4 +20,9 @@ ConversationSchema.statics.findOrCreate = function(users, cb){
   });
 }
 
+ConversationSchema.statics.findUserInbox = function(id,cb){
+  return this.find({ participants: { $in: [id] }}).exec(cb);
+}
+
 mongoose.model('Conversation', ConversationSchema);
+

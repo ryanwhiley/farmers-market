@@ -68,6 +68,26 @@ function auth($http, $window){
     }
     return currentUser;
   }
+  // this function takes the current users id and an array of conversations that contain that user
+  // then iterates over the array and stores all the users that are the current user
+  auth.findMessageRecipients = function(user_id,convos){
+    var recipients = [];
+    var convoLookup = {};
+    for(var i = 0;i<convos.length;i++){
+      if(convos[i].participants[0]==user_id){
+        recipients.push(convos[i].participants[1])
+        convoLookup[convos[i].participants[1]] = convos[i]._id
+      }else{
+        recipients.push(convos[i].participants[0])
+        convoLookup[convos[i].participants[0]] = convos[i]._id
+      }
+    }
+    return [recipients,convoLookup];
+  }
+
+  auth.matchRecipientsToMessages = function(){
+
+  }
 
   // api calls
   auth.userLookUp = function(user){
@@ -75,6 +95,15 @@ function auth($http, $window){
       return data;
     })
   };
+  auth.getByIds = function(user_ids){
+    return $http.get('/api/users/ids',{params: { user_ids: user_ids }})
+    .success(function(res){
+      return res;
+    })
+    .error(function(err){
+      return err;
+    })
+  }
   auth.userUpdate = function(user){
     return $http.post('/api/users/update', {user:user}).success(function(data){
       return data.token;

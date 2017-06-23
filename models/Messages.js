@@ -8,7 +8,7 @@ var MessageSchema = new mongoose.Schema({
 })
 
 MessageSchema.statics.findByConvoId = function(convo_id,cb){
-	return this.find({conversation_id: convo_id}).exec(cb)
+	return this.find({conversation_id: convo_id}).sort({created_at: -1}).limit(10).exec(cb)
 }
 
 MessageSchema.statics.create = function(data,cb){
