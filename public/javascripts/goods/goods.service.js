@@ -59,13 +59,19 @@ function goodsService($http,auth){
       o.goods.push(data);
     })
   };
+  // =================================================
   // currently not using, replaced by auth.userUpdate()
+  // =================================================
   o.addToCart = function(user){
     return $http.post('/api/users/addToCart', {user: user}).success(function(data){
       return data.token;
     })
   };
+  // =================================================
+  // =================================================
+  // =================================================
   o.get = function(id) {
+    console.log(id);
     return $http.get('/api/goods/' + id).then(function(res){
       return res.data;
     });
@@ -75,8 +81,12 @@ function goodsService($http,auth){
       return res.data;
     })
   };
-  o.getByUser = function(user){
-    return $http.get('/api/users/' + user + '/goods').then(function(res){
+  // purpose -> gets goods by user. ie get all goods that i (or someone else) has posted 
+  // args:
+  // user_id (string) -> obvi. looks up goods by user_id rather than user name like it used to
+  o.getByUser = function(user_id){
+    return $http.get('/api/users/' + user_id + '/goods').then(function(res){
+      console.log(res.data);
       return res.data;
     });
   };

@@ -39,16 +39,16 @@ router.get('/search/:term', function(req,res){
 })
 
 // get goods for sale by user
-router.get('/:user/goods', function(req, res, next) {
-  Good.find({'seller':req.params.user},null,{sort: {type:1}},function(err, goods){
+router.get('/:user_id/goods', function(req, res, next) {
+  Good.find({'seller':req.params.user_id},null,{sort: {type:1}},function(err, goods){
     if(err){ console.log(err); return next(err); }
     res.json(goods);
   });
 });
 
 // simple user lookup, used from auth service
-router.get('/:user', function(req, res, next) {
-  User.findOne({'username':req.params.user},function(err,user){
+router.get('/:user_id', function(req, res, next) {
+  User.findOne({'_id':req.params.user_id},function(err,user){
     if(err){ return next(err); }
     return res.json(user);
   })

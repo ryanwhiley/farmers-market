@@ -249,14 +249,15 @@ function UpdateGoodCtrl($state,goodsService,good,auth){
 	vm.currentUser = auth.currentUser();
 	vm.categories = goodsService.categories;
 	vm.error = '';
-	if(vm.good.seller!=vm.currentUser.username){
+	console.log(vm.good.seller._id,vm.currentUser._id)
+	if(vm.good.seller._id!=vm.currentUser._id){
 		$state.go('home');
 	}
 
 	vm.updateGood = updateGood;
 
 	function updateGood(){
-		if(good.seller==vm.currentUser.username){
+		if(good.seller._id==vm.currentUser._id){
 			vm.good.updated_at = new Date();
 			goodsService.update(vm.good).then(function(res){
 				if(res.ok){
@@ -266,6 +267,8 @@ function UpdateGoodCtrl($state,goodsService,good,auth){
 					})
 				}
 			})
+		}else{
+			vm.error = 'You do not have permission to update this good. If you believe this is an issue you can contact us at hello@farmtomeal.com.';
 		}
 	}
 }

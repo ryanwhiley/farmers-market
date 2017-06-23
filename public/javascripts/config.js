@@ -76,7 +76,7 @@ function configure($stateProvider, $urlRouterProvider){
       controllerAs: 'forgot'
     })
 
-    // get users page
+    // get users (dashboard) page
     .state('users', {
       url: '/users/{id}',
       templateUrl: 'views/users.html',

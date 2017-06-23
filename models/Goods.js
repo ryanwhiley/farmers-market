@@ -9,7 +9,7 @@ var GoodsSchema = new mongoose.Schema({
 	unitOfMeasurement: String, // lbs, ozs, pints, etc
 	unitOfSale: Number, //how much 1 unit of sale is
 	pricePerUnit: Number, //price per unit of sale
-	seller: String,
+	seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	forSale: {type: Boolean, default: true},
 	can_deliver: Boolean,
 	delivery_fee: Number,
@@ -18,12 +18,21 @@ var GoodsSchema = new mongoose.Schema({
 	updated_at: { type: Date, default:Date.now }
 })
 
+
+// find functions
 GoodsSchema.statics.findByType = function(type,cb){
-	return this.find({type: type}).where('quantityForSale').gt(0).sort({category: 1}).exec(cb)
+	return this.find({type: type}).where('quantityForSale').gt(0).sort({category: 1}).populate('seller').exec(function(err,goods){
+		if(err){
+			cb(err);
+		}else{
+			console.log(goods);
+			cb(null,goods);
+		}
+	})
 }
 
 GoodsSchema.statics.findByTypeOrCategory = function(search,cb){
-	return this.find({$or: [{type:{"$regex": search, "$options": "i"}},{category:{"$regex": search, "$options": "i"}}]}).where('quantityForSale').gt(0).sort({category: 1}).exec(cb)
+	return this.find({$or: [{type:{"$regex": search, "$options": "i"}},{category:{"$regex": search, "$options": "i"}}]}).where('quantityForSale').gt(0).sort({category: 1}).populate('seller', '_id username').exec(cb)
 }
 
 GoodsSchema.statics.findByIDs = function(good_ids,cb){

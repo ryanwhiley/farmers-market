@@ -1,7 +1,7 @@
 <!-- currentUser && farmer -->
 <!-- lists out farmers inventory -->
 
-<div class="container-fluid" ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
+<div class="container-fluid" ng-if="user.user._id==user.currentUser._id&&user.user.farmer==1">
 <div class="row">
   <h1>
     Dashboard
@@ -152,7 +152,7 @@
 </div>
 
 <!-- currentUser && !farmer -->
-<div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==0">
+<div ng-if="user.user._id==user.currentUser._id&&user.user.farmer==0">
   <div class="row">
       <h3>
         Your Orders
@@ -204,7 +204,7 @@
 </div>
 
 <!-- !currentUser && farmer -->
-<div class="container-fluid" ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
+<div class="container-fluid" ng-if="user.user._id!=user.currentUser._id&&user.user.farmer==1">
   <div class="row">
     <h1>
       {{user.user.username}}'s Goods.

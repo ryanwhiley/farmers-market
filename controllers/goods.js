@@ -11,7 +11,8 @@ var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
 router.get('/type/:type', function(req, res, next) {
   // res.json(req.goods);
   Good.findByTypeOrCategory(req.params.type, function(err,goods){
-    if(err){ return next(err); }
+    if(err){ console.log(err); return next(err); }
+    console.log(goods);
     res.json(goods);
   })
 });
@@ -26,12 +27,13 @@ router.get('/ids', function(req, res, next) {
 
 // get good by id
 router.get('/:good', function(req, res) {
+  console.log('asdfasdf')
   res.json(req.good);
 });
 
 // create new good
 router.post('/', auth, function(req, res, next) {
-  Good.create(req.body, req.payload.username, function(err,good){
+  Good.create(req.body, req.payload._id, function(err,good){
     if(err){ console.log(err); return next(err); }
     res.json(good);
   })
@@ -63,7 +65,7 @@ router.delete('/:good', function(req, res, next) {
 
 // goods param
 router.param('good', function(req, res, next, id) {
-  var query = Good.findById(id);
+  var query = Good.findById(id).populate('seller', '_id username');
   query.exec(function (err, good){
     if (err) { return next(err); }
     if (!good) { return next(new Error('can\'t find good')); }
@@ -73,15 +75,18 @@ router.param('good', function(req, res, next, id) {
   });
 });
 
+// !!!!
+// im not really sure if this is being used anymore because now we are finding goods by category and 
+// type rather than just type.
 // type param
-router.param('type', function(req, res, next, id) {
-  Good.findByType(req.params.type, function(err, goods){
-    if (err) { return next(err); }
-    if (!goods) { return next(new Error('can\'t find goods')); }
+// router.param('type', function(req, res, next, id) {
+//   Good.findByType(req.params.type, function(err, goods){
+//     if (err) { return next(err); }
+//     if (!goods) { return next(new Error('can\'t find goods')); }
 
-    req.goods = goods;
-    return next();
-  })
-});
+//     req.goods = goods;
+//     return next();
+//   })
+// });
 
 module.exports = router;

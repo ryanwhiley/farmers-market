@@ -174,7 +174,6 @@ function auth($http, $window){
   auth.getConversationId = function(users){
     return $http.put('/api/conversations/getConversation',{users:users})
     .success(function(res){
-      console.log(res);
       return res;
     })
     .error(function(err){
