@@ -1,3 +1,7 @@
+// !!!!!!!!!!!!!!!!!!!!!!!!
+// no longer in use but gonna keep it here for now
+// !!!!!!!!!!!!!!!!!!!!!!!!
+
 var nodemailer = require('nodemailer')
 		, email = {};
 

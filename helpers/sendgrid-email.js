@@ -35,7 +35,6 @@ sgemail.sendNewMessageEmail = function(recipient,sender,content){
 	var request = buildStandardRequest(recipient.email,template_id);
 	request.body.personalizations[0].substitutions = newMessageHTMLSub(recipient.username,sender.username,content);
 	request.body.personalizations[0].subject = 'New Message on Farm to Meal';
-	console.log(request)
 	sendEmail(request);
 }
 

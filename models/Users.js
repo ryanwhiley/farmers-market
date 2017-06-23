@@ -24,6 +24,9 @@ var UserSchema = new mongoose.Schema({
   updated_at: { type: Date, default:Date.now }
 });
 
+// ======================
+// methods -> functions that act on document rather than entire collection
+// ======================
 UserSchema.methods.setPassword = function(password){
   this.salt = crypto.randomBytes(16).toString('hex');
 
@@ -59,11 +62,21 @@ UserSchema.methods.formatPhoneNumber = function(phone){
   return phone.split('-').join('').split('.').join('').split(' ').join('');
 }
 
+
+// ====================
+// statics -> functions that act on entire collection (ie) looking shit up
+// ====================
 UserSchema.statics.search = function(term,cb){
   return this.find({ username: { "$regex": term, "$options": "i" } })
   .select('username email phone')
   .limit(10)
   .exec(cb)
+}
+
+UserSchema.statics.findByIDs = function(user_ids,cb){
+  return this.find()
+          .where('_id').in(user_ids)
+          .exec(cb);
 }
 
 mongoose.model('User', UserSchema);

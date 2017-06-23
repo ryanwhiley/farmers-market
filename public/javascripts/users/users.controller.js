@@ -2,6 +2,7 @@ angular.module('farmersMarket.users.controller', [])
 
 .controller('UserCtrl',UserCtrl)
 .controller('EditProfileCtrl',EditProfileCtrl)
+.controller('InboxCtrl',InboxCtrl)
 
 
 // template -> users.html
@@ -14,7 +15,6 @@ angular.module('farmersMarket.users.controller', [])
 function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, good, user, purchases){
 	var vm = this;
 	vm.user = user.data;
-	console.log(vm.user);
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.goods = good;
 	vm.purchases = purchases;
@@ -54,7 +54,7 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 	}
 
 	function messageUser(){
-		auth.getConversationId([1,23])
+		auth.getConversationId([vm.user._id,vm.currentUser._id])
 		.then(function(res){
 			if(res.data.found){
 				vm.convo_id = res.data.convo._id;
@@ -108,3 +108,63 @@ function EditProfileCtrl(auth){
 		});
 	}
 }
+
+
+// template -> inbox.html
+// url -> /users/inbox/:user_id
+// |actions|
+// users -> can view messages between them and other users
+// users -> can reply to messages from other users
+function InboxCtrl(conversations, auth){
+	var vm = this;
+	vm.currentUser = auth.currentUser();
+	vm.conversations = conversations.data;
+	vm.conversation_id = null;
+	vm.messages = [];
+	vm.message = '';
+	// otherUser is the person on the other end of a message, ie whoever currentUser is messaging with
+	vm.otherUser = null;
+
+	vm.getMessages = getMessages;
+	vm.updateOtherUser = updateOtherUser;
+	vm.sendMessage = sendMessage;
+
+	// setInterval(function(){
+	// 	vm.getMessages();
+	// },1000)
+
+	auth.getByIds(vm.conversations.recipients)
+	.then(function(res){
+		vm.inbox = res.data;
+		vm.otherUser = vm.inbox[0];
+		vm.conversation_id = vm.conversations.convoLookup[vm.inbox[0]._id];
+		vm.getMessages(vm.conversation_id);
+	})
+
+	function getMessages(){
+		auth.getMessages(vm.conversation_id)
+		.then(function(messages){
+			vm.messages = messages.data.reverse();
+			console.log(vm.messages);
+		})
+	}
+
+	function updateOtherUser(user){
+		vm.otherUser = user;
+	}
+
+	function sendMessage(){
+		auth.sendNewMessage({conversation_id:vm.conversation_id,sender:vm.currentUser,content:vm.message,receiver:vm.otherUser})
+		.then(function(res){
+			vm.message = '';
+			vm.getMessages(vm.conversation_id);
+		})
+	}
+
+	// functions that i dont wanna put in the resolve, but this matches users to conversations
+
+}
+
+
+
+

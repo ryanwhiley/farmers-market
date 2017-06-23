@@ -1,0 +1,22 @@
+<div class="page-header">
+  <div class="row">
+    <div class="col-md-4">
+      Inbox<hr>
+      <div class="row capitalize" style="border-bottom:1px solid #000;padding:10px;" ng-repeat="convo in inbox.inbox" ng-click="inbox.conversation_id=inbox.conversations.convoLookup[convo._id];inbox.getMessages(inbox.conversations.convoLookup[convo._id]);inbox.updateOtherUser(convo)">
+      	{{convo.username}}
+      </div>
+    </div>
+    <div class="col-md-8" style="padding-left:20px;">
+      messages<hr>
+      <div class="row" style="font-weight:light;" ng-repeat="message in inbox.messages">
+      	<span ng-class="{'pull-right':inbox.currentUser._id==message.sender_id, 'pull-left':inbox.currentUser._id!=message.sender_id}" style="{{inbox.currentUser._id==message.sender_id?'color: #3BCC54':'color: #aaacab'}}">
+      	{{message.content}}
+      	</span>
+      </div>
+      <div class="row">
+      	<input type="text" class="col-md-10 form-control" ng-model="inbox.message" placeholder="Send Message" />
+      	<button class="col-md-2" ng-click="inbox.sendMessage()">Send</button> 
+      </div>
+    </div>
+  </div>
+</div>

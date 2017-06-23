@@ -22,6 +22,14 @@ router.post('/update', function(req, res, next) {
   })
 });
 
+// get batch users by ids
+router.get('/ids',function(req,res,next){
+  User.findByIDs(req.query.user_ids, function(err,users){
+    if(err){ return next(err); }
+    res.json(users);
+  })
+})
+
 // search users
 router.get('/search/:term', function(req,res){
   User.search(req.params.term, function(err,users){
