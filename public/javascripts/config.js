@@ -171,6 +171,19 @@ function configure($stateProvider, $urlRouterProvider){
       controller: 'NewUserCtrl',
       controllerAs: 'newUser'
     })
+
+    // users inbox
+    .state('inbox',{
+      url: '/users/inbox/{id}',
+      templateUrl: 'views/inbox.html',
+      controller: 'InboxCtrl',
+      controllerAs: 'inbox',
+      resolve: {
+        conversations: ['$stateParams', 'auth', function($stateParams, auth) {
+          return auth.getInbox($stateParams.id);
+        }]
+      }
+    })
     
     // update specific good
     .state('update', {
