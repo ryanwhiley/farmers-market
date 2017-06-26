@@ -2,11 +2,11 @@
   <div class="row">
     <div ng-repeat="good in reorder.orders">
       <div class="clearfix" ng-if="$index % 3 == 0"></div>
-      <div class="col-lg-3 good-item text-center" href="/#/{{good.seller}}/{{good._id}}">
+      <div class="col-lg-3 good-item text-center capitalize" href="/#/{{good.seller._id}}/{{good._id}}">
           <h2>{{good.name}}</h2>
-          <p>{{good.seller}}<br>
+          <p>{{good.seller.username}}<br>
           {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}</p>
-          <a href="/#/{{good.seller}}/{{good._id}}">Reorder</a>
+          <a href="/#/{{good.seller._id}}/{{good._id}}">Reorder</a>
       </div>
     </div>
     <div ng-if="reorder.orders.length==0" class="alert alert-info text-center row" style="margin-top:20px;">

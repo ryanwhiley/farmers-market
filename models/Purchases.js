@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 var PruchasesSchema = new mongoose.Schema({
 	good: String,
-	buyer: String,
-	seller: String,
+	buyer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
+	seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
 	price: Number,
 	quantity: Number,
 	delivered: {type: Boolean, default: false},
@@ -18,7 +18,7 @@ var PruchasesSchema = new mongoose.Schema({
 		pickup_time: Date,
 		pickup_location: String
 	},
-	good_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Good' },
+	good_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Good', index: true },
 	created_at: { type: Date, default: Date.now }
 	// buyer
 	// seller
@@ -33,8 +33,11 @@ PruchasesSchema.statics.create = function(purchase,cb){
 	return NewPurchase.save(cb);
 }
 
-PruchasesSchema.statics.findByUser = function(user,cb){
-	return this.find( { $or:[ {'seller':user}, {'buyer':user}]}).sort({created_at: -1}).exec(cb);
+PruchasesSchema.statics.findByUser = function(user_id,cb){
+	return this.find( { $or:[ {'seller':user_id}, {'buyer':user_id}]})
+					.sort({created_at: -1})
+					.populate('seller buyer','_id username')
+					.exec(cb);
 }
 
 PruchasesSchema.statics.mostPopular = function(count,cb){

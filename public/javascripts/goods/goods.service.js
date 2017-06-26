@@ -16,8 +16,12 @@ function goodsService($http,auth){
   // other functions that dont hit the api
   o.prepPurchasesForReorders = function(purchases){
     var purchase_ids = [];
+    var seen = {};
     for(var i = 0,len=purchases.length;i<len;i++){
-      purchase_ids.push(purchases[i].good_id);
+      if(!seen[purchases[i].good_id]){
+        purchase_ids.push(purchases[i].good_id);
+        seen[purchases[i].good_id] = true;
+      }
     }
     return purchase_ids;
   };
@@ -71,7 +75,6 @@ function goodsService($http,auth){
   // =================================================
   // =================================================
   o.get = function(id) {
-    console.log(id);
     return $http.get('/api/goods/' + id).then(function(res){
       return res.data;
     });
@@ -86,7 +89,6 @@ function goodsService($http,auth){
   // user_id (string) -> obvi. looks up goods by user_id rather than user name like it used to
   o.getByUser = function(user_id){
     return $http.get('/api/users/' + user_id + '/goods').then(function(res){
-      console.log(res.data);
       return res.data;
     });
   };
@@ -100,8 +102,8 @@ function goodsService($http,auth){
       return res.data;
     });
   };
-  o.getPurchases = function(user){
-    return $http.get('/api/purchases/'+user).then(function(res){
+  o.getPurchases = function(user_id){
+    return $http.get('/api/purchases/'+user_id).then(function(res){
       return res.data;
     })
   }
@@ -114,9 +116,9 @@ function goodsService($http,auth){
       console.log(err,'Error purchasing good');
     })
   };
-  o.sendLowStockEmail = function(goods,seller){
+  o.sendLowStockEmail = function(goods,seller_email){
     if(goods.length){
-      return $http.put('/api/purchases/lowStock', {goods:goods,seller:seller.email});
+      return $http.put('/api/purchases/lowStock', {goods:goods,seller:seller_email});
     }
   };
   o.purchaseEmail = function(goods, buyer, seller, toSeller){

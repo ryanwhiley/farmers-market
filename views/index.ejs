@@ -85,7 +85,7 @@
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser().username }}">Reorder</a></li>
+          <li ng-show="isLoggedIn()&&!currentUser().farmer"><a href="/#/reorder/{{ currentUser()._id }}">Reorder</a></li>
           <li><a href="/#/cart">Cart</a></li>
           <li ng-show="isLoggedIn()&&currentUser().farmer"><a href="/#/new">Post</a></li>
           <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>

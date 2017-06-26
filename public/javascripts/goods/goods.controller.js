@@ -143,30 +143,25 @@ function GoodCtrl(goodsService,good,auth){
 	vm.error = '';
 
 	// functions
-	vm.purchaseGood = purchaseGood;
-	vm.buildPurchaseObject = buildPurchaseObject;
 	vm.addToCart = addToCart;
-	vm.updateUserCart = updateUserCart;
 
 	// if we want to put add to cart functionality then we'll need to take some of these functions and put them into
 	// a service
 	// specifically -> addToCart, buildPurchaseObject, 
 	function addToCart(){
-		if(vm.good.delivery==''||!vm.good.delivery){
+		if(vm.good.seller._id==vm.currentUser._id){
+			vm.error = 'You cannot purchase your own goods.';
+			return;
+		}else if(vm.good.delivery==''||!vm.good.delivery){
 			vm.error = 'Please select pickup or delivery to add this to your cart.';
 			return;
 		}else if(!vm.currentUser){
 			vm.error = 'Please login to add this to your cart.';
 			return;
-		}
-		// vm.buildPurchaseObject().then(function(res){
-		// 	vm.updateUserCart();
-		// 	vm.success = 'Successfully added to cart!';
-		// 	auth.userUpdate(vm.currentUser).then(function(res){
-		// 		auth.updateToken(res.data.token);
-		// 	})
-		// })
-		auth.buildPurchaseObject(vm.good,vm.currentUser,vm.userQuantity)
+		} 
+		
+		// note: this purchase object is not the same object that it stored in the Purchase table. it is just stored in the cart for the user
+		auth.buildPurchaseObject(vm.good,vm.currentUser._id,vm.userQuantity)
 		.then(function(res){
 			vm.purchase = res;
 			auth.updateUserCart(vm.purchase,vm.currentUser,vm.good);
@@ -175,56 +170,6 @@ function GoodCtrl(goodsService,good,auth){
 			auth.userUpdate(vm.currentUser).then(function(res){
 				auth.updateToken(res.data.token);
 			})
-		})
-	}
-
-	function updateUserCart(){
-		// checks to see if the good the user is adding is already in the cart
-		// only compares by good_id, which means that the price should be the same
-		// bc if a user wants to update the price of a good they must create a 
-		// new listing of that good, thus good_id will be diff
-		var inCart = false;
-		for(var i = 0,len=vm.currentUser.cart.length;i<len;i++){
-			if(vm.purchase.good_id==vm.currentUser.cart[i].good_id){
-				inCart = true;
-				vm.currentUser.cart[i].quantity = parseInt(vm.purchase.quantity)+parseInt(vm.currentUser.cart[i].quantity);
-				vm.currentUser.cart[i].price = parseFloat(vm.good.pricePerUnit);
-				return
-			}
-		}
-		if(!inCart){
-			vm.currentUser.cart.push(vm.purchase)
-		}
-	}
-
-	function buildPurchaseObject(){
-		vm.purchase.good = vm.good.name;
-		vm.purchase.good_id = vm.good._id;
-		vm.purchase.buyer = vm.currentUser.username;
-		vm.purchase.quantity = parseInt(vm.userQuantity);
-		vm.purchase.price = parseFloat(vm.good.pricePerUnit);
-		return auth.userLookUp(vm.good.seller).then(function(res){
-			vm.purchase.seller = {};
-			vm.purchase.seller.name = res.data.username;
-			vm.purchase.seller.email = res.data.email;
-			vm.purchase.seller.phone = res.data.phone;
-			vm.purchase.seller.address = res.data.address;
-			return true;
-		})
-	}
-	
-	// i dont think this is in use right now, however im not totally sure
-	function purchaseGood(){
-		vm.good.quantityForSale -= vm.userQuantity;
-		vm.buildPurchaseObject();
-		// update quantity in goods table
-		goodsService.update(vm.good)
-		// create row in purchase table
-		goodsService.purchase(vm.purchase)
-		// send seller and buyer emails
-		auth.userLookUp(vm.good.seller).then(function(res){
-			goodsService.purchaseEmail(vm.good, vm.currentUser, res.data);
-			successfulNotification();
 		})
 	}
 
@@ -249,7 +194,6 @@ function UpdateGoodCtrl($state,goodsService,good,auth){
 	vm.currentUser = auth.currentUser();
 	vm.categories = goodsService.categories;
 	vm.error = '';
-	console.log(vm.good.seller._id,vm.currentUser._id)
 	if(vm.good.seller._id!=vm.currentUser._id){
 		$state.go('home');
 	}
@@ -358,7 +302,7 @@ function CartCtrl($state, goodsService, auth){
 		for(var i = 1,len = vm.currentUser.cart.length;i<len;i++){
 			let inCart = false;
 			for(var j = 0;j<vm.cart.length;j++){
-				if(vm.cart[j].seller.name==vm.currentUser.cart[i].seller.name){
+				if(vm.cart[j].seller._id==vm.currentUser.cart[i].seller._id){
 					inCart = true;
 					vm.cart[j].goods.push(vm.buildGoodObject(vm.currentUser.cart[i]));
 				}
@@ -380,7 +324,7 @@ function CartCtrl($state, goodsService, auth){
 			goodsService.purchaseEmail(vm.cart[i].goods, vm.currentUser, vm.cart[i].seller, 1);
 			vm.getGoodsObject(vm.cart[i].goods, vm.cart[i].seller);
 		}
-		goodsService.purchaseEmail(vm.cart, vm.currentUser, null, 0);
+		// goodsService.purchaseEmail(vm.cart, vm.currentUser, null, 0);
 	}
 
 	// fucking duh
@@ -393,7 +337,7 @@ function CartCtrl($state, goodsService, auth){
 												good_id:vm.currentUser.cart[i].good_id,
 												price:vm.currentUser.cart[i].price,
 												quantity:vm.currentUser.cart[i].quantity,
-												seller:vm.currentUser.cart[i].seller.name};
+												seller:vm.currentUser.cart[i].seller._id};
 			// vm.updateRemainingQuantities(vm.currentUser.cart[i].good_id, vm.currentUser.cart[i].quantity)
 			goodsService.purchase(goodObject);
 		}
@@ -423,7 +367,7 @@ function CartCtrl($state, goodsService, auth){
 					lowGoods.push(res);
 				}
 				if(counter===goods.length){
-					goodsService.sendLowStockEmail(lowGoods,seller);
+					goodsService.sendLowStockEmail(lowGoods,seller.email);
 				}
 			})
 		})

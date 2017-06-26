@@ -1,3 +1,4 @@
+<!-- dashboard -->
 <!-- currentUser && farmer -->
 <!-- lists out farmers inventory -->
 
@@ -134,7 +135,7 @@
                   </select>
                 </td>
                 <td class="width-20">{{good.price*good.quantity | currency}}</td>
-                <td class="width-20">{{good.buyer}}</td>
+                <td class="width-20">{{good.buyer.username}}</td>
           </tr>
             <tr>
 
@@ -191,7 +192,7 @@
                   </select>
                 </td>
                 <td class="width-20">{{good.price*good.quantity | currency}}</td>
-                <td class="width-20 capitalize">{{good.seller}}</td>
+                <td class="width-20 capitalize">{{good.seller.username}}</td>
           </tr>
             <tr>
 
