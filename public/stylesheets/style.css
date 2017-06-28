@@ -171,7 +171,12 @@ input[type="textbox"]:focus {
   background: transparent;
   -webkit-box-shadow: none;
   box-shadow: none;
-  border-bottom: solid 3px #969696;
+  border-bottom: solid 3px #FFD9B5;
+}
+
+.search{
+  text-align: center;
+  font-size: 2rem;
 }
 /* Bootstrap Overwrites */
 .page-header{

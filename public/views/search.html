@@ -1,13 +1,14 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="page-header">
-			<div class="row">
-				<input type="textbox"
-				ng-change="search.search()"
-		    class="form-control"
-		    placeholder="Search Farmers, Restaurants & Goods"
-		    ng-model="search.searchTerm"></input>
-			</div>
+
+		</div>
+		<div class="row">
+			<input type="textbox"
+			ng-change="search.search()"
+			class="form-control search"
+			placeholder="Search Farmers, Restaurants & Goods"
+			ng-model="search.searchTerm"></input>
 		</div>
 
 		<div class="row">
@@ -17,7 +18,7 @@
 					<h4 ng-if="search.userMatches.length==0">
 						No results
 					</h4>
-					<div class="row capitalize" style="margin-bottom:10px;" ng-repeat="user in search.userMatches">
+					<div class="row" style="margin-bottom:10px;" ng-repeat="user in search.userMatches">
 						<a href="/#/users/{{user.username}}"><b>{{user.username}}</b></a><br>
 						<p>{{user.email}}<br>
 							{{user.phone}}</p>
