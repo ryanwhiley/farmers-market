@@ -17,8 +17,14 @@ angular.module('farmersMarket.goods-ui.controller', [])
   $scope.bigCurrentPage = 1;
 })
 
-.controller('TabsDemoCtrl', function ($scope, $window) {
-
+.controller('TabsCtrl', function ($scope, $window) {
+  $scope.tabs = [
+    { title:'', content: "/images/foodphotos/blueberries.jpg" },
+    { title:'', content: "/images/foodphotos/brown-eggs.jpg" },
+    { title:'', content: "/images/foodphotos/chestnuts.jpg" },
+    { title:'', content: "/images/foodphotos/green-peas.jpg" },
+    { title:'', content: "/images/foodphotos/pak-choi.jpg" }
+  ];
 })
 
 .controller('AccordionCtrl', function ($scope) {

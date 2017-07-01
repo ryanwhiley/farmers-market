@@ -7,7 +7,7 @@
     Dashboard
   </h1>
 </div>
-<div ng-controller="TabsDemoCtrl" class="col-md-12">
+<div ng-controller="TabsCtrl" class="col-md-12">
 <uib-tabset active="activeJustified" justified="true">
   <uib-tab index="0" heading="Your Inventory">
     <div class="container-fluid">
@@ -208,7 +208,7 @@
 <div class="container-fluid" ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
   <div class="row">
     <h1>
-      {{user.user.username}}'s Goods.
+      {{user.user.username}}'s Goods
       <!-- <span ng-click="user.messageUser()" data-toggle="modal" data-target="#sendMessageModal">
         Message User
       </span> -->
