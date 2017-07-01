@@ -395,6 +395,12 @@ img {
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column; }
+.preview-pic .nav-tabs.nav-justified > .active > a{
+  visibility: hidden;
+}
+.preview-thumbnail a{
+  cursor: pointer;
+}
   @media screen and (max-width: 996px) {
     .preview {
       margin-bottom: 20px; } }

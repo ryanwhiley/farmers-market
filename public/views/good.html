@@ -9,20 +9,22 @@
     <div class="container-fliud">
       <div class="wrapper row">
         <div class="preview col-md-6">
-          <div class="preview-pic tab-content">
-            <div class="tab-pane active" id="pic-1"><img src="/images/foodphotos/blueberries.jpg" /></div>
-            <div class="tab-pane" id="pic-2"><img src="/images/foodphotos/brown-eggs.jpg" /></div>
-            <div class="tab-pane" id="pic-3"><img src="/images/foodphotos/chestnuts.jpg" /></div>
-            <div class="tab-pane" id="pic-4"><img src="/images/foodphotos/green-peas.jpg" /></div>
-            <div class="tab-pane" id="pic-5"><img src="/images/foodphotos/pak-choi.jpg" /></div>
+          <div ng-controller="TabsCtrl">
+            <div class="preview-pic tab-content" >
+              <uib-tabset active="activeJustified" justified="true">
+                <uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
+                  <div class="tab-pane"><img src={{tab.content}} /></div>
+                </uib-tab>
+            </uib-tabset>
+            </div>
+            <ul class="preview-thumbnail nav nav-tabs">
+              <li><a ng-click="tabs[0].active = true"><img ng-click="tabs[0].active = true" src="/images/foodphotos/blueberries.jpg" /></a></li>
+              <li><a ng-click="tabs[1].active = true"><img ng-click="tabs[1].active = true" src="/images/foodphotos/brown-eggs.jpg" /></a></li>
+              <li><a ng-click="tabs[2].active = true" ><img src="/images/foodphotos/chestnuts.jpg" /></a></li>
+              <li><a ng-click="tabs[3].active = true"><img src="/images/foodphotos/green-peas.jpg" /></a></li>
+              <li><a ng-click="tabs[4].active = true"><img src="/images/foodphotos/pak-choi.jpg" /></a></li>
+            </ul>
           </div>
-          <ul class="preview-thumbnail nav nav-tabs">
-            <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="/images/foodphotos/blueberries.jpg" /></a></li>
-            <li><a data-target="#pic-2" data-toggle="tab"><img src="/images/foodphotos/brown-eggs.jpg" /></a></li>
-            <li><a data-target="#pic-3" data-toggle="tab"><img src="/images/foodphotos/chestnuts.jpg" /></a></li>
-            <li><a data-target="#pic-4" data-toggle="tab"><img src="/images/foodphotos/green-peas.jpg" /></a></li>
-            <li><a data-target="#pic-5" data-toggle="tab"><img src="/images/foodphotos/pak-choi.jpg" /></a></li>
-          </ul>
 
         </div>
         <div class="details col-md-6">
