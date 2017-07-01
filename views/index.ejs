@@ -1,16 +1,19 @@
 <head>
   <title>FarmToMeal</title>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <base href="/">
   <link href="/stylesheets/bootstrap.css" rel="stylesheet">
   <link href="/stylesheets/style.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="/images/farmtomeal.png">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   <script src="/javascripts/styles.js"></script>
   <script src="/javascripts/angular.js"></script>
   <script src="/javascripts/angular-ui-bootstrap.js"></script>
@@ -153,7 +156,7 @@
         <div class="col-xs-8 col-md-8" ng-show="main.arr.indexOf(main.currentPath)>=0">
           <ui-view></ui-view>
         </div>
-        <div class="col-xs-12 col-md-8 col-md-push-2 col-md-pull-2" ng-show="main.arr.indexOf(main.currentPath)<0">
+        <div class="col-xs-12 col-md-10 col-md-push-1 col-md-pull-1" ng-show="main.arr.indexOf(main.currentPath)<0">
           <ui-view></ui-view>
         </div>
       </div>
