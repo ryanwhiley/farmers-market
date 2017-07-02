@@ -29,10 +29,17 @@ Black (Headings)
 */
 
 /* Global Styles */
+html {
+  position: relative;
+  min-height: 100%;
+}
 
 body{
   font: 14px "Roboto", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
   background-color: #FFFAF6;
+  /* Margin bottom by footer height */ /* For sticky Footer */
+  margin-bottom: 60px;
 }
 h1, h2, h3, h4, h5, h6{
   color: #444;
@@ -43,7 +50,19 @@ hr{
 .error_text{
   color: #9d0a00;
 }
+img{
+  max-width: 100%;
+}
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
 /* Header */
 
 header p{
@@ -79,9 +98,6 @@ header a:hover{
 .navbar .navbar-nav > li:hover > a:hover,
 .navbar .navbar-nav > li:hover > a:focus {
     background-color: #E4FEE9;
-}
-.navbar li ul{
-
 }
 
 .navbar a{
@@ -376,15 +392,6 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
     color: #777777 !important
 }
 /* Product Detail */
-
-/*****************globals*************/
-body {
-  font-family: 'open sans';
-  overflow-x: hidden; }
-
-img {
-  max-width: 100%; }
-
 .preview {
   display: -webkit-box;
   display: -webkit-flex;
@@ -436,7 +443,8 @@ img {
             animation-duration: .3s; }
 
 .card {
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 40px;
   background: #eee;
   padding: 3em;
   line-height: 1.5em; }
@@ -467,7 +475,7 @@ img {
 
 .product-title, .price, .sizes, .colors {
   text-transform: UPPERCASE;
-  font-weight: bold; }
+}
 
 .checked, .price span {
   color: #ff9f1a; }

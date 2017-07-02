@@ -35,4 +35,8 @@ angular.module('farmersMarket.goods-ui.controller', [])
     isFirstOpen: true,
     isFirstDisabled: false
   };
+})
+
+.controller('ButtonsCtrl', function ($scope) {
+  $scope.radioModel = 'pickup';
 });
