@@ -10,6 +10,7 @@
 <div ng-controller="TabsCtrl" class="col-md-12">
 <uib-tabset active="activeJustified" justified="true">
   <uib-tab index="0" heading="Your Inventory">
+    <br>
     <div class="container-fluid">
       <div class="row">
         <table class="table table-striped" summary="Inventory">
@@ -92,11 +93,8 @@
 
   </uib-tab>
   <uib-tab index="1" heading="Your Orders">
+    <br>
     <div class="container-fluid">
-      <div class="row" style="margin-top:10px;margin-bottom:10px;pad:10px;">
-        <div class="form-group center">
-          <label>Search Goods Sold and Buyers:</label><input class="width-70 search-field" ng-model="user.orderSearch"/></input>
-        </div>
       </hr>
         <label>Delivery Status</label>
         <select name="deliveryStatus" ng-model="user.deliveryStatus">
@@ -104,8 +102,8 @@
           <option value="1">Delivered</option>
           <option value="0">Not Delivered</option>
         </select>
-      </div>
       <div>
+        <input class="table-search" ng-model="user.orderSearch" placeholder="Search Goods Sold and Buyers"/></input>
         <table  class="table table-striped" summary="Inventory">
         <thead class="thead-inverse">
           <tr>
