@@ -1,5 +1,5 @@
 <!-- currentUser && farmer -->
-<table>
+<table class="dashboard">
   <caption>Statement Summary</caption>
   <thead>
     <tr>
@@ -17,7 +17,7 @@
       <td data-label="Period">03/01/2016 - 03/31/2016</td>
     </tr>
     <tr>
-      <td scope="row" data-label="Account">Visa - 6076</td>
+      <td data-label="Account">Visa - 6076</td>
       <td data-label="Due Date">03/01/2016</td>
       <td data-label="Amount">$2,443</td>
       <td data-label="Period">02/01/2016 - 02/29/2016</td>
@@ -49,19 +49,19 @@
     <br>
     <div class="container-fluid">
       <div class="row">
-        <table class="table table-striped" summary="Inventory">
-          <thead class="thead-inverse">
+        <table class="dashboard" summary="Inventory">
+          <thead class="">
             <tr>
-              <th scope="col" class="width-30">Good</th>
-              <th scope="col" class="width-30">Quantity Remaining</th>
-              <th scope="col" class="width-30">Price Per Unit</th>
-              <th scope="col" class="width-5"></th>
-              <th scope="col" class="width-5"></th>
+              <th class="width-30">Good</th>
+              <th class="width-30">Quantity Remaining</th>
+              <th class="width-30">Price Per Unit</th>
+              <th class="width-5"></th>
+              <th class="width-5"></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td data-label="Good"class="width-30">{{good.name}}</td>
+              <td data-label="Good" class="width-30">{{good.name}}</td>
               <td data-label="Quantity">{{good.quantityForSale}}</td>
               <td data-label="Price Per Unit">{{good.pricePerUnit | currency}}</td>
               <td><a href="/#/goods/{{good._id}}/update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
@@ -115,15 +115,15 @@
         </select>
       <div>
         <input class="table-search" ng-model="user.orderSearch" placeholder="Search Goods Sold and Buyers"/></input>
-        <table  class="table table-striped" summary="Inventory">
-        <thead class="thead-inverse">
+        <table  class="dashboard" summary="Inventory">
+        <thead class="">
           <tr>
-                <th scope="col" class="width-10" ng-click="user.updateSort('created_at')">Date</th>
-                <th scope="col" class="width-20" ng-click="user.updateSort('good')">Good</th>
-                <th scope="col" class="width-10" ng-click="user.updateSort('quantity')">Sold</th>
-                <th scope="col" class="width-20" ng-click="user.updateSort('delivered')">Status</th>
-                <th scope="col" class="width-20" ng-click="user.updateSort('price')">$ Amount</th>
-                <th scope="col" class="width-20" ng-click="user.updateSort('buyer')">Buyer</th>
+                <th class="width-10" ng-click="user.updateSort('created_at')">Date</th>
+                <th class="width-20" ng-click="user.updateSort('good')">Good</th>
+                <th class="width-10" ng-click="user.updateSort('quantity')">Sold</th>
+                <th class="width-20" ng-click="user.updateSort('delivered')">Status</th>
+                <th class="width-20" ng-click="user.updateSort('price')">$ Amount</th>
+                <th class="width-20" ng-click="user.updateSort('buyer')">Buyer</th>
             </tr>
         </thead>
         <tbody>
@@ -171,15 +171,15 @@
         <input placeholder="Search Goods" class="table-search" ng-model="user.orderSearch" /></input>
       </div>
       <div>
-        <table  class="table table-striped" summary="Inventory">
-        <thead class="thead-inverse">
+        <table  class="dashboard" summary="Inventory">
+        <thead class="">
           <tr>
-                <th scope="col" class="width-10">Date</th>
-                <th scope="col" class="width-20">Good</th>
-                <th scope="col" class="width-10">Sold</th>
-                <th scope="col" class="width-20">Status</th>
-                <th scope="col" class="width-20">$ Amount</th>
-                <th scope="col" class="width-20">Seller</th>
+                <th class="width-10">Date</th>
+                <th class="width-20">Good</th>
+                <th class="width-10">Sold</th>
+                <th class="width-20">Status</th>
+                <th class="width-20">$ Amount</th>
+                <th class="width-20">Seller</th>
             </tr>
         </thead>
         <tbody>
