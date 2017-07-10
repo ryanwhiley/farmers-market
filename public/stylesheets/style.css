@@ -693,7 +693,7 @@ table tr {
 }
 table th,
 table td {
-  padding: .625em;
+  padding: 1em;
   text-align: center;
 }
 table th {
@@ -727,7 +727,9 @@ table th {
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: .8em;
+    line-height: .8em;
     text-align: right;
+    padding-bottom: 20px;
   }
   .dashboard td:before {
     content: attr(data-label);
