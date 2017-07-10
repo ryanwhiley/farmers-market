@@ -1,6 +1,42 @@
 <!-- currentUser && farmer -->
+<table>
+  <caption>Statement Summary</caption>
+  <thead>
+    <tr>
+      <th>Account</th>
+      <th>Due Date</th>
+      <th>Amount</th>
+      <th>Period</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="Account">Visa - 3412</td>
+      <td data-label="Due Date">04/01/2016</td>
+      <td data-label="Amount">$1,190</td>
+      <td data-label="Period">03/01/2016 - 03/31/2016</td>
+    </tr>
+    <tr>
+      <td scope="row" data-label="Account">Visa - 6076</td>
+      <td data-label="Due Date">03/01/2016</td>
+      <td data-label="Amount">$2,443</td>
+      <td data-label="Period">02/01/2016 - 02/29/2016</td>
+    </tr>
+    <tr>
+      <td data-label="Account">Corporate AMEX</td>
+      <td data-label="Due Date">03/01/2016</td>
+      <td data-label="Amount">$1,181</td>
+      <td data-label="Period">02/01/2016 - 02/29/2016</td>
+    </tr>
+    <tr>
+      <td data-label="Acount">Visa - 3412</td>
+      <td data-label="Due Date">02/01/2016</td>
+      <td data-label="Amount">$842</td>
+      <td data-label="Period">01/01/2016 - 01/31/2016</td>
+    </tr>
+  </tbody>
+</table>
 <!-- lists out farmers inventory -->
-
 <div class="container-fluid" ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
 <div class="row">
   <h1>
@@ -24,12 +60,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="good in user.goods">
-              <td class="width-30">{{good.name}}</td>
-              <td class="width-30">{{good.quantityForSale}}</td>
-              <td class="width-30">{{good.pricePerUnit | currency}}</td>
-              <td class="width-5"><a href="/#/goods/{{good._id}}/update"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
-              <td class="width-5"><a ng-click="user.prepareForDeletion(good)" data-toggle="modal" data-target="#deleteGoodModal" class="ask"><img src="images/trash.png" alt="" title="" border="0" /></a></td>
+            <tr>
+              <td data-label="Good"class="width-30">{{good.name}}</td>
+              <td data-label="Quantity">{{good.quantityForSale}}</td>
+              <td data-label="Price Per Unit">{{good.pricePerUnit | currency}}</td>
+              <td><a href="/#/goods/{{good._id}}/update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+              <td class="center"><a ng-click="user.prepareForDeletion(good)" data-toggle="modal" data-target="#deleteGoodModal" class="ask pointer"><i class="fa fa-trash-o" aria-hidden="true"></i>
+</a></td>
             </tr>
           </tbody>
         </table>
@@ -37,10 +74,6 @@
           Add new item
         </button></a>
         </div>
-         <!-- <a href="/#/new" ><button type="button" class="btn btn-warning" aria-label="Delete Items"> -->
-
-   <!-- Delete items
-   </button></a> -->
       <!-- Replace with inventory logic -->
        <div ng-if="cart.currentUser.cart.length==0" class="alert alert-info text-center row" style="margin-top:20px;">
          <span>You have no goods in your cart.</span>
@@ -67,28 +100,6 @@
           <b>Buyer:</b> {{good.buyer}}<br>
         </div>
       </div> -->
-
-      <!-- ========================= -->
-      <!-- === DELETE GOOD MODAL === -->
-      <!-- ========================= -->
-      <div id="deleteGoodModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title text-center">Are you sure you want to delete {{user.goodToDelete.name}}?</h4>
-            </div>
-            <div class="modal-body text-center">
-              <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="user.theyDontWantToDeleteThisGood()">No, I don't want to delete {{user.goodToDelete.name}}.</button><br><br><br>
-              <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="user.deleteGood(user.goodToDelete._id)">Yes, delete it.</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- ========================= -->
-      <!-- === DELETE GOOD MODAL === -->
-      <!-- ========================= -->
     </div>
 
   </uib-tab>
@@ -139,24 +150,25 @@
   </uib-tab>
 </uib-tabset>
 </div>
-  </div>
 
 </div>
+<!-- ========================= -->
+<!-- === currentUser && !farmer === -->
+<!-- ========================= -->
 
-<!-- currentUser && !farmer -->
 <div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==0">
   <div class="row">
       <h3>
         Your Orders
       </h3>
       <div class="row">
-        <label>Search Goods Sold and Sellers:</label><input class="width-70" ng-model="user.orderSearch" /></input>
         <label>Delivery Status</label>
         <select name="deliveryStatus" ng-model="user.deliveryStatus">
           <option value="false">Any</option>
           <option value="1">Delivered</option>
           <option value="0">Not Delivered</option>
         </select>
+        <input placeholder="Search Goods" class="table-search" ng-model="user.orderSearch" /></input>
       </div>
       <div>
         <table  class="table table-striped" summary="Inventory">
@@ -191,10 +203,6 @@
 
           </tbody>
           <tfoot>
-            <!-- Need to make this do something -->
-            <tr align="right">
-              <td align="right"><button class="btn btn-success" value="update">Update</button></td>
-            </tr>
           </tfoot>
         </table>
       </div>
@@ -202,7 +210,11 @@
 
 </div>
 
-<!-- !currentUser && farmer -->
+
+<!-- ========================== -->
+<!-- === !currentUser && farmer === -->
+<!-- ========================== -->
+
 <div class="container-fluid" ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
   <div class="row">
     <h1>
