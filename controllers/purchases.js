@@ -3,7 +3,6 @@ var express = require('express'),
     jwt = require('express-jwt'),
     mongoose = require('mongoose'),
     Purchase = mongoose.model('Purchase'),
-    email = require('../helpers/email'),
     sendgrid = require('../helpers/sendgrid-email'),
     general = require('../helpers/general');
 
@@ -54,8 +53,8 @@ router.get('/mostPopular/:count', function(req,res,next){
 
 
 // get purchases by user
-router.get('/:user', function(req,res,next){
-  Purchase.findByUser(req.params.user, function(err,purchases){
+router.get('/:user_id', function(req,res,next){
+  Purchase.findByUser(req.params.user_id, function(err,purchases){
     if(err){ return next(err); }
     res.json(purchases);
   })

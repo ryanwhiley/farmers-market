@@ -30,7 +30,7 @@
         <div class="details col-md-6">
           <h3 class="product-title">{{good.good.name}}</h3>
           <div class="rating">
-            <span>Producer: <a href="#/users/{{good.good.seller}}" class="capitalize">{{good.good.seller}}</a></span>
+            <span>Producer: <a href="#/users/{{good.good.seller._id}}" class="capitalize">{{good.good.seller.username}}</a></span>
           </div>
           <p class="product-description">{{good.good.description}}</p>
           <h4 class="price">Price: <span>{{good.good.pricePerUnit | currency}}/{{good.good.unitOfSale}} {{good.good.unitOfMeasurement}}</span></h4>

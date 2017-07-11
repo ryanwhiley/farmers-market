@@ -33,15 +33,16 @@ function auth($http, $window){
       return payload;
     }
   };
-  auth.buildPurchaseObject = function(good,currentUser,userQuantity){
+  auth.buildPurchaseObject = function(good,buyer_id,userQuantity){
     var purchase = {};
     purchase.good = good.name;
     purchase.good_id = good._id;
-    purchase.buyer = currentUser.username;
+    purchase.buyer = buyer_id;
     purchase.quantity = parseInt(userQuantity);
     purchase.price = parseFloat(good.pricePerUnit);
-    return this.userLookUp(good.seller).then(function(res){
+    return this.userLookUp(good.seller._id).then(function(res){
       purchase.seller = {};
+      purchase.seller._id = res.data._id;
       purchase.seller.name = res.data.username;
       purchase.seller.email = res.data.email;
       purchase.seller.phone = res.data.phone;
@@ -101,6 +102,17 @@ function auth($http, $window){
       return res;
     })
     .error(function(err){
+      return err;
+    })
+  }
+  auth.getImagesByOwner = function(user_id){
+    return $http.get('/api/images/'+user_id)
+    .success(function(res){
+      console.log(res);
+      return res;
+    })
+    .error(function(err){
+      console.log(err)
       return err;
     })
   }
@@ -174,7 +186,6 @@ function auth($http, $window){
   auth.getConversationId = function(users){
     return $http.put('/api/conversations/getConversation',{users:users})
     .success(function(res){
-      console.log(res);
       return res;
     })
     .error(function(err){

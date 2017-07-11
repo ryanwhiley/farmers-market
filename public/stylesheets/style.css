@@ -686,3 +686,7 @@ tbody td, thead th {
     -o-transform: translate(-50%, -50%);
     transform: translate(-70%, -70%);
 }
+
+.selected-image{
+  border:5px solid #224db2;
+}

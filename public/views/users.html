@@ -1,7 +1,8 @@
+<!-- dashboard -->
 <!-- currentUser && farmer -->
 <!-- lists out farmers inventory -->
 
-<div class="container-fluid" ng-if="user.user.username==user.currentUser.username&&user.user.farmer==1">
+<div class="container-fluid" ng-if="user.user._id==user.currentUser._id&&user.user.farmer==1">
 <div class="row">
   <h1>
     Dashboard
@@ -130,7 +131,7 @@
                   </select>
                 </td>
                 <td class="width-20">{{good.price*good.quantity | currency}}</td>
-                <td class="width-20">{{good.buyer}}</td>
+                <td class="width-20">{{good.buyer.username}}</td>
           </tr>
           <tr>
           </tr>
@@ -146,7 +147,7 @@
 </div>
 
 <!-- currentUser && !farmer -->
-<div ng-if="user.user.username==user.currentUser.username&&user.user.farmer==0">
+<div ng-if="user.user._id==user.currentUser._id&&user.user.farmer==0">
   <div class="row">
       <h3>
         Your Orders
@@ -185,7 +186,7 @@
                   </select>
                 </td>
                 <td class="width-20">{{good.price*good.quantity | currency}}</td>
-                <td class="width-20 capitalize">{{good.seller}}</td>
+                <td class="width-20 capitalize">{{good.seller.username}}</td>
           </tr>
             <tr>
 
@@ -205,7 +206,7 @@
 </div>
 
 <!-- !currentUser && farmer -->
-<div class="container-fluid" ng-if="user.user.username!=user.currentUser.username&&user.user.farmer==1">
+<div class="container-fluid" ng-if="user.user._id!=user.currentUser._id&&user.user.farmer==1">
   <div class="row">
     <h1>
       {{user.user.username}}'s Goods

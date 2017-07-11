@@ -60,7 +60,6 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 				vm.convo_id = res.data.convo._id;
 				auth.getMessages(res.data.convo._id)
 				.then(function(messages){
-					console.log(messages);
 				})
 			}
 		})
@@ -145,7 +144,6 @@ function InboxCtrl(conversations, auth){
 		auth.getMessages(vm.conversation_id)
 		.then(function(messages){
 			vm.messages = messages.data.reverse();
-			console.log(vm.messages);
 		})
 	}
 

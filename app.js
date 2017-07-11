@@ -4,7 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var helmet = require('helmet')
+var helmet = require('helmet');
+var fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 var mongoose = require('mongoose');
@@ -13,6 +14,7 @@ require('./models/Users');
 require('./models/Purchases');
 require('./models/Conversation');
 require('./models/Messages');
+require('./models/Images');
 require('./config/passport');
 
 // mongoose.connect('mongodb://localhost/market');
@@ -38,6 +40,9 @@ if(app.get('env')==='development'){
 // use helmet for security headers
 // https://helmetjs.github.io/docs/
 app.use(helmet());
+app.use(fileUpload());
+// app.use(bodyParser({uploadDir:'/public/images/content'}));
+
 // app.use('/api', jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'}));
 
 // view engine setup
@@ -69,6 +74,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   console.log('hey');
   app.use(function(err, req, res, next) {
+    console.log(err);
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,

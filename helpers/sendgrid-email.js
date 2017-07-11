@@ -16,8 +16,8 @@ sgemail.sendForgotPasswordEmail = function(email,token){
 sgemail.sendLowStockEmail = function(recipient,goods){
 	var template_id = sg_lu['lowstock'];
 	var request = buildStandardRequest(recipient,template_id);
-	request.body.personalizations[0].to[0].name = goods[0].seller || '';
-	request.body.personalizations[0].substitutions = lowStockHTMLSub(buildLowStockHTML(goods),goods[0].seller || '');
+	request.body.personalizations[0].to[0].name = goods[0].seller.username || '';
+	request.body.personalizations[0].substitutions = lowStockHTMLSub(buildLowStockHTML(goods),goods[0].seller.username || '');
 	request.body.personalizations[0].subject = "Low Stock Notice";
 	sendEmail(request);
 }
@@ -91,8 +91,7 @@ function determinePurchaseEmailHTMLFunction(toSeller,other,goods){
 
 // purchase - seller html functions
 function buildEmailHTMLSeller(toSeller, user, goods){
-  return buildGoodsStringSeller(goods)+
-          "<b>Buyer Info</b><p>"+user.username+"</p><p>"+user.address.street+"<br>"+user.addres.city+"</p><p>"+user.email+"</p><p>"+user.phone+"</p>";
+  return buildGoodsStringSeller(goods)+"<b>Buyer Info</b><p>"+user.username+"</p><p>"+user.address.street+"<br>"+user.address.city+"</p><p>"+user.email+"</p><p>"+user.phone+"</p>";
 }
 
 function buildGoodsStringSeller(goods){
@@ -154,8 +153,8 @@ function sendEmail(request){
 	    console.log('Error response received',error);
 	  }
 	  console.log(response.statusCode);
-	  console.log(response.body);
-	  console.log(response.headers);
+	  // console.log(response.body);
+	  // console.log(response.headers);
 	});
 }
 

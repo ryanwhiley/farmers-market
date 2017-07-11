@@ -7,11 +7,11 @@
     <div ng-repeat="good in categoryGoods">
       <div class="clearfix" ng-if="$index % 3 == 0&&good.quantityForSale>0"></div>
         <div class="col-lg-5 good-item text-center" ng-if="good.quantityForSale>0" href="/#/{{good.seller}}/{{good._id}}">
-          <a href="/#/{{good.seller}}/{{good._id}}">
+          <a href="/#/{{good.seller._id}}/{{good._id}}">
           <div class="col-lg-12">
           <h3 class="capitalize">{{good.name}}</h3>
-          <p class="capitalize">Sold by: {{good.seller}}</p>
-          <p class="emphasise">{{good.unitOfSale}}{{good.unitOfMeasurement}}/{{good.pricePerUnit | currency}}</p>
+          <p class="capitalize">Sold by: {{good.seller.username}}<br>
+          {{good.unitOfSale}}/{{good.unitOfMeasurement}} {{good.pricePerUnit | currency}}</p>
           </div>
           </a>
           <hr>

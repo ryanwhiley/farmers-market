@@ -67,17 +67,77 @@ function GoodsCtrl($state, $stateParams, goodsService, goods, auth){
 // template -> new.html
 // url -> /new
 // actions -> create new good
-function NewGoodCtrl($state, goodsService, auth){
+function NewGoodCtrl($state, goodsService, auth, images){
 	var vm = this;
 	// variable declarations
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1, can_deliver: false, delivery_fee: 0, delivery_time: ''};
 	vm.categories = goodsService.categories;
 	vm.currentUser = auth.currentUser();
+	vm.images = images.data;
+	vm.selectedImages = [];
+	vm.imageName = "";
+
 
 	// function declarations
 	vm.newGood = newGood;
 	vm.goodsFieldCheck = goodsFieldCheck;
+	vm.toggleImageInclusion = toggleImageInclusion;
+
+	// vm.imageChaneListner = imageChaneListner();
+	$(document).on('change', '#file-input', function() {
+		console.log($(this));
+    var file = $(this)[0]; // note the [0] to return the DOMElement from the jQuery object
+
+    // if(vm.imageName){
+    // 	file.files[0].name = vm.imageName+'.'+file.files[0].name.split('.')[1];
+    // }
+    console.log(file.files[0], vm.imageName);
+	  getSignedRequest(file.files[0]);
+	});
+
+	function getSignedRequest(file){
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('GET', `/api/images/sign-s3?file-name=${file.name}&file-type=${file.type}&id=${vm.currentUser._id}`);
+	  xhr.onreadystatechange = () => {
+	    if(xhr.readyState === 4){
+	      if(xhr.status === 200){
+	        var response = JSON.parse(xhr.responseText);
+	        console.log(response);
+	        uploadFile(file, response.signedRequest, response.url);
+	      }
+	      else{
+	        alert('Could not get signed URL.');
+	      }
+	    }
+	  };
+	  xhr.send();
+	}
+
+	function uploadFile(file, signedRequest, url){
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('PUT', signedRequest);
+	  xhr.onreadystatechange = () => {
+	    if(xhr.readyState === 4){
+	      if(xhr.status === 200){
+	        // document.getElementById('image-url').value = url;
+	      }
+	      else{
+	        alert('Could not upload file.');
+	      }
+	    }
+	  };
+	  xhr.send(file);
+	}
+
+	function toggleImageInclusion(id){
+		var index = vm.selectedImages.indexOf(id);
+		if(index>=0){
+			vm.selectedImages.splice(index,1);
+		}else{
+			vm.selectedImages.push(id);
+		}
+	}
 
 	function goodsFieldCheck(){
 		if(!vm.goodDetails.name||
@@ -109,7 +169,8 @@ function NewGoodCtrl($state, goodsService, auth){
 	    	unitOfSale: vm.goodDetails.unitOfSale,
 	    	can_deliver: vm.goodDetails.can_deliver,
 				delivery_fee: vm.goodDetails.delivery_fee,
-	    	delivery_time: vm.goodDetails.delivery_time
+	    	delivery_time: vm.goodDetails.delivery_time,
+	    	images: vm.selectedImages
 	    })
 	  	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1, can_deliver: false, delivery_fee: 0, delivery_time: ''};
 	  	$state.go('home');
@@ -143,30 +204,25 @@ function GoodCtrl(goodsService,good,auth){
 	vm.error = '';
 
 	// functions
-	vm.purchaseGood = purchaseGood;
-	vm.buildPurchaseObject = buildPurchaseObject;
 	vm.addToCart = addToCart;
-	vm.updateUserCart = updateUserCart;
 
 	// if we want to put add to cart functionality then we'll need to take some of these functions and put them into
 	// a service
 	// specifically -> addToCart, buildPurchaseObject, 
 	function addToCart(){
-		if(vm.good.delivery==''||!vm.good.delivery){
+		if(vm.good.seller._id==vm.currentUser._id){
+			vm.error = 'You cannot purchase your own goods.';
+			return;
+		}else if(vm.good.delivery==''||!vm.good.delivery){
 			vm.error = 'Please select pickup or delivery to add this to your cart.';
 			return;
 		}else if(!vm.currentUser){
 			vm.error = 'Please login to add this to your cart.';
 			return;
-		}
-		// vm.buildPurchaseObject().then(function(res){
-		// 	vm.updateUserCart();
-		// 	vm.success = 'Successfully added to cart!';
-		// 	auth.userUpdate(vm.currentUser).then(function(res){
-		// 		auth.updateToken(res.data.token);
-		// 	})
-		// })
-		auth.buildPurchaseObject(vm.good,vm.currentUser,vm.userQuantity)
+		} 
+		
+		// note: this purchase object is not the same object that it stored in the Purchase table. it is just stored in the cart for the user
+		auth.buildPurchaseObject(vm.good,vm.currentUser._id,vm.userQuantity)
 		.then(function(res){
 			vm.purchase = res;
 			auth.updateUserCart(vm.purchase,vm.currentUser,vm.good);
@@ -175,56 +231,6 @@ function GoodCtrl(goodsService,good,auth){
 			auth.userUpdate(vm.currentUser).then(function(res){
 				auth.updateToken(res.data.token);
 			})
-		})
-	}
-
-	function updateUserCart(){
-		// checks to see if the good the user is adding is already in the cart
-		// only compares by good_id, which means that the price should be the same
-		// bc if a user wants to update the price of a good they must create a 
-		// new listing of that good, thus good_id will be diff
-		var inCart = false;
-		for(var i = 0,len=vm.currentUser.cart.length;i<len;i++){
-			if(vm.purchase.good_id==vm.currentUser.cart[i].good_id){
-				inCart = true;
-				vm.currentUser.cart[i].quantity = parseInt(vm.purchase.quantity)+parseInt(vm.currentUser.cart[i].quantity);
-				vm.currentUser.cart[i].price = parseFloat(vm.good.pricePerUnit);
-				return
-			}
-		}
-		if(!inCart){
-			vm.currentUser.cart.push(vm.purchase)
-		}
-	}
-
-	function buildPurchaseObject(){
-		vm.purchase.good = vm.good.name;
-		vm.purchase.good_id = vm.good._id;
-		vm.purchase.buyer = vm.currentUser.username;
-		vm.purchase.quantity = parseInt(vm.userQuantity);
-		vm.purchase.price = parseFloat(vm.good.pricePerUnit);
-		return auth.userLookUp(vm.good.seller).then(function(res){
-			vm.purchase.seller = {};
-			vm.purchase.seller.name = res.data.username;
-			vm.purchase.seller.email = res.data.email;
-			vm.purchase.seller.phone = res.data.phone;
-			vm.purchase.seller.address = res.data.address;
-			return true;
-		})
-	}
-	
-	// i dont think this is in use right now, however im not totally sure
-	function purchaseGood(){
-		vm.good.quantityForSale -= vm.userQuantity;
-		vm.buildPurchaseObject();
-		// update quantity in goods table
-		goodsService.update(vm.good)
-		// create row in purchase table
-		goodsService.purchase(vm.purchase)
-		// send seller and buyer emails
-		auth.userLookUp(vm.good.seller).then(function(res){
-			goodsService.purchaseEmail(vm.good, vm.currentUser, res.data);
-			successfulNotification();
 		})
 	}
 
@@ -249,14 +255,14 @@ function UpdateGoodCtrl($state,goodsService,good,auth){
 	vm.currentUser = auth.currentUser();
 	vm.categories = goodsService.categories;
 	vm.error = '';
-	if(vm.good.seller!=vm.currentUser.username){
+	if(vm.good.seller._id!=vm.currentUser._id){
 		$state.go('home');
 	}
 
 	vm.updateGood = updateGood;
 
 	function updateGood(){
-		if(good.seller==vm.currentUser.username){
+		if(good.seller._id==vm.currentUser._id){
 			vm.good.updated_at = new Date();
 			goodsService.update(vm.good).then(function(res){
 				if(res.ok){
@@ -266,6 +272,8 @@ function UpdateGoodCtrl($state,goodsService,good,auth){
 					})
 				}
 			})
+		}else{
+			vm.error = 'You do not have permission to update this good. If you believe this is an issue you can contact us at hello@farmtomeal.com.';
 		}
 	}
 }
@@ -355,7 +363,7 @@ function CartCtrl($state, goodsService, auth){
 		for(var i = 1,len = vm.currentUser.cart.length;i<len;i++){
 			let inCart = false;
 			for(var j = 0;j<vm.cart.length;j++){
-				if(vm.cart[j].seller.name==vm.currentUser.cart[i].seller.name){
+				if(vm.cart[j].seller._id==vm.currentUser.cart[i].seller._id){
 					inCart = true;
 					vm.cart[j].goods.push(vm.buildGoodObject(vm.currentUser.cart[i]));
 				}
@@ -377,7 +385,7 @@ function CartCtrl($state, goodsService, auth){
 			goodsService.purchaseEmail(vm.cart[i].goods, vm.currentUser, vm.cart[i].seller, 1);
 			vm.getGoodsObject(vm.cart[i].goods, vm.cart[i].seller);
 		}
-		goodsService.purchaseEmail(vm.cart, vm.currentUser, null, 0);
+		// goodsService.purchaseEmail(vm.cart, vm.currentUser, null, 0);
 	}
 
 	// fucking duh
@@ -390,7 +398,7 @@ function CartCtrl($state, goodsService, auth){
 												good_id:vm.currentUser.cart[i].good_id,
 												price:vm.currentUser.cart[i].price,
 												quantity:vm.currentUser.cart[i].quantity,
-												seller:vm.currentUser.cart[i].seller.name};
+												seller:vm.currentUser.cart[i].seller._id};
 			// vm.updateRemainingQuantities(vm.currentUser.cart[i].good_id, vm.currentUser.cart[i].quantity)
 			goodsService.purchase(goodObject);
 		}
@@ -420,7 +428,7 @@ function CartCtrl($state, goodsService, auth){
 					lowGoods.push(res);
 				}
 				if(counter===goods.length){
-					goodsService.sendLowStockEmail(lowGoods,seller);
+					goodsService.sendLowStockEmail(lowGoods,seller.email);
 				}
 			})
 		})
