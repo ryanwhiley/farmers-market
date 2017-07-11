@@ -10,6 +10,7 @@ var GoodsSchema = new mongoose.Schema({
 	unitOfSale: Number, //how much 1 unit of sale is
 	pricePerUnit: Number, //price per unit of sale
 	seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
+	images: Array,
 	forSale: {type: Boolean, default: true},
 	can_deliver: Boolean,
 	delivery_fee: Number,

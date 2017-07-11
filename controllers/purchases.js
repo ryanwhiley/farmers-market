@@ -3,7 +3,6 @@ var express = require('express'),
     jwt = require('express-jwt'),
     mongoose = require('mongoose'),
     Purchase = mongoose.model('Purchase'),
-    email = require('../helpers/email'),
     sendgrid = require('../helpers/sendgrid-email'),
     general = require('../helpers/general');
 

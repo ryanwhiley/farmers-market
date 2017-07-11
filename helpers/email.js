@@ -4,6 +4,7 @@
 
 var nodemailer = require('nodemailer')
 		, email = {};
+var inLineCss = require('nodemailer-juice');
 
 // console.log(process.env.EMAIL_NAME, process.env.EMAIL_PW);
 
@@ -15,6 +16,7 @@ var transporter = nodemailer.createTransport({
   }
 
 });
+transporter.use('compile', inLineCss());
 
 email.sendForgotPasswordEmail = function(email,token,host){
 	var mailOptions = {
@@ -41,7 +43,12 @@ email.lowStockNotice = function(goods,recipient){
     to: recipient,
     from: 'hello@farmtomeal.com',
     subject: 'You have low stock',
-    html: 'Hello!  We are emailing you let you know that the following goods are in low stock on FarmToMeal:<br> '+lowStockHTML(goods)
+    html: '<style>body{ margin: 0; padding: 0;}table{ border-collapse: collapse; text-align: center;}td{ background-color: #70bbd9; padding: 40px 0 30px 0;}img{ width:300px; height: 230px; display:block;}</style>\
+		<body> <table> <tr> <td> <table> <tr> <td> <img /> </td> </tr> <tr> <td> <table> <tr> <td> Lorem ipsum dolor sit amet! </td> </tr> <tr> <td> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat. </td> </tr> <tr> <td> <table> <tr> <td> <table> <tr> <td> <img /> </td> </tr> <tr> <td> Lorem ipsum dolor sit amet, consectetur\
+		adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat. </td> </tr> </table> </td> <td> &nbsp; </td> <td> <table> <tr> <td> <img /> </td> </tr> <tr> <td> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque\
+		at erat. </td> </tr> </table> </td> </tr> </table> </td> </tr> </table> </td> </tr> <tr> <td> </td> </tr> </table> </td> </tr> </table><p>Hello! <br> We are emailing you let you know that the following goods are in low stock on FarmToMeal:<br><br> '
+		+lowStockHTML(goods)
+		+'</p></body>'
   }
   sendEmail(mailOptions);
 }
@@ -64,7 +71,7 @@ email.sendNewUserEmail = function(user){
     to: user.email,
     from: 'hello@farmtomeal.com',
     subject: 'Welcome to Farm to Meal!',
-    html: 'Hello '+user.username+' and welcome to Farm to Meal!<br> Here are some helpful links or something.'
+    html: '<style>p { color: red; }</style><p>Hello '+user.username+' and welcome to Farm to Meal!</p><br> '
   };
   sendEmail(mailOptions);
   return 'success';
@@ -111,13 +118,13 @@ function buildEmailSubject(toSeller, goods){
   if(toSeller){
     return 'Hello, You just made a sale!';
   }else{
-    return 'Hello, You just bought cool shit!';
+    return 'Hello, You just bought cool stuff!';
   }
 }
 
 function buildEmailHTMLSeller(toSeller, user, goods){
   return "<b>Hey</b><br>"+
-          "<p>We're emailing you to notify that your following good(s) have been pruchased!</p>"+buildGoodsStringSeller(goods)+
+          "<p>We're emailing you to notify that your following good(s) have been purchased!</p>"+buildGoodsStringSeller(goods)+
           "<b>Buyer Info</b><p>"+user.username+"</p><p>"+user.address+"</p><p>"+user.email+"</p><p>"+user.phone+"</p>";
 }
 
@@ -152,4 +159,3 @@ function buildGoodsStringBuyer(cart){
 }
 
 module.exports = email;
-

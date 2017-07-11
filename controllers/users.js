@@ -7,8 +7,7 @@ var express = require('express'),
 		passport = require('passport'),
 		crypto = require('crypto'),
 		async = require('async'),
-    sendgrid = require('../helpers/sendgrid-email'),
-    email = require('../helpers/email');
+    sendgrid = require('../helpers/sendgrid-email');
 
 var auth = jwt({secret: process.env.JWT_SECRECT, userProperty: 'payload'});
 

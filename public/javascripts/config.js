@@ -153,7 +153,15 @@ function configure($stateProvider, $urlRouterProvider){
       url: '/new',
       templateUrl: 'views/new.html',
       controller: 'NewGoodCtrl',
-      controllerAs: 'goods'
+      controllerAs: 'goods',
+      resolve: {
+        images: ['auth' , function(auth){
+          console.log(auth.currentUser()._id);
+          return auth.getImagesByOwner(auth.currentUser()._id).then(function(res){
+            return res;
+          })
+        }]
+      }
     })
 
     // farmer welcome page

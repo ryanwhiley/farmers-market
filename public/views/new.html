@@ -1,3 +1,5 @@
+<div class="container-fluid">
+
 <form ng-submit="goods.newGood()"
 	ng-show="goods.isLoggedIn()">
   <h3>Post new Good</h3>
@@ -127,5 +129,40 @@
         ng-model="goods.goodDetails.delivery_time"></input>
     </div>
   </div>
+  <a data-toggle="modal" data-target="#selectImage" class="ask"><img src="images/trash.png" alt="" title="" border="0" />Show</a>
+
   <button type="submit" class="btn btn-primary">Post</button>
 </form>
+
+<input type="file" id="file-input">
+<input type="text" id="image-name" ng-model="goods.imageName">
+
+
+<!-- =========================== -->
+<!-- === SELECT/UPLOAD IMAGE === -->
+<!-- =========================== -->
+<div id="selectImage" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Select or Upload a new image</h4>
+      </div>
+      <div class="modal-body text-center row">
+        <div class="col-md-6">
+          Select
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- =========================== -->
+<!-- === SELECT/UPLOAD IMAGE === -->
+<!-- =========================== -->
+
+<div class="row">
+  <img ng-repeat="image in goods.images" ng-class="{'selected-image':goods.selectedImages.indexOf(image._id)>=0}" ng-click="goods.toggleImageInclusion(image._id)" width="125px" height="125px" ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image._id}}" />
+</div>
+
+</div>

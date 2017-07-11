@@ -9,7 +9,7 @@ function goodsService($http,auth){
     categories: {
       'produce':['Fruit','Vegetables','Greens','Mushrooms','Garlic','Onions','Other'],
       'dairy':['Milk','Eggs','Cheese','Yogurt','Butter','Other'],
-      'meat':['Poultry','Beef','Pork','Other'],
+      'meat':['Poultry','Beef','Pork','Fish','Other'],
       'other':['Other']
     }
   };
@@ -88,6 +88,7 @@ function goodsService($http,auth){
   // args:
   // user_id (string) -> obvi. looks up goods by user_id rather than user name like it used to
   o.getByUser = function(user_id){
+    console.log(user_id);
     return $http.get('/api/users/' + user_id + '/goods').then(function(res){
       return res.data;
     });

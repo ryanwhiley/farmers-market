@@ -105,6 +105,17 @@ function auth($http, $window){
       return err;
     })
   }
+  auth.getImagesByOwner = function(user_id){
+    return $http.get('/api/images/'+user_id)
+    .success(function(res){
+      console.log(res);
+      return res;
+    })
+    .error(function(err){
+      console.log(err)
+      return err;
+    })
+  }
   auth.userUpdate = function(user){
     return $http.post('/api/users/update', {user:user}).success(function(data){
       return data.token;

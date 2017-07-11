@@ -1,3 +1,5 @@
+
+
 <div ng-show="cart.success" class="alert alert-success row">
   <div class="col-md-6"> {{ cart.success }}</div>
 </div>
@@ -57,6 +59,7 @@
 
 <div class="row">
 <table  class="table table-striped col-md-12" summary="Inventory">
+
 <thead class="thead-inverse">
   <tr>
         <th class="width-25">Product Details</th>
@@ -69,7 +72,7 @@
 
     <tr ng-repeat="good in cart.currentUser.cart">
         <td class="width-25"><a href="/#/{{good.seller.name}}/{{good.good_id}}">{{good.good}}</a></td>
-        <td class="width-25">			
+        <td class="width-25">
         	<input type='number'
             ng-model="good.quantity"
             ng-model-options='{ debounce: 300 }'
@@ -81,7 +84,7 @@
         </td>
         <td class="width-25">{{(good.price*good.quantity) | currency}}</td>
 
-        <td class="width-25"><img ng-click="cart.removeFromCart($index)" src="images/trash.png" alt="" title="" border="0" /></td>
+        <td class="width-25"><img class="pointer" ng-click="cart.removeFromCart($index)" src="images/trash.png" alt="" title="" border="0" /></td>
     </tr>
   </tbody>
 
@@ -90,7 +93,7 @@
 
 <div class="row">
 	<div class="col-md-3">
-		<h5><b>Totals:</b></h5>
+		<h5><b>Total:</b></h5>
 	</div>
 	<div class="col-md-3">
 		<h5>{{cart.totals.totalPrice | currency}}</h5>

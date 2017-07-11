@@ -67,17 +67,77 @@ function GoodsCtrl($state, $stateParams, goodsService, goods, auth){
 // template -> new.html
 // url -> /new
 // actions -> create new good
-function NewGoodCtrl($state, goodsService, auth){
+function NewGoodCtrl($state, goodsService, auth, images){
 	var vm = this;
 	// variable declarations
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1, can_deliver: false, delivery_fee: 0, delivery_time: ''};
 	vm.categories = goodsService.categories;
 	vm.currentUser = auth.currentUser();
+	vm.images = images.data;
+	vm.selectedImages = [];
+	vm.imageName = "";
+
 
 	// function declarations
 	vm.newGood = newGood;
 	vm.goodsFieldCheck = goodsFieldCheck;
+	vm.toggleImageInclusion = toggleImageInclusion;
+
+	// vm.imageChaneListner = imageChaneListner();
+	$(document).on('change', '#file-input', function() {
+		console.log($(this));
+    var file = $(this)[0]; // note the [0] to return the DOMElement from the jQuery object
+
+    // if(vm.imageName){
+    // 	file.files[0].name = vm.imageName+'.'+file.files[0].name.split('.')[1];
+    // }
+    console.log(file.files[0], vm.imageName);
+	  getSignedRequest(file.files[0]);
+	});
+
+	function getSignedRequest(file){
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('GET', `/api/images/sign-s3?file-name=${file.name}&file-type=${file.type}&id=${vm.currentUser._id}`);
+	  xhr.onreadystatechange = () => {
+	    if(xhr.readyState === 4){
+	      if(xhr.status === 200){
+	        var response = JSON.parse(xhr.responseText);
+	        console.log(response);
+	        uploadFile(file, response.signedRequest, response.url);
+	      }
+	      else{
+	        alert('Could not get signed URL.');
+	      }
+	    }
+	  };
+	  xhr.send();
+	}
+
+	function uploadFile(file, signedRequest, url){
+	  var xhr = new XMLHttpRequest();
+	  xhr.open('PUT', signedRequest);
+	  xhr.onreadystatechange = () => {
+	    if(xhr.readyState === 4){
+	      if(xhr.status === 200){
+	        // document.getElementById('image-url').value = url;
+	      }
+	      else{
+	        alert('Could not upload file.');
+	      }
+	    }
+	  };
+	  xhr.send(file);
+	}
+
+	function toggleImageInclusion(id){
+		var index = vm.selectedImages.indexOf(id);
+		if(index>=0){
+			vm.selectedImages.splice(index,1);
+		}else{
+			vm.selectedImages.push(id);
+		}
+	}
 
 	function goodsFieldCheck(){
 		if(!vm.goodDetails.name||
@@ -109,7 +169,8 @@ function NewGoodCtrl($state, goodsService, auth){
 	    	unitOfSale: vm.goodDetails.unitOfSale,
 	    	can_deliver: vm.goodDetails.can_deliver,
 				delivery_fee: vm.goodDetails.delivery_fee,
-	    	delivery_time: vm.goodDetails.delivery_time
+	    	delivery_time: vm.goodDetails.delivery_time,
+	    	images: vm.selectedImages
 	    })
 	  	vm.goodDetails = {name: '',pricePerUnit: 0, description: '', type: '', category: '', unitOfMeasurement: '', unitOfSale: '', quantityForSale: 1, can_deliver: false, delivery_fee: 0, delivery_time: ''};
 	  	$state.go('home');
