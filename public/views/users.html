@@ -8,7 +8,7 @@
     Dashboard
   </h1>
 </div>
-<div ng-controller="TabsDemoCtrl" class="col-md-12">
+<div ng-controller="TabsCtrl" class="col-md-12">
 <uib-tabset active="activeJustified" justified="true">
   <uib-tab index="0" heading="Your Inventory">
     <div class="container-fluid">
@@ -101,7 +101,7 @@
       </hr>
         <label>Delivery Status</label>
         <select name="deliveryStatus" ng-model="user.deliveryStatus">
-          <option value="false">N/A</option>
+          <option value="false">Any</option>
           <option value="1">Delivered</option>
           <option value="0">Not Delivered</option>
         </select>
@@ -152,11 +152,11 @@
       <h3>
         Your Orders
       </h3>
-      <div class="row" style="margin-top:10px;margin-bottom:10px;pad:10px;border-top:2px solid #000;border-bottom:2px solid #000;">
+      <div class="row">
         <label>Search Goods Sold and Sellers:</label><input class="width-70" ng-model="user.orderSearch" /></input>
         <label>Delivery Status</label>
         <select name="deliveryStatus" ng-model="user.deliveryStatus">
-          <option value="false">N/A</option>
+          <option value="false">Any</option>
           <option value="1">Delivered</option>
           <option value="0">Not Delivered</option>
         </select>
@@ -209,7 +209,7 @@
 <div class="container-fluid" ng-if="user.user._id!=user.currentUser._id&&user.user.farmer==1">
   <div class="row">
     <h1>
-      {{user.user.username}}'s Goods.
+      {{user.user.username}}'s Goods
       <!-- <span ng-click="user.messageUser()" data-toggle="modal" data-target="#sendMessageModal">
         Message User
       </span> -->
