@@ -788,6 +788,10 @@ table th {
     transform: translate(-70%, -70%);
 }
 
+.fixed{
+    position: fixed;
+}
+
 .selected-image{
   border:5px solid #224db2;
 }
