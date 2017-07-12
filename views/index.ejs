@@ -158,15 +158,33 @@
           <ui-view></ui-view>
         </div>
       </div>
+      <!-- ========================= -->
+      <!-- === DELETE GOOD MODAL === -->
+      <!-- ========================= -->
+      <div id="deleteGoodModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title text-center">Are you sure you want to delete {{user.goodToDelete.name}}?</h4>
+            </div>
+            <div class="modal-body text-center">
+              <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="user.theyDontWantToDeleteThisGood()">No, I don't want to delete {{user.goodToDelete.name}}.</button><br><br><br>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="user.deleteGood(user.goodToDelete._id)">Yes, delete it.</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </body>
 <footer class="footer">
   <div class="container">
     <div class="row">
-    <div class="col-md-4 text-muted center">Farm to Meal 2017</div>
-    <div class="col-md-4 text-muted center">Terms and Agreements</div>
-    <div class="col-md-4 text-muted center">All Fresh LLC</div>
+    <div class="col-sm-4 text-muted center">Farm to Meal 2017</div>
+    <div class="col-sm-4 text-muted center"><a href="/#/terms">Terms and Agreements</a></div>
+    <div class="col-sm-4 text-muted center">All Fresh LLC</div>
   </div>
 </footer>
 </html>

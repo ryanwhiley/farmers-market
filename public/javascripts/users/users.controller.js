@@ -162,7 +162,3 @@ function InboxCtrl(conversations, auth){
 	// functions that i dont wanna put in the resolve, but this matches users to conversations
 
 }
-
-
-
-
