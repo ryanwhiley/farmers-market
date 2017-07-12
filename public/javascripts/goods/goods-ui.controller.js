@@ -39,4 +39,38 @@ angular.module('farmersMarket.goods-ui.controller', [])
 
 .controller('ButtonsCtrl', function ($scope) {
   $scope.radioModel = 'pickup';
+})
+
+.controller('ModalCtrl', function ($scope, $uibModal, $log) {
+  $scope.animationsEnabled = true;
+
+  $scope.open = function (size) {
+
+    var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'myModalContent.html',
+        controller: 'ModalInstanceCtrl',
+        size: size,
+        resolve: {
+          items: function () {
+            return $scope.items;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      });
+    };
+})
+
+.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
+
+  $scope.ok = function () {
+    $uibModalInstance.close($scope.selected.item);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
 });
