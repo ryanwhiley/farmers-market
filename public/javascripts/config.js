@@ -1,7 +1,7 @@
 angular.module('farmersMarket.config', [])
 .config(configure)
 .config(function($locationProvider) {
-  // $locationProvider.html5Mode(true); 
+  // $locationProvider.html5Mode(true);
 });
 
 function configure($stateProvider, $urlRouterProvider){
@@ -179,6 +179,13 @@ function configure($stateProvider, $urlRouterProvider){
       controller: 'NewUserCtrl',
       controllerAs: 'newUser'
     })
+    // Terms and Agreements Page
+    .state('terms', {
+      url: '/terms',
+      templateUrl: 'views/terms.html',
+      controller: 'termsCtrl',
+      controllerAs: 'terms'
+    })
 
     // users inbox
     .state('inbox',{
@@ -192,7 +199,7 @@ function configure($stateProvider, $urlRouterProvider){
         }]
       }
     })
-    
+
     // update specific good
     .state('update', {
       url: '/goods/{id}/update',

@@ -5,6 +5,8 @@
 // });
 
 $(document).ready(function () {
+
+
   $('.dropdown-menu').mouseleave(function () {
 		$(this).parents('li.dropdown.open').removeClass('open');
   });
@@ -13,4 +15,5 @@ $(document).ready(function () {
   	$(this).removeClass('open');
   	$(this).find('a').blur();
   })
+
 });

@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="/">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
   <link href="/stylesheets/style.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -12,7 +12,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="/javascripts/styles.js"></script>
   <script src="/javascripts/angular.js"></script>
   <script src="/javascripts/angular-ui-bootstrap.js"></script>
   <script src="/javascripts/config.js?r=<%= Math.random()%>"></script>
@@ -27,6 +26,7 @@
   <script src="/javascripts/goods/goods.service.js?r=<%= Math.random()%>"></script>
   <script src="/javascripts/purchases/purchases.service.js?r=<%= Math.random()%>"></script>
   <script src="/javascripts/users/users.controller.js?r=<%= Math.random()%>"></script>
+
 </head>
 <body ng-app="farmersMarket" ng-controller="MainCtrl as main">
   <nav class="navbar border-bottom" ng-controller="NavCtrl">
@@ -158,15 +158,24 @@
           <ui-view></ui-view>
         </div>
       </div>
+
     </div>
+
   </main>
+
+  <!-- <script>
+  $(document).ready(function () {
+      $('#deleteGoodModal').appendTo("body");
+  });
+  </script> -->
+
 </body>
 <footer class="footer">
   <div class="container">
     <div class="row">
-    <div class="col-md-4 text-muted center">Farm to Meal 2017</div>
-    <div class="col-md-4 text-muted center">Terms and Agreements</div>
-    <div class="col-md-4 text-muted center">All Fresh LLC</div>
+    <div class="col-sm-4 text-muted center">Farm to Meal 2017</div>
+    <div class="col-sm-4 text-muted center"><a href="/#/terms">Terms and Agreements</a></div>
+    <div class="col-sm-4 text-muted center">All Fresh LLC</div>
   </div>
 </footer>
 </html>
