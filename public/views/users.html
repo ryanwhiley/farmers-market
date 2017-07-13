@@ -30,7 +30,7 @@
               <td data-label="Good" class="width-30">{{good.name}}</td>
               <td data-label="Quantity">{{good.quantityForSale}}</td>
               <td data-label="Price Per Unit">{{good.pricePerUnit | currency}}</td>
-              <td>
+              <td class="center">
                 <a href="/#/goods/{{good._id}}/update"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </a>
               </td>
@@ -42,6 +42,10 @@
                 <!-- === DELETE GOOD MODAL === -->
                 <!-- ========================= -->
                 <div ng-controller="ModalCtrl">
+
+                  <a ng-click="user.prepareForDeletion(good); open()" class="ask pointer">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </a>
                   <script type="text/ng-template" id="myModalContent.html">
                     <div class="modal-dialog">
                       <!-- Modal content-->
@@ -57,9 +61,6 @@
                       </div>
                     </div>
                   </script>
-                  <a ng-click="user.prepareForDeletion(good); open()" class="ask pointer">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                  </a>
                 </div>
 
               </td>
@@ -81,12 +82,13 @@
     <br>
     <div class="container-fluid">
       </hr>
-        <label>Delivery Status</label>
-        <select name="deliveryStatus" ng-model="user.deliveryStatus">
-          <option value="false">Any</option>
-          <option value="1">Delivered</option>
-          <option value="0">Not Delivered</option>
-        </select>
+      <div ng-controller="ButtonsDashboardCtrl">
+            <div class="btn-group">
+                <label class="btn btn-primary" ng-model="user.deliveryStatus" uib-btn-radio="'false'">Any</label>
+                <label class="btn btn-primary" ng-model="user.deliveryStatus" uib-btn-radio="'1'">Delivered</label>
+                <label class="btn btn-primary" ng-model="user.deliveryStatus" uib-btn-radio="'0'">Not Delivered</label>
+            </div>
+      </div>
       <div>
         <input class="table-search" ng-model="user.orderSearch" placeholder="Search Goods Sold and Buyers"/></input>
         <table  class="dashboard" summary="Inventory">
@@ -103,17 +105,17 @@
         <tbody>
 
           <tr ng-repeat="good in user.purchases | filterPurchases:user.orderSearch:user.deliveryStatus:'buyer' | orderBy:user.sortBy:user:reverseSort">
-                <td class="width-10">{{good.created_at | date:'M/d'}}</td>
-                <td class="width-20">{{good.good}}</td>
-                <td class="width-10">{{good.quantity}}</td>
-                <td class="width-20">
-                  <select name="delivered" ng-model="good.delivered" ng-change="user.updateDeliveryStatus(good)">
-                    <option value="true">Delivered</option>
-                    <option value="false">Not Delivered</option>
-                  </select>
-                </td>
-                <td class="width-20">{{good.price*good.quantity | currency}}</td>
-                <td class="width-20">{{good.buyer.username}}</td>
+            <td class="width-10">{{good.created_at | date:'M/d'}}</td>
+            <td class="width-20">{{good.good}}</td>
+            <td class="width-10">{{good.quantity}}</td>
+            <td class="width-20">
+              <select name="delivered" ng-model="good.delivered" ng-change="user.updateDeliveryStatus(good)">
+                <option value="true">Delivered</option>
+                <option value="false">Not Delivered</option>
+              </select>
+            </td>
+            <td class="width-20">{{good.price*good.quantity | currency}}</td>
+            <td class="width-20">{{good.buyer.username}}</td>
           </tr>
           <tr>
           </tr>
@@ -137,16 +139,17 @@
       <h3>
         Your Orders
       </h3>
-      <div class="row">
-        <label>Delivery Status</label>
-        <select name="deliveryStatus" ng-model="user.deliveryStatus">
-          <option value="false">Any</option>
-          <option value="1">Delivered</option>
-          <option value="0">Not Delivered</option>
-        </select>
+
+
         <input placeholder="Search Goods" class="table-search" ng-model="user.orderSearch" /></input>
-      </div>
       <div>
+        <div ng-controller="ButtonsDashboardCtrl">
+              <div class="btn-group">
+                  <label class="btn btn-primary" ng-model="user.deliveryStatus" uib-btn-radio="'false'">Any</label>
+                  <label class="btn btn-primary" ng-model="user.deliveryStatus" uib-btn-radio="'1'">Delivered</label>
+                  <label class="btn btn-primary" ng-model="user.deliveryStatus" uib-btn-radio="'0'">Not Delivered</label>
+              </div>
+        </div>
         <table  class="dashboard" summary="Inventory">
         <thead class="">
           <tr>

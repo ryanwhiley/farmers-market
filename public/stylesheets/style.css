@@ -70,7 +70,7 @@ img{
   cursor: pointer;
 }
 .center{
-  text-align: center;
+  text-align: center!important;
   margin: 0 auto;
 }
 
@@ -680,6 +680,10 @@ table {
   padding: 0;
   width: 100%;
   table-layout: fixed;
+}
+
+.dashboard{
+  margin-bottom: 10px;
 }
 
 table caption {

@@ -125,12 +125,13 @@
         ng-model="goods.goodDetails.delivery_time"></input>
     </div>
   </div>
-
+<label>Add an Image for your good: </label>
+	<input type="file" id="file-input">
+	<input type="text" id="image-name" ng-model="goods.imageName">
   <button type="submit" class="btn btn-primary">Post</button>
 </form>
 
-<input type="file" id="file-input">
-<input type="text" id="image-name" ng-model="goods.imageName">
+
 
 
 <!-- =========================== -->
