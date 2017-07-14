@@ -126,17 +126,20 @@
     </div>
   </div>
 
+  <div class="row col-md-12" style="margin-bottom:20px;">
+    <span data-toggle="modal" data-target="#selectImage">Select Images</span><br>
+    <img ng-repeat="image in goods.selectedImages" width="100px" height="100px" ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image}}" />
+  </div>
+
   <button type="submit" class="btn btn-primary">Post</button>
 </form>
 
-<input type="file" id="file-input">
-<input type="text" id="image-name" ng-model="goods.imageName">
 
 
 <!-- =========================== -->
 <!-- === SELECT/UPLOAD IMAGE === -->
 <!-- =========================== -->
-<!-- <div id="selectImage" class="modal fade fixed" role="dialog">
+<div id="selectImage" class="modal fade fixed" role="dialog">
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -146,18 +149,26 @@
       </div>
       <div class="modal-body text-center row">
         <div class="col-md-6">
-          Select
+          Select Images
+          <div class="row">
+            <img ng-repeat="image in goods.images" ng-class="{'selected-image':goods.selectedImages.indexOf(image._id)>=0}" ng-click="goods.toggleImageInclusion(image._id)" width="100px" height="100px" ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image._id}}" />
+          </div>
+          <button class="btn btn-secondary" data-dismiss="modal">Select</button>
+        </div>
+        <div class="col-md-6">
+          Upload Image
+          <div class="row text-center">
+            <input type="file" id="file-input"><br>
+            <input type="text" id="image-name" ng-model="goods.imageName">
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div> -->
+</div>
+
 <!-- =========================== -->
 <!-- === SELECT/UPLOAD IMAGE === -->
 <!-- =========================== -->
-
-<div class="row">
-  <img ng-repeat="image in goods.images" ng-class="{'selected-image':goods.selectedImages.indexOf(image._id)>=0}" ng-click="goods.toggleImageInclusion(image._id)" width="125px" height="125px" ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image._id}}" />
-</div>
 
 </div>

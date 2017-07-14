@@ -83,6 +83,7 @@ function NewGoodCtrl($state, goodsService, auth, images){
 	vm.newGood = newGood;
 	vm.goodsFieldCheck = goodsFieldCheck;
 	vm.toggleImageInclusion = toggleImageInclusion;
+	vm.reloadImages = reloadImages;
 
 	// vm.imageChaneListner = imageChaneListner();
 	$(document).on('change', '#file-input', function() {
@@ -103,7 +104,6 @@ function NewGoodCtrl($state, goodsService, auth, images){
 	    if(xhr.readyState === 4){
 	      if(xhr.status === 200){
 	        var response = JSON.parse(xhr.responseText);
-	        console.log(response);
 	        uploadFile(file, response.signedRequest, response.url);
 	      }
 	      else{
@@ -120,14 +120,21 @@ function NewGoodCtrl($state, goodsService, auth, images){
 	  xhr.onreadystatechange = () => {
 	    if(xhr.readyState === 4){
 	      if(xhr.status === 200){
-	        // document.getElementById('image-url').value = url;
-	      }
-	      else{
+	        vm.reloadImages();
+	      }else{
 	        alert('Could not upload file.');
 	      }
 	    }
 	  };
 	  xhr.send(file);
+	}
+
+	function reloadImages(){
+		auth.getImagesByOwner(vm.currentUser._id)
+		.then(function(res){
+      vm.images = res.data;
+	    $scope.$apply();
+    })
 	}
 
 	function toggleImageInclusion(id){
@@ -200,6 +207,7 @@ function GoodCtrl(goodsService,good,auth){
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.currentUser = auth.currentUser();
 	vm.good = good;
+	console.log(vm.good)
 	vm.success = '';
 	vm.error = '';
 
