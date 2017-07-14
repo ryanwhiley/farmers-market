@@ -259,6 +259,10 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
   width: auto;
 }
 
+.btn-group .btn{
+  border-radius: 0!important;
+}
+
 /* Sidebar */
 
 .navbar-fixed-side h4{
