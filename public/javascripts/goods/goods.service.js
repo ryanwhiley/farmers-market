@@ -10,7 +10,7 @@ function goodsService($http,auth){
       'produce':['Fruit','Vegetables','Greens','Mushrooms','Garlic','Onions','Other'],
       'dairy':['Milk','Eggs','Cheese','Yogurt','Butter','Other'],
       'meat':['Poultry','Beef','Pork','Fish','Other'],
-      'other':['Other']
+      'other':['Granola','Other']
     }
   };
   // other functions that dont hit the api
@@ -29,6 +29,7 @@ function goodsService($http,auth){
     var totals = {totalPrice: 0, totalQuantity: 0};
     for(var i = 0,len=cart.length;i<len;i++){
       totals.totalPrice = totals.totalPrice+(parseFloat(cart[i].price)*parseFloat(cart[i].quantity));
+      totals.totalPrice += parseFloat(cart[i].delivery_fee);
       totals.totalQuantity = totals.totalQuantity+parseFloat(cart[i].quantity);
     }
     return totals;

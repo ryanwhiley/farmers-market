@@ -11,8 +11,8 @@
         <div class="preview col-md-6">
           <div ng-controller="TabsCtrl">
             <div class="preview-pic tab-content" >
-              <uib-tabset active="activeJustified" justified="true">
-                <uib-tab ng-repeat="tab in good.good.images" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
+              <uib-tabset active="1" justified="true">
+                <uib-tab ng-repeat="tab in good.good.images" heading="{{tab.title}}">
                   <div class="tab-pane"><img ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{tab}}" /></div>
                 </uib-tab>
             </uib-tabset>

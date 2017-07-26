@@ -26,6 +26,14 @@
   <script src="/javascripts/goods/goods.service.js?r=<%= Math.random()%>"></script>
   <script src="/javascripts/purchases/purchases.service.js?r=<%= Math.random()%>"></script>
   <script src="/javascripts/users/users.controller.js?r=<%= Math.random()%>"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>  
+    // var socket = io.connect('/');
+    // socket.on('announcements', function(data) {
+    //     console.log('Got announcement:', data.message);
+    // });
+  </script>  
 
 </head>
 <body ng-app="farmersMarket" ng-controller="MainCtrl as main">
@@ -96,7 +104,7 @@
             <a href="#" class="dropdown-toggle capitalize" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ currentUser().username }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li ng-show="isLoggedIn()"><a href="/#/users/{{ currentUser()._id }}">Dashboard</a></li>
-              <!-- <li ng-show="isLoggedIn()"><a href="/#/users/inbox/{{ currentUser()._id }}">Inbox</a></li> -->
+              <li ng-show="isLoggedIn()"><a href="/#/users/inbox/{{ currentUser()._id }}">Inbox</a></li>
               <li ng-show="isLoggedIn()"><a href="/#/users/edit">Edit Profile</a></li>
               <li ng-show="isLoggedIn()"><a href="/#/favorites">Favorites</a></li>
               <li role="separator" class="divider"></li>

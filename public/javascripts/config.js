@@ -156,7 +156,6 @@ function configure($stateProvider, $urlRouterProvider){
       controllerAs: 'goods',
       resolve: {
         images: ['auth' , function(auth){
-          console.log(auth.currentUser()._id);
           return auth.getImagesByOwner(auth.currentUser()._id).then(function(res){
             return res;
           })

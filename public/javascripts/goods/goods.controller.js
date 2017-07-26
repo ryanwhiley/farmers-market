@@ -233,6 +233,7 @@ function GoodCtrl(goodsService,good,auth){
 		auth.buildPurchaseObject(vm.good,vm.currentUser._id,vm.userQuantity)
 		.then(function(res){
 			vm.purchase = res;
+			console.log(vm.purchase);
 			auth.updateUserCart(vm.purchase,vm.currentUser,vm.good);
 			vm.success = 'Successfully added to cart!';
 			vm.error = '';

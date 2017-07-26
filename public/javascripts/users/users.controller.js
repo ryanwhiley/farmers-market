@@ -35,6 +35,7 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 	vm.updateSort = updateSort;
 	vm.messageUser = messageUser;
 	vm.sendMessage = sendMessage;
+	
 
 	function deleteGood(good){
 		goodsService.remove(good).then(function(res){
@@ -58,6 +59,7 @@ function UserCtrl($scope, $stateParams, goodsService, purchaseService, auth, goo
 		.then(function(res){
 			if(res.data.found){
 				vm.convo_id = res.data.convo._id;
+				vm.socket.emit('subscribe', vm.convo_id);
 				auth.getMessages(res.data.convo._id)
 				.then(function(messages){
 				})
@@ -114,7 +116,7 @@ function EditProfileCtrl(auth){
 // |actions|
 // users -> can view messages between them and other users
 // users -> can reply to messages from other users
-function InboxCtrl(conversations, auth){
+function InboxCtrl($scope, conversations, auth){
 	var vm = this;
 	vm.currentUser = auth.currentUser();
 	vm.conversations = conversations.data;
@@ -124,9 +126,18 @@ function InboxCtrl(conversations, auth){
 	// otherUser is the person on the other end of a message, ie whoever currentUser is messaging with
 	vm.otherUser = null;
 
+	vm.emitMessage = emitMessage;
 	vm.getMessages = getMessages;
 	vm.updateOtherUser = updateOtherUser;
 	vm.sendMessage = sendMessage;
+
+	// sockets
+	vm.socket = io.connect();
+	vm.socket.on('conversation private post', function(data) {
+    console.log(data);
+    vm.messages.push(data);
+    $scope.$apply();
+	});
 
 	// setInterval(function(){
 	// 	vm.getMessages();
@@ -137,6 +148,7 @@ function InboxCtrl(conversations, auth){
 		vm.inbox = res.data;
 		vm.otherUser = vm.inbox[0];
 		vm.conversation_id = vm.conversations.convoLookup[vm.inbox[0]._id];
+		vm.socket.emit('subscribe', vm.conversation_id);
 		vm.getMessages(vm.conversation_id);
 	})
 
@@ -144,7 +156,17 @@ function InboxCtrl(conversations, auth){
 		auth.getMessages(vm.conversation_id)
 		.then(function(messages){
 			vm.messages = messages.data.reverse();
+			console.log(vm.messages);
 		})
+	}
+
+
+	function emitMessage(){
+		vm.socket.emit('send message', {
+	    room: vm.conversation_id,
+	    content: vm.message,
+	    sender_id: vm.currentUser._id
+		});
 	}
 
 	function updateOtherUser(user){
@@ -152,10 +174,11 @@ function InboxCtrl(conversations, auth){
 	}
 
 	function sendMessage(){
+		vm.emitMessage();
 		auth.sendNewMessage({conversation_id:vm.conversation_id,sender:vm.currentUser,content:vm.message,receiver:vm.otherUser})
 		.then(function(res){
 			vm.message = '';
-			vm.getMessages(vm.conversation_id);
+			// vm.getMessages(vm.conversation_id);
 		})
 	}
 
