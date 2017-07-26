@@ -38,10 +38,18 @@ angular.module('farmersMarket.goods-ui.controller', [])
 })
 
 .controller('ButtonsCtrl', function ($scope) {
-  $scope.radioModel = 'pickup';
+  $scope.radioModel = {
+  'pickup':true,
+  'delivery': false
+  }
+
 })
 
-.controller('ModalCtrl', function ($scope, $uibModal, $log) {
+.controller('ButtonsDashboardCtrl', function ($scope) {
+  $scope.radioModel = 'user.deliveryStatus';
+})
+
+.controller('ModalCtrl', function ($scope, $uibModal) {
   $scope.animationsEnabled = true;
 
   $scope.open = function (size) {

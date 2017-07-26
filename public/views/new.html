@@ -125,15 +125,15 @@
         ng-model="goods.goodDetails.delivery_time"></input>
     </div>
   </div>
-
+	<label>Add an Image for your good: </label>
   <div class="row col-md-12" style="margin-bottom:20px;">
-    <span data-toggle="modal" data-target="#selectImage">Select Images</span><br>
+    <button type="button" data-toggle="modal" data-target="#selectImage" class="btn btn-success">Select Images</button><br>
     <img ng-repeat="image in goods.selectedImages" width="100px" height="100px" ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image}}" />
-  </div>
+		<button type="submit" class="btn btn-primary">Post</button>
+	</div>
 
-  <button type="submit" class="btn btn-primary">Post</button>
+
 </form>
-
 
 
 <!-- =========================== -->

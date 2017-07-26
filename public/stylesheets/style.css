@@ -70,7 +70,7 @@ img{
   cursor: pointer;
 }
 .center{
-  text-align: center;
+  text-align: center!important;
   margin: 0 auto;
 }
 
@@ -257,6 +257,10 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
   height: 100%;
   padding: 15px;
   width: auto;
+}
+
+.btn-group .btn{
+  border-radius: 0!important;
 }
 
 /* Sidebar */
@@ -680,6 +684,10 @@ table {
   padding: 0;
   width: 100%;
   table-layout: fixed;
+}
+
+.dashboard{
+  margin-bottom: 10px;
 }
 
 table caption {
