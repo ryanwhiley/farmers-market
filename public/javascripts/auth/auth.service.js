@@ -40,6 +40,7 @@ function auth($http, $window){
     purchase.buyer = buyer_id;
     purchase.quantity = parseInt(userQuantity);
     purchase.price = parseFloat(good.pricePerUnit);
+    purchase.delivery_fee = good.delivery=='delivery' ? good.delivery_fee : 0;
     return this.userLookUp(good.seller._id).then(function(res){
       purchase.seller = {};
       purchase.seller._id = res.data._id;

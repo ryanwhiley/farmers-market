@@ -82,7 +82,7 @@
 	          <span>{{good.error}}</span>
 	        </div>
         </td>
-        <td class="width-25">{{(good.price*good.quantity) | currency}}</td>
+        <td class="width-25">{{(good.price*good.quantity) | currency}} {{good.delivery_fee | currency}}</td>
 
         <td class="width-25"><img class="pointer" ng-click="cart.removeFromCart($index)" src="images/trash.png" alt="" title="" border="0" /></td>
     </tr>

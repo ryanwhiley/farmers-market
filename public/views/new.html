@@ -41,7 +41,7 @@
     <div class="col-md-4">
       <label>
         Quantity
-      </label><a href="" class="new-good-tooltip" title="This is the total quantity you have available and are willing to sell." data-toggle="tooltip" data-placement="top" tooltip> <span class="glyphicon glyphicon-question-sign"></span></a>
+      </label><a href="" class="new-good-tooltip" title="This is the total quantity you have available and are willing to sell." data-toggle="tooltip" data-placement="top" tooltip> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
       <input type="text"
       class="form-control"
       placeholder="Quantity"
@@ -54,7 +54,7 @@
     <div class="col-md-4">
       <label>
         Unit of Measurement
-      </label><a href="" class="new-good-tooltip" title="The unit of measurement that this is sold in." data-toggle="tooltip" data-placement="top" tooltip> <span class="glyphicon glyphicon-question-sign"></span></a><br>
+      </label><a href="" class="new-good-tooltip" title="The unit of measurement that this is sold in." data-toggle="tooltip" data-placement="top" tooltip> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a><br>
       <select ng-model="goods.goodDetails.unitOfMeasurement" required>
         <option value="lb">LBs</option>
         <option value="oz">Oz</option>
@@ -69,7 +69,7 @@
     <div class="col-md-4">
       <label>
         Unit of Sale
-      </label><a href="" class="new-good-tooltip" title="Quantity that is sold per unit." data-toggle="tooltip" data-placement="top" tooltip> <span class="glyphicon glyphicon-question-sign"></span></a>
+      </label><a href="" class="new-good-tooltip" title="Quantity that is sold per unit." data-toggle="tooltip" data-placement="top" tooltip> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
       <input type="text"
         class="form-control"
         ng-model="goods.goodDetails.unitOfSale"></input>
@@ -78,7 +78,7 @@
     <div class="col-md-4">
       <label>
         Price per Unit
-      </label><a href="" class="new-good-tooltip" title="Price per unit of sale." data-toggle="tooltip" data-placement="top" tooltip> <span class="glyphicon glyphicon-question-sign"></span></a>
+      </label><a href="" class="new-good-tooltip" title="Price per unit of sale." data-toggle="tooltip" data-placement="top" tooltip> <i class="fa fa-question-circle-o" aria-hidden="true"></i> </a>
       <input type="text"
         class="form-control"
         placeholder="Price per Unit"
@@ -125,21 +125,23 @@
         ng-model="goods.goodDetails.delivery_time"></input>
     </div>
   </div>
-  <a data-toggle="modal" data-target="#selectImage" class="ask"><img src="images/trash.png" alt="" title="" border="0" />Show</a>
+
+  <div class="row col-md-12" style="margin-bottom:20px;">
+    <span data-toggle="modal" data-target="#selectImage">Select Images</span><br>
+    <img ng-repeat="image in goods.selectedImages" width="100px" height="100px" ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image}}" />
+  </div>
 
   <button type="submit" class="btn btn-primary">Post</button>
 </form>
 
-<input type="file" id="file-input">
-<input type="text" id="image-name" ng-model="goods.imageName">
 
 
 <!-- =========================== -->
 <!-- === SELECT/UPLOAD IMAGE === -->
 <!-- =========================== -->
-<div id="selectImage" class="modal fade" role="dialog">
+<div id="selectImage" class="modal fade fixed" role="dialog">
   <div class="modal-dialog">
-    <!-- Modal content-->
+
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -147,18 +149,26 @@
       </div>
       <div class="modal-body text-center row">
         <div class="col-md-6">
-          Select
+          Select Images
+          <div class="row">
+            <img ng-repeat="image in goods.images" ng-class="{'selected-image':goods.selectedImages.indexOf(image._id)>=0}" ng-click="goods.toggleImageInclusion(image._id)" width="100px" height="100px" ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image._id}}" />
+          </div>
+          <button class="btn btn-secondary" data-dismiss="modal">Select</button>
+        </div>
+        <div class="col-md-6">
+          Upload Image
+          <div class="row text-center">
+            <input type="file" id="file-input"><br>
+            <input type="text" id="image-name" ng-model="goods.imageName">
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <!-- =========================== -->
 <!-- === SELECT/UPLOAD IMAGE === -->
 <!-- =========================== -->
-
-<div class="row">
-  <img ng-repeat="image in goods.images" ng-class="{'selected-image':goods.selectedImages.indexOf(image._id)>=0}" ng-click="goods.toggleImageInclusion(image._id)" width="125px" height="125px" ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image._id}}" />
-</div>
 
 </div>
