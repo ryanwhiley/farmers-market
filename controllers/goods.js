@@ -39,8 +39,9 @@ router.post('/', auth, function(req, res, next) {
   })
 });
 
+
 // search goods
-router.get('/search/:term', function(req,next,res){
+router.get('/search/:term', function(req,res,next){
   Good.search(req.params.term, function(err,goods){
     if(err){ return next(err); }
     res.json(goods);

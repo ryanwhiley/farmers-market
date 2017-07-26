@@ -28,6 +28,7 @@ var routes = require('./controllers/index');
 
 var app = express();
 
+
 // set db
 if(app.get('env')==='development'){
   mongoose.connect('mongodb://localhost/market');
