@@ -44,8 +44,8 @@
             <div ng-controller="ButtonsCtrl">
               <h5 class="sizes">Pickup or Delivery</h5>
                   <div class="btn-group">
-                      <label class="btn btn-primary" ng-model="good.good.delivery" uib-btn-radio="'pickup'">Pickup</label>
-                      <label class="btn btn-primary" ng-disabled="!good.good.can_deliver" ng-model="good.good.delivery" uib-btn-radio="'delivery'">Delivery</label>
+                      <label class="btn btn-primary" ng-model="good.good.delivery" uib-btn-radio="'pickup'" uibButtonConfig="active">Pickup</label>
+                      <label class="btn btn-primary" ng-model="good.good.delivery" ng-disabled="!good.good.can_deliver"  uib-btn-radio="'delivery'">Delivery</label>
                   </div>
             </div>
             <h5 class="colors">
