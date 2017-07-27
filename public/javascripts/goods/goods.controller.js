@@ -87,13 +87,11 @@ function NewGoodCtrl($state, goodsService, auth, images){
 
 	// vm.imageChaneListner = imageChaneListner();
 	$(document).on('change', '#file-input', function() {
-		console.log($(this));
     var file = $(this)[0]; // note the [0] to return the DOMElement from the jQuery object
 
     // if(vm.imageName){
     // 	file.files[0].name = vm.imageName+'.'+file.files[0].name.split('.')[1];
     // }
-    console.log(file.files[0], vm.imageName);
 	  getSignedRequest(file.files[0]);
 	});
 
@@ -122,7 +120,7 @@ function NewGoodCtrl($state, goodsService, auth, images){
 	      if(xhr.status === 200){
 	        vm.reloadImages();
 	      }else{
-	        alert('Could not upload file.');
+
 	      }
 	    }
 	  };
@@ -133,7 +131,6 @@ function NewGoodCtrl($state, goodsService, auth, images){
 		auth.getImagesByOwner(vm.currentUser._id)
 		.then(function(res){
       vm.images = res.data;
-	    $scope.$apply();
     })
 	}
 
