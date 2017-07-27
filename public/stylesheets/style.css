@@ -77,7 +77,12 @@ img{
 .error_text{
   color: #9d0a00;
 }
-
+.right{
+  float:right;
+}
+.margin-10{
+  margin: 10px;
+}
 
 /* Header */
 
@@ -275,6 +280,13 @@ nav ul.dropdown-menu li a:hover, nav ul.dropdown-menu li a:focus{
 
 .navbar-fixed-side h5{
   text-align: center;
+}
+.navbar-fixed-side .panel-body a{
+  -webkit-transition: 2s;
+  transition: 2s;
+}
+.navbar-fixed-side .panel-body a:focus{
+  text-decoration:underline!important;
 }
 .panel-body{
   transition-duration: 1s;

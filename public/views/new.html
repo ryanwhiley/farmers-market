@@ -42,7 +42,7 @@
       <label>
         Quantity
       </label><a href="" class="new-good-tooltip" title="This is the total quantity you have available and are willing to sell." data-toggle="tooltip" data-placement="top" tooltip> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-      <input type="text"
+      <input type="number"
       class="form-control"
       placeholder="Quantity"
       ng-model="goods.goodDetails.quantityForSale" required></input>
@@ -70,7 +70,7 @@
       <label>
         Unit of Sale
       </label><a href="" class="new-good-tooltip" title="Quantity that is sold per unit." data-toggle="tooltip" data-placement="top" tooltip> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-      <input type="text"
+      <input type="number"
         class="form-control"
         ng-model="goods.goodDetails.unitOfSale"></input>
     </div>
@@ -79,7 +79,7 @@
       <label>
         Price per Unit
       </label><a href="" class="new-good-tooltip" title="Price per unit of sale." data-toggle="tooltip" data-placement="top" tooltip> <i class="fa fa-question-circle-o" aria-hidden="true"></i> </a>
-      <input type="text"
+      <input type="number"
         class="form-control"
         placeholder="Price per Unit"
         ng-model="goods.goodDetails.pricePerUnit"></input>
