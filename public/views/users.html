@@ -139,9 +139,8 @@
       <h3>
         Your Orders
       </h3>
-
-
         <input placeholder="Search Goods" class="table-search" ng-model="user.orderSearch" /></input>
+        <br><br>
       <div>
         <div ng-controller="ButtonsDashboardCtrl">
               <div class="btn-group">
@@ -196,11 +195,11 @@
 
   <div class="row">
     <h1>
-      {{user.user.username}}'s Goods
-      <span ng-click="user.messageUser()" data-toggle="modal" data-target="#sendMessageModal">
-        Message User
-      </span>
+      {{user.user.username}}
     </h1>
+    <span class="btn btn-default" ng-click="user.messageUser()" data-toggle="modal" data-target="#sendMessageModal">
+      Message User
+    </span>
     <div class="container-fluid">
       <h2>Current Goods</h2>
       <div class="row">
@@ -250,13 +249,13 @@
             <label for="message">Message:</label>
             <textarea class="form-control" rows="5" id="comment" ng-model="user.message"></textarea>
             <button type="button" class="btn btn-default" ng-click="user.sendMessage()">Send Message</button><br><br><br>
-            <p class="text-center">This will send a message and an email to <span class="capitalize">{{user.user.userName}}</span> so that they can get back to you as quickly as possible.
+            <p class="text-center">This will send a message and an email to <span class="capitalize">{{user.user.username}}</span> so that they can get back to you as quickly as possible.
               However, if you have attachements or would prefer to simply email them directly, you can contact them at <a href="meailto:{{user.user.email}}">{{user.user.email}}</a>.
             </p>
           </div>
 
           <div class="modal-body text-center" ng-if="user.successfullySentMessage">
-            <p>Your message has been sent to {{user.userName}}, along with an email notifying them.</p>
+            <p>Your message has been sent to {{user.user.username}}, along with an email notifying them.</p>
             <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button><br><br><br>
           </div>
 

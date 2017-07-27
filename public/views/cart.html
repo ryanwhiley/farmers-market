@@ -41,17 +41,17 @@
 </div>
 
 <div class="row center">
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<h5><b>Total:</b></h5>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<h5>{{cart.totals.totalQuantity}}</h5>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-2">
     <h5>{{cart.totals.totalPrice | currency}}</h5>
 
 	</div>
-  <div class="col-md-3">
+  <div class="col-md-2 col-md-push-4">
     <button class="btn btn-primary" ng-if="cart.currentUser.cart.length>0" ng-disabled="cart.submissionError" ng-click="cart.purchase()">Purchase</button>
 </div>
 
