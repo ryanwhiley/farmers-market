@@ -27,7 +27,6 @@ router.get('/ids', function(req, res, next) {
 
 // get good by id
 router.get('/:good', function(req, res) {
-  console.log('asdfasdf')
   res.json(req.good);
 });
 
@@ -39,8 +38,9 @@ router.post('/', auth, function(req, res, next) {
   })
 });
 
+
 // search goods
-router.get('/search/:term', function(req,res){
+router.get('/search/:term', function(req,res,next){
   Good.search(req.params.term, function(err,goods){
     if(err){ return next(err); }
     res.json(goods);

@@ -17,7 +17,7 @@
 							No results
 						</h4>
 						<div class="row" style="margin-bottom:10px;" ng-repeat="user in search.userMatches">
-							<a href="/#/users/{{user.username}}"><b>{{user.username}}</b></a><br>
+							<a href="/#/users/{{user._id}}"><b>{{user.username}}</b></a><br>
 							<p>{{user.email}}<br>
 								{{user.phone}}</p>
 						</div>
