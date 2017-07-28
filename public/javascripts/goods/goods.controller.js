@@ -203,7 +203,7 @@ function GoodCtrl(goodsService,good,auth){
 	vm.purchase = {};
 	vm.isLoggedIn = auth.isLoggedIn;
 	vm.currentUser = auth.currentUser();
-	vm.good = good;
+	vm.good = goodsService.convertImagesToObject(good);
 	console.log(vm.good)
 	vm.success = '';
 	vm.error = '';

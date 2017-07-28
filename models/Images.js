@@ -12,8 +12,11 @@ ImageSchema.statics.create = function(image,cb){
 }
 
 ImageSchema.statics.findByOwner = function(owner,cb){
-	console.log(owner);
 	return this.find({owner: owner}).exec(cb)
+}
+
+ImageSchema.methods.deleteImage = function(id){
+	return this.remove({"_id": ObjectId(id)})
 }
 
 mongoose.model('Image', ImageSchema);

@@ -27,7 +27,6 @@ router.get('/ids', function(req, res, next) {
 
 // get good by id
 router.get('/:good', function(req, res) {
-  console.log('asdfasdf')
   res.json(req.good);
 });
 
