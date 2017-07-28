@@ -12,13 +12,13 @@
           <div ng-controller="TabsCtrl">
             <div class="preview-pic tab-content" >
               <uib-tabset active="1" justified="true">
-                <uib-tab ng-repeat="tab in good.good.images" heading="{{tab.title}}">
-                  <div class="tab-pane"><img ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{tab}}" /></div>
+                <uib-tab ng-repeat="tab in good.good.images" heading="{{tab._id}}">
+                  <div class="tab-pane"><img ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{tab._id}}" /></div>
                 </uib-tab>
             </uib-tabset>
             </div>
             <ul class="preview-thumbnail nav nav-tabs">
-              <li ng-repeat="image in good.good.images"><a ng-click="good.good.images[$index].active = true"><img ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image}}" /></a></li>
+              <li ng-repeat="image in good.good.images"><a ng-click="good.good.images[$index].active = true"><img ng-src="https://s3-us-west-2.amazonaws.com/farmtomeal-useruploads/{{image._id}}" /></a></li>
               <!-- <li><a ng-click="tabs[1].active = true"><img src="/images/foodphotos/brown-eggs.jpg" /></a></li>
               <li><a ng-click="tabs[2].active = true"><img src="/images/foodphotos/chestnuts.jpg" /></a></li>
               <li><a ng-click="tabs[3].active = true"><img src="/images/foodphotos/green-peas.jpg" /></a></li>

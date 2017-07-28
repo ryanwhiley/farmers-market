@@ -45,6 +45,19 @@ function goodsService($http,auth){
     }
     return categoriesGroupings;
   };
+  o.convertImagesToObject = function(good){
+    var images = [];
+    var obj = {};
+    for(var i = 0;i<good.images.length;i++){
+      obj = {};
+      obj._id = good.images[i];
+      obj.active = i==good.images.length-1 ? true : false;
+      images.push(obj);
+    }
+    console.log(images);
+    good.images = images;
+    return good;
+  };
 
   // api calls
   o.getAll = function() {

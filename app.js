@@ -28,11 +28,12 @@ var routes = require('./controllers/index');
 
 var app = express();
 
+
 // set db
 if(app.get('env')==='development'){
   mongoose.connect('mongodb://localhost/market');
 }else{
-  mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds131320.mlab.com:31320/farmers-market');
+  mongoose.connect('mongodb://'+process.env.MLAB_USER+':'+process.env.MLAB_PW+'@ds125113.mlab.com:25113/farm-to-meal-test');
 }
 
 // use helmet for security headers

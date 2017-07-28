@@ -12,11 +12,9 @@ router.get('/sign-s3', (req, res) => {
   var fileType = req.query['file-type'];
   Image.create(img, function(err,image){
     if(err) return err;
-    console.log(image)
     var s3Params = getS3Params(image._id, fileType);
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
       if(err){
-        console.log(err);
         return res.end();
       }
       var returnData = {
