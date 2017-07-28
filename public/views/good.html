@@ -63,7 +63,7 @@
             <label>
               Quantity
             </label>
-
+            <input type="number" ng-model="good.userQuantity" min="0" ng-max="{{good.good.quantityForSale}}">
             <select ng-model="good.userQuantity" ng-options="n for n in [] | limitQuantitySelectable:good.good.quantityForSale"></select>
             <!-- <select ng-model="good.userQuantity">
               <option ng-repeat="q in good.quantity" ng-if="q<=good.good.quantityForSale" value="{{q}}">{{q}} {{parseFloat(q)<=parseFloat(good.good.quantityForSale)}}</option>
